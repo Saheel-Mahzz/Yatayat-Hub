@@ -2,6 +2,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { Clock, Bus, ArrowRight } from "lucide-react";
+// Think about what types these elements should be:
+interface IBusTrip {
+  departureTime: string;
+  departureLocation: string;
+  duration: string;
+  isDirect: boolean;
+  arrivalTime: string;
+  arrivalLocation: string;
+}
 
 export default function BusTripCard() {
   return (

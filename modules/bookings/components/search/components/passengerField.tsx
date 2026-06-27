@@ -15,7 +15,7 @@ export default function PassengerField() {
       <Users className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">Passengers</span>
-        <Select>
+        <Select name="total_passenger">
           <SelectTrigger className="border-0 p-0 h-6">
             <SelectValue placeholder="1 Passenger" />
           </SelectTrigger>

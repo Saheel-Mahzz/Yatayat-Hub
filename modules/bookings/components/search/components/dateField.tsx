@@ -6,16 +6,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 export default function DateField() {
+  const [date, setDate] = useState();
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
+      <input type="hidden" name="departure_time" value={date} />
       <CalendarIcon className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">Departure</span>
         <Popover>
-          <PopoverTrigger asChild>
+          <PopoverTrigger name="departure_date" asChild>
             <Button
               variant="ghost"
               className="justify-start p-0 h-6 text-gray-500"
@@ -24,7 +26,7 @@ export default function DateField() {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" />
+            <Calendar mode="single" onSelect={setDate} />
           </PopoverContent>
         </Popover>
       </div>
