@@ -19,6 +19,7 @@ import {
   MapPin,
   Users,
 } from "lucide-react";
+import { PASSENGERS } from "../constants/passenger.const";
 
 export default function SearchBar() {
   return (
@@ -79,15 +80,17 @@ export default function SearchBar() {
                 <SelectValue placeholder="1 Passenger" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">1 Passenger</SelectItem>
-                <SelectItem value="2">2 Passengers</SelectItem>
-                <SelectItem value="3">3 Passengers</SelectItem>
+                {PASSENGERS?.map((passenger, index) => (
+                  <SelectItem key={index} value={passenger?.value}>
+                    {passenger?.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
         </div>
 
-        <Button className="rounded-xl px-6">Search</Button>
+        <Button className="rounded-xl px-6 cursor-pointer">Search</Button>
       </div>
     </div>
   );
