@@ -1,11 +1,16 @@
 import SearchBar from "./components/searchBar";
-import BusList from "./components/busList";
+import getBuses from "./api/getBuses";
+import BusTripCard from "./components/busList";
 
-export default function Bookings() {
+export default async function Bookings() {
+  const response = await getBuses();
+  console.log("bus response", response);
+  const allBuses = response?.data;
+  console.log("all bueses", allBuses);
   return (
     <div>
       <SearchBar />
-      <BusList />
+      <BusTripCard allBus={allBuses} />
     </div>
   );
 }
