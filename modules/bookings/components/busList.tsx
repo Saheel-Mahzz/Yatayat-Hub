@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { Clock, Bus, ArrowRight } from "lucide-react";
-// Think about what types these elements should be:
 export interface IBusTrip {
   id: string;
   name: string;
