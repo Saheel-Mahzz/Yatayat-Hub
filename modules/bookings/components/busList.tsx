@@ -8,8 +8,11 @@ export interface IBusTrip {
   total_seats: number;
   number_plate: number;
   bus_type: string;
+  from_location: string;
+  to_location: string;
+  departure_time: string;
+  available_seats: string;
 }
-
 export default function BusTripCard({ allBus }: { allBus: IBusTrip[] }) {
   return (
     <>
@@ -18,45 +21,62 @@ export default function BusTripCard({ allBus }: { allBus: IBusTrip[] }) {
           key={b?.id}
           className="max-w-3xl mx-auto border rounded-xl mb-3 p-4 bg-white shadow-sm flex items-center justify-between gap-6"
         >
-          <div className="flex flex-col gap-2 w-full">
+          {/* LEFT SIDE */}
+          <div className="flex flex-col gap-3 w-full">
+            {/* TOP ROW */}
             <div className="flex items-center justify-between">
+              {/* FROM */}
               <div className="flex flex-col">
-                <span className="text-sm font-semibold">16:55</span>
-                <span className="text-xs text-muted-foreground">{b?.name}</span>
+                {/* <span className="text-sm font-semibold">
+                  {b?.departure_time}
+                </span> */}
+                <span className="text-xs text-muted-foreground">
+                  {b?.from_location}
+                </span>
               </div>
 
+              {/* MIDDLE INFO */}
               <div className="flex flex-col items-center text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  <span>02h 35m</span>
+                  <span>Trip</span>
                 </div>
+
                 <div className="w-24 h-px bg-gray-200 my-1" />
+
                 <div className="flex items-center gap-1">
                   <Bus className="w-3 h-3" />
-                  <span>Direct</span>
+                  <span>{b?.bus_type}</span>
                 </div>
               </div>
 
+              {/* TO */}
               <div className="flex flex-col text-right">
-                <span className="text-sm font-semibold">19:30</span>
+                <span className="text-sm font-semibold">{b?.to_location}</span>
                 <span className="text-xs text-muted-foreground">
-                  Central Bus Station - Sofia
+                  Destination
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* BOTTOM TAGS */}
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="secondary" className="text-xs">
-                Bus
+                Seats: {b?.available_seats}/{b?.total_seats}
               </Badge>
+
               <Badge variant="outline" className="text-xs">
-                Best Option
+                Bus No: {b?.number_plate}
               </Badge>
             </div>
           </div>
 
+          {/* RIGHT SIDE */}
           <div className="flex flex-col items-end gap-2 min-w-25">
-            <span className="text-lg font-bold">$76</span>
+            <span className="text-lg font-bold">
+              {/* placeholder price since not in API */}
+              $--
+            </span>
 
             <Button className="rounded-lg cursor-pointer">
               Continue <ArrowRight className="w-4 h-4 ml-1" />
