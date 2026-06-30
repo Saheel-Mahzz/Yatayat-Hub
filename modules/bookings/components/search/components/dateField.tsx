@@ -13,7 +13,13 @@ export default function DateField() {
   const [date, setDate] = useState<Date | undefined>(undefined);
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
-      <input type="hidden" name="departure_time" value={date} />
+      {/* <input type="hidden" name="departure_time" value={date} />
+       */}
+      <input
+        type="hidden"
+        name="departure_time"
+        value={date ? date.toISOString() : ""}
+      />
       <CalendarIcon className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">Departure</span>
