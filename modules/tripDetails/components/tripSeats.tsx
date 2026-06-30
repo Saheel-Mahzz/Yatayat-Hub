@@ -7,11 +7,28 @@ import { creatBookingAction } from "../actions/createBookingAction";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export default function Seats({ tripDetails }: { tripDetails: any }) {
+interface ITripDetails {
+  id: string | number;
+  from_location: string;
+  to_location: string;
+  bus_type: string;
+  price?: string | number; // Optional fallback ko lagi
+  bus: {
+    name: string;
+    total_seats: number;
+    number_plate: string;
+  };
+  booked_seats: string[]; // Array of booked seat numbers
+}
+
+export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   console.log("trip details", tripDetails);
   const router = useRouter();
 
-  const [state, formAction, isPending] = useActionState(creatBookingAction, {});
+  const [state, formAction, isPending] = useActionState(creatBookingAction, {
+    success: false,
+    message: "",
+  });
 
   useEffect(() => {
     if (state?.success) {
