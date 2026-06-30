@@ -6,13 +6,10 @@ import SearchFields from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
 import { useActionState } from "react";
-import { searchAction } from "../actions/searchAction";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
 export default function SearchBar() {
-  const [state, formAction, isPending] = useActionState(searchAction, {});
-
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
