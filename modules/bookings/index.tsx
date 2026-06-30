@@ -2,7 +2,6 @@ import SearchBar from "./components/searchBar";
 import getBuses from "./api/getBuses";
 import BusTripCard from "./components/busList";
 import BusPagination from "./components/pagination";
-import BusSeatAndTicketUI from "./components/testing";
 
 export default async function Bookings({
   searchParams,
