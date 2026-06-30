@@ -5,7 +5,6 @@ import { ArrowLeftRight } from "lucide-react";
 import SearchFields from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
-import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
@@ -41,7 +40,7 @@ export default function SearchBar() {
   };
   return (
     <div className="w-full flex items-center justify-center p-6">
-      <form action={formAction} onSubmit={handleSearch}>
+      <form onSubmit={handleSearch}>
         <div className="flex items-center gap-3 bg-white shadow-md rounded-2xl p-4 w-full max-w-5xl">
           <SearchFields
             label="From"
@@ -58,9 +57,7 @@ export default function SearchBar() {
           />
           <DateField />
           <PassengerField />
-          <Button className="rounded-xl px-6 cursor-pointer">
-            {isPending ? "Searching..." : "Search"}
-          </Button>
+          <Button className="rounded-xl px-6 cursor-pointer">Search</Button>
         </div>
       </form>
     </div>
