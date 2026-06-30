@@ -1,6 +1,15 @@
 import { api } from "@/lib/axios";
 
-export async function creatBookingAction(prevState, formData: FormData) {
+interface BookingActionResponse {
+  data?: string; // Backend response dynamic huna sakcha
+  success: boolean;
+  message: string;
+}
+
+export async function creatBookingAction(
+  prevState: BookingActionResponse,
+  formData: FormData,
+) {
   console.log("form entries", Object.fromEntries(formData));
 
   const rawData = {
