@@ -27,9 +27,7 @@ export default function BusTripCard({ allBus }: { allBus: IBusTrip[] }) {
             <div className="flex items-center justify-between">
               {/* FROM */}
               <div className="flex flex-col">
-                {/* <span className="text-sm font-semibold">
-                  {b?.departure_time}
-                </span> */}
+                <span className="text-sm font-semibold">{b?.bus?.name}</span>
                 <span className="text-xs text-muted-foreground">
                   {b?.from_location}
                 </span>
@@ -62,11 +60,11 @@ export default function BusTripCard({ allBus }: { allBus: IBusTrip[] }) {
             {/* BOTTOM TAGS */}
             <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="secondary" className="text-xs">
-                Seats: {b?.available_seats}/{b?.total_seats}
+                Seats: {b?.bus?.total_seats}
               </Badge>
 
               <Badge variant="outline" className="text-xs">
-                Bus No: {b?.number_plate}
+                Bus No: {b?.bus?.number_plate}
               </Badge>
             </div>
           </div>

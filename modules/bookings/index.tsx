@@ -2,6 +2,7 @@ import SearchBar from "./components/searchBar";
 import getBuses from "./api/getBuses";
 import BusTripCard from "./components/busList";
 import BusPagination from "./components/pagination";
+import BusSeatAndTicketUI from "./components/testing";
 
 export default async function Bookings({
   searchParams,
@@ -11,7 +12,7 @@ export default async function Bookings({
   const response = await getBuses(searchParams);
 
   const currentPage = Number(searchParams?.page) || 1;
-  console.log("bus response", response);
+  // console.log("bus response", response);
   const allBuses = response?.data?.results;
   console.log("all bueses", allBuses);
   return (
@@ -22,6 +23,7 @@ export default async function Bookings({
         totalCount={response?.data?.count}
         currentPage={currentPage}
       />
+      {/* <BusSeatAndTicketUI /> */}
     </div>
   );
 }

@@ -25,8 +25,8 @@ export default function BusPagination({
   const ITEMS_PER_PAGE = 3;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-  console.log("total pages", totalPages);
-  console.log("params", searchParams.toString());
+  // console.log("total pages", totalPages);
+  // console.log("params", searchParams.toString());
 
   const handlePageChange = (newPageNumber: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -38,7 +38,7 @@ export default function BusPagination({
   if (totalPages <= 1) return;
 
   const starsArray = Array.from({ length: 5 }, () => "*");
-  console.log("stars array", starsArray);
+  // console.log("stars array", starsArray);
 
   return (
     <div className="flex justify-center mt-6">
@@ -59,7 +59,7 @@ export default function BusPagination({
                   //   href="#"
                   isActive={currentPage === index + 1}
                   onClick={() => {
-                    handlePageChange(1);
+                    handlePageChange(index + 1);
                   }}
                 >
                   {index + 1}
