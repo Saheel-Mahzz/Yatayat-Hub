@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Clock, Bus, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { all } from "axios";
 
 interface IBusTrip {
   id: string | number;
