@@ -4,6 +4,5 @@ import Seats from "./components/tripSeats";
 
 export default async function TripDetails({ tripId }: { tripId: string }) {
   const tripDetails = await getTripDetails(tripId);
-  console.log("trip details", tripDetails);
-  return <Seats />;
+  return <Seats tripDetails={tripDetails} />;
 }
