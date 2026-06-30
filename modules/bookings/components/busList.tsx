@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { Clock, Bus, ArrowRight } from "lucide-react";
+import Link from "next/link";
 export interface IBusTrip {
   id: string;
   name: string;
@@ -75,10 +76,11 @@ export default function BusTripCard({ allBus }: { allBus: IBusTrip[] }) {
               {/* placeholder price since not in API */}
               $--
             </span>
-
-            <Button className="rounded-lg cursor-pointer">
-              Continue <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            <Link href={`/booking/${b?.id}`}>
+              <Button className="rounded-lg cursor-pointer">
+                Continue <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       ))}
