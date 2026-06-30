@@ -3,7 +3,7 @@ import { Clock, Bus, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-interface IBusTrip {
+export interface IBusTrip {
   id: string | number;
   from_location: string;
   to_location: string;
