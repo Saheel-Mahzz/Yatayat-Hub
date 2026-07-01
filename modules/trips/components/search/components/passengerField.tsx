@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PASSENGERS } from "@/modules/bookings/constants/passenger.const";
+import { PASSENGERS } from "@/modules/trips/constants/passenger.const";
 import { Users } from "lucide-react";
 import React from "react";
 

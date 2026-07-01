@@ -1,4 +1,4 @@
-import Bookings from "@/modules/bookings";
+import Trips from "@/modules/trips";
 import React from "react";
 
 export default async function page({
@@ -8,5 +8,5 @@ export default async function page({
 }) {
   const search = await searchParams;
   console.log("search page", search);
-  return <Bookings searchParams={search} />;
+  return <Trips searchParams={search} />;
 }
