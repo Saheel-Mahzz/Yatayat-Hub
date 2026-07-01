@@ -1,5 +1,5 @@
 import { IBusTrip } from "../definitions/trips.types";
-import BusTripcard from "./busTripcard";
+import BusTripcard from "./busTripCard";
 
 export default function TripList({ allTrips }: { allTrips: IBusTrip[] }) {
   if (!allTrips || allTrips.length === 0) {
