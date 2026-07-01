@@ -1,14 +1,14 @@
 import SearchBar from "./components/searchBar";
-import getBuses from "./api/getBuses";
 import BusTripCard from "./components/busList";
 import BusPagination from "./components/pagination";
+import getTrips from "./api/getTrips";
 
-export default async function Bookings({
+export default async function Trips({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const response = await getBuses(searchParams);
+  const response = await getTrips(searchParams);
 
   const currentPage = Number(searchParams?.page) || 1;
   // console.log("bus response", response);

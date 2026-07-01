@@ -7,7 +7,17 @@ export interface IBusTripResponse {
   previous: string | null;
   results: IBusTrip[]; // Actual array yeta hunchha
 }
-export default async function getBuses(searchParams?: {
+// export default async function getBuses(searchParams?: {
+//   [key: string]: string | string[] | undefined;
+// }) {
+//   // console.log("search", searchParams);
+//   const res = await api.get<IBusTripResponse>("/trips", {
+//     params: searchParams,
+//   });
+//   return res;
+// }
+
+export default async function getTrips(searchParams?: {
   [key: string]: string | string[] | undefined;
 }) {
   // console.log("search", searchParams);
