@@ -7,10 +7,7 @@ import { IBusTrip } from "../definitions/trips.types";
 
 export default function BusTripcard({ trip }: { trip: IBusTrip }) {
   return (
-    <div
-      key={trip.id}
-      className="max-w-3xl mx-auto border rounded-xl mb-3 p-4 bg-white shadow-sm flex items-center justify-between gap-6"
-    >
+    <div className="max-w-3xl mx-auto border rounded-xl mb-3 p-4 bg-white shadow-sm flex items-center justify-between gap-6">
       {/* LEFT SIDE */}
       <div className="flex flex-col gap-3 w-full">
         {/* TOP ROW */}
@@ -48,7 +45,7 @@ export default function BusTripcard({ trip }: { trip: IBusTrip }) {
         {/* BOTTOM TAGS */}
         <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="secondary" className="text-xs">
-            Seats: {trip.bus?.total_seats}
+            Seats: {trip.bus?.total_seats ?? "-"}
           </Badge>
 
           <Badge variant="outline" className="text-xs">

@@ -8,7 +8,14 @@ import PassengerField from "./search/components/passengerField";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
-export default function TripFilters() {
+export default function TripFilters({
+  locations,
+}: {
+  locations: {
+    label: string;
+    value: string;
+  }[];
+}) {
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,13 +43,14 @@ export default function TripFilters() {
     }
     // 4. Clean URL push handine
     // output: /bookings?from_location=KTM&passenger=2
-    router.push(`/bookings?${params.toString()}`);
+    router.push(`/trips?${params.toString()}`);
   };
   return (
-    <div className="w-full flex items-center justify-center p-6">
-      <form onSubmit={handleSearch}>
-        <div className="flex items-center gap-3 bg-white shadow-md rounded-2xl p-4 w-full max-w-5xl">
+    <div className="w-full flex items-center justify-center p-6 ">
+      <form onSubmit={handleSearch} className=" w-full">
+        <div className="flex items-center gap-3 bg-white shadow-md rounded-2xl p-4 w-full max-w-5xl mx-auto">
           <SearchFields
+            locations={locations}
             label="From"
             placeholder="Select Origin "
             name="from_destination"
@@ -51,6 +59,7 @@ export default function TripFilters() {
             <ArrowLeftRight className="w-4 h-4" />
           </Button>
           <SearchFields
+            locations={locations}
             placeholder="Select Destination"
             label="To"
             name="to_destination"

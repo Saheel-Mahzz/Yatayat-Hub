@@ -10,3 +10,15 @@ export interface IBusTrip {
   };
   price: string;
 }
+
+export interface ILocation {
+  id: string;
+  name: string;
+}
+
+export interface ILocationResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: ILocation[];
+}
