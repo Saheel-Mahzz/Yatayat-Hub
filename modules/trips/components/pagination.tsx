@@ -32,7 +32,7 @@ export default function TripPagination({
     const params = new URLSearchParams(searchParams.toString());
 
     params.set("page", newPageNumber.toString());
-    router.push(`/bookings?${params.toString()}`);
+    router.push(`/trips/?${params.toString()}`);
   };
 
   if (totalPages <= 1) return;
