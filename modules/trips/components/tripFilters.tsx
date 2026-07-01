@@ -8,7 +8,7 @@ import PassengerField from "./search/components/passengerField";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
-export default function SearchBar() {
+export default function TripFilters() {
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {

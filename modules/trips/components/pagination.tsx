@@ -16,7 +16,7 @@ interface PaginationProps {
   totalCount: number;
 }
 
-export default function BusPagination({
+export default function TripPagination({
   currentPage,
   totalCount,
 }: PaginationProps) {
@@ -37,7 +37,7 @@ export default function BusPagination({
 
   if (totalPages <= 1) return;
 
-  const starsArray = Array.from({ length: 5 }, () => "*");
+  // const starsArray = Array.from({ length: 5 }, () => "*");
   // console.log("stars array", starsArray);
 
   return (
