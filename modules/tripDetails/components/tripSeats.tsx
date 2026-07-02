@@ -17,6 +17,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import LoginForm from "@/components/auth/loginForm";
+import RegisterForm from "@/components/auth/registerForm";
 
 interface ITripDetails {
   id: string | number;
@@ -199,7 +200,8 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
                   {/* Name Input Field */}
                   {/* Email Input Field */}
                   {/* Password Input Field */}
-                  <Button className="w-full mt-2">Create Account</Button>
+                  {/* <Button className="w-full mt-2">Create Account</Button> */}
+                  <RegisterForm />
                 </TabsContent>
               </Tabs>
             </DialogContent>
