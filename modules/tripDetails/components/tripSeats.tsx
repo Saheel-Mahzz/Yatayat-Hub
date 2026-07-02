@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { creatBookingAction } from "../actions/createBookingAction";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -34,7 +34,7 @@ interface ITripDetails {
 }
 
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
-  console.log("trip details", tripDetails);
+  // console.log("trip details", tripDetails);
   const router = useRouter();
 
   const [state, formAction, isPending] = useActionState(creatBookingAction, {
@@ -52,12 +52,41 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   // Backend dynamic booked seats array placeholder
   //   const bookedSeats = ["A1", "A5", "B2", "B12"];
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [isModelOpen, setIsModelOpen] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  const handleSeatClick = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("trip", tripDetails?.id);
+    formData.append("seat_number", selectedSeat as string);
+    if (isLoggedIn) {
+      startTransition(() => {
+        formAction(formData);
+      });
+    } else {
+      setIsModelOpen(true);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setIsLoggedIn(true);
+    setIsModelOpen(false);
+    const formData = new FormData();
+    formData.append("trip", tripDetails?.id);
+    formData.append("seat_number", selectedSeat as string);
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
 
   // Total 10 वटा rows pattern (10 rows * 4 seats per row = 40 seats)
   const totalRows = 10;
-  console.log("state", state);
+  // console.log("state", state);
   return (
-    <form action={formAction}>
+    // <form action={formAction}>
+    <form>
       <input type="hidden" name="trip" value={tripDetails?.id} />
       <input type="hidden" name="seat_number" value={selectedSeat || ""} />
       <Card className="rounded-2xl shadow-lg max-w-xl mx-auto">
@@ -155,11 +184,12 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
           )}
 
           {/* // 1. Modal wrapper le wrap garne */}
-          <Dialog>
+          <Dialog open={isModelOpen} onOpenChange={setIsModelOpen}>
             {/* 2. Tero tyo button lai Trigger bhitra halne */}
             <DialogTrigger asChild>
               <Button
-                type="submit"
+                type="button"
+                onClick={handleSeatClick}
                 className="w-full mt-6 rounded-full cursor-pointer"
                 disabled={!selectedSeat || isPending}
               >
@@ -192,7 +222,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
                   <Input type="password" placeholder="Password.." />
                   {/* Password Input Field */}
                   {/* <Button className="w-full mt-2">Login & Continue</Button> */}
-                  <LoginForm />
+                  <LoginForm onAuthSuccess={handleAuthSuccess} />
                 </TabsContent>
 
                 {/* --- REGISTER TAB --- */}

@@ -28,6 +28,8 @@ export async function creatBookingAction(
       message: "Booked Successfully!",
     };
   } catch (err) {
+    console.error("DEBUG BOOKING ERROR:", err);
+    console.error("RESPONSE DATA:", err.response?.data);
     return {
       success: false,
       message: "Something went wrong!",

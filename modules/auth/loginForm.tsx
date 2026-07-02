@@ -1,12 +1,17 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import InputElement from "../../components/inputFields/inputElement";
 import PasswordElement from "../../components/inputFields/passportElement";
 import { Button } from "../../components/ui/button";
 import { loginAction } from "./actions/loginAction";
+import { toast } from "sonner";
 
-export default function LoginForm() {
+export default function LoginForm({
+  onAuthSuccess,
+}: {
+  onAuthSuccess: () => void;
+}) {
   const [state, formAction, isPending] = useActionState(loginAction, {
     success: false,
     message: "",
@@ -14,6 +19,12 @@ export default function LoginForm() {
 
   console.log("state", state);
 
+  useEffect(() => {
+    if (state.success) {
+      toast.success("Login Successfull!");
+      onAuthSuccess();
+    }
+  }, [state, onAuthSuccess]);
   return (
     <form className="space-y-4" action={formAction}>
       <InputElement
