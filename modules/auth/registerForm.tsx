@@ -1,7 +1,7 @@
 import React from "react";
-import InputElement from "../inputFields/inputElement";
-import PasswordElement from "../inputFields/passportElement";
-import { Button } from "../ui/button";
+import InputElement from "../../components/inputFields/inputElement";
+import PasswordElement from "../../components/inputFields/passportElement";
+import { Button } from "../../components/ui/button";
 
 export default function RegisterForm() {
   return (

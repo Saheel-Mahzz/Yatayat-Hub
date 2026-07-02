@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import LoginForm from "@/components/auth/loginForm";
-import RegisterForm from "@/components/auth/registerForm";
+import LoginForm from "@/modules/auth/loginForm";
+import RegisterForm from "@/modules/auth/registerForm";
 
 interface ITripDetails {
   id: string | number;
