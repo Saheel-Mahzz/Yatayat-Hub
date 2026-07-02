@@ -17,6 +17,7 @@ export default function TripFilters({
   }[];
 }) {
   const router = useRouter();
+  console.log("locations", locations);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

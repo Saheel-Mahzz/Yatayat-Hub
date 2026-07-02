@@ -16,6 +16,12 @@ export interface ILocation {
   name: string;
 }
 
+// export interface ILocationResponse {
+//   count: number;
+//   next: string;
+//   previous: string;
+//   results: ILocation[];
+// }
 export interface ILocationResponse {
   count: number;
   next: string;

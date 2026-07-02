@@ -6,6 +6,17 @@ import { useActionState, useEffect, useState } from "react";
 import { creatBookingAction } from "../actions/createBookingAction";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import LoginForm from "@/components/auth/loginForm";
 
 interface ITripDetails {
   id: string | number;
@@ -142,13 +153,57 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             </p>
           )}
 
-          <Button
-            type="submit"
-            className="w-full mt-6 rounded-full cursor-pointer"
-            disabled={!selectedSeat || isPending}
-          >
-            Book Seat
-          </Button>
+          {/* // 1. Modal wrapper le wrap garne */}
+          <Dialog>
+            {/* 2. Tero tyo button lai Trigger bhitra halne */}
+            <DialogTrigger asChild>
+              <Button
+                type="submit"
+                className="w-full mt-6 rounded-full cursor-pointer"
+                disabled={!selectedSeat || isPending}
+              >
+                Book Seat
+              </Button>
+            </DialogTrigger>
+
+            {/* 3. Modal open huda dekhine content */}
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-bold text-center">
+                  Continue your Booking
+                </DialogTitle>
+                <DialogDescription className="text-center">
+                  Please login or create an account to secure your seat.
+                </DialogDescription>
+              </DialogHeader>
+
+              {/* 4. Login ra Register switch garna Shadcn Tabs use garne */}
+              <Tabs defaultValue="login" className="w-full mt-4">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="register">Register</TabsTrigger>
+                </TabsList>
+
+                {/* --- LOGIN TAB --- */}
+                <TabsContent value="login" className="space-y-4 pt-4">
+                  {/* Email Input Field */}
+                  {/* <Input type="email" placeholder="test@yopmail.com.." />
+                  <Input type="password" placeholder="Password.." />
+                  {/* Password Input Field */}
+                  {/* <Button className="w-full mt-2">Login & Continue</Button> */}
+                  <LoginForm />
+                </TabsContent>
+
+                {/* --- REGISTER TAB --- */}
+                <TabsContent value="register" className="space-y-4 pt-4">
+                  {/* Name Input Field */}
+                  {/* Email Input Field */}
+                  {/* Password Input Field */}
+                  <Button className="w-full mt-2">Create Account</Button>
+                </TabsContent>
+              </Tabs>
+            </DialogContent>
+          </Dialog>
         </CardContent>
       </Card>
     </form>

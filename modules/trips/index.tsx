@@ -16,17 +16,20 @@ export default async function Trips({
     getLocations(),
   ]);
 
+  console.log("trip response", tripsRes);
+  console.log("location res", locationsRes);
+
   const currentPage = Number(searchParams?.page) || 1;
   const allTrips = response?.data?.results;
 
-  const locations = locationsRes?.results?.map((loc) => {
+  const locations = locationsRes?.map((loc) => {
     return {
       label: loc?.name,
       value: loc?.id,
     };
   });
 
-  console.log("lcoationssss", locations);
+  // console.log("lcoationssss", locations);
   console.log("all bueses", allTrips);
   return (
     <div>
