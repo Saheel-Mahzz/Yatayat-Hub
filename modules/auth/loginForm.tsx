@@ -31,6 +31,7 @@ export default function LoginForm({
         label="Email"
         name="email"
         placeholder="test@yopmail.com"
+        type="email"
         err={state?.error?.email}
       />
       <PasswordElement
