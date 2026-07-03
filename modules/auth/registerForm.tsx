@@ -1,33 +1,63 @@
-import React from "react";
+"use client";
+import { useActionState, useEffect } from "react";
 import InputElement from "../../components/inputFields/inputElement";
 import PasswordElement from "../../components/inputFields/passportElement";
 import { Button } from "../../components/ui/button";
+import { registerAction } from "./actions/registerAction";
+import { toast } from "sonner";
 
-export default function RegisterForm() {
+export default function RegisterForm({
+  onAuthSuccess,
+}: {
+  onAuthSuccess: () => void;
+}) {
+  const [state, formAction, isPending] = useActionState(registerAction, {
+    success: false,
+    message: "",
+  });
+
+  useEffect(() => {
+    if (state.success) {
+      toast.success("User Registered successfully!");
+      onAuthSuccess();
+    }
+  }, [state]);
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <form action={formAction}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <InputElement
+            label="First Name"
+            name="first_name"
+            placeholder="Saheel"
+            type="text"
+            err={state?.error?.first_name}
+          />
+          <InputElement
+            label="Last Name"
+            name="last_name"
+            placeholder="Maharjan"
+            type="text"
+            err={state?.error?.last_name}
+          />
+        </div>
         <InputElement
-          label="First Name"
-          name="first_name"
-          placeholder="Saheel"
-          type="text"
+          label="Email"
+          name="email"
+          placeholder="test@yopmail.com"
+          type="email"
+          err={state?.error?.email}
         />
-        <InputElement
-          label="Last Name"
-          name="last_name"
-          placeholder="Maharjan"
-          type="text"
+        <PasswordElement
+          label="Password"
+          name="password"
+          placeholder="*******"
+          err={state?.error?.password}
         />
+        <Button className="w-full mt-2">
+          {isPending ? "Creating..." : "Create Account"}
+        </Button>
       </div>
-      <InputElement
-        label="Email"
-        name="email"
-        placeholder="test@yopmail.com"
-        type="email"
-      />
-      <PasswordElement label="Password" name="password" placeholder="*******" />
-      <Button className="w-full mt-2">Create Account</Button>
-    </div>
+    </form>
   );
 }

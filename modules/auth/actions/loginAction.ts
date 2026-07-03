@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { AuthSchema, IAuth } from "../definitions/auth.definitons";
+import { LoginSchema } from "../definitions/auth.definitons";
 
 interface LoginState {
   // data: IAuth | null;
@@ -12,7 +12,7 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
     password: formData.get("password") as string,
   };
 
-  const safeData = AuthSchema.safeParse(rawData);
+  const safeData = LoginSchema.safeParse(rawData);
   if (!safeData.success) {
     console.log("err", safeData?.error?.issues);
 
