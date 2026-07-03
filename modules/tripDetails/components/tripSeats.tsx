@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import LoginForm from "@/modules/auth/loginForm";
 import RegisterForm from "@/modules/auth/registerForm";
+import TicketModal from "./ticketCard";
 
 interface ITripDetails {
   id: string | number;
@@ -42,18 +43,20 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     message: "",
   });
 
-  useEffect(() => {
-    if (state?.success) {
-      toast.success("Seat Booked Successfully!");
-      router.refresh();
-    }
-  }, [state]);
-
   // Backend dynamic booked seats array placeholder
   //   const bookedSeats = ["A1", "A5", "B2", "B12"];
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [isModelOpen, setIsModelOpen] = useState<boolean>(false);
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Seat Booked Successfully!");
+      // setIsTicketModalOpen(true)
+      router.refresh();
+    }
+  }, [state]);
 
   const handleSeatClick = (e) => {
     e.preventDefault();
@@ -231,12 +234,19 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
                   {/* Email Input Field */}
                   {/* Password Input Field */}
                   {/* <Button className="w-full mt-2">Create Account</Button> */}
-                  <RegisterForm />
+                  <RegisterForm onAuthSuccess={handleAuthSuccess} />
                 </TabsContent>
               </Tabs>
             </DialogContent>
           </Dialog>
         </CardContent>
+        {state?.success && (
+          <TicketModal
+            isTicketModelOpen
+            // setIsTicketModelOpen={() => setIsTicketModalOpen(false)}
+            setIsTicketModelOpen={setIsTicketModalOpen}
+          />
+        )}
       </Card>
     </form>
   );
