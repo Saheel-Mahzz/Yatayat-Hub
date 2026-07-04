@@ -81,7 +81,7 @@ export default function SearchFields({
         <span className="text-xs text-gray-500">{label}</span>
 
         {/* Hidden input — yehi le FormData ma value carry garcha */}
-        {/* <input type="hidden" name={name} value={selected?.value ?? ""} /> */}
+        <input type="hidden" name={name} value={value?.value ?? ""} />
 
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>

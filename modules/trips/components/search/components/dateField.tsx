@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
 
@@ -33,12 +34,22 @@ export default function DateField() {
               variant="ghost"
               className="justify-start p-0 h-6 text-gray-500"
             >
-              Select date
+              {/* Select date
+               */}
+              {date ? (
+                // format(date, "PPP")
+                format(date, "yyyy-MM-dd")
+              ) : (
+                <span className="text-muted-foreground font-normal">
+                  Select date
+                </span>
+              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
+              selected={date}
               onSelect={setDate}
               disabled={{ before: new Date(), after: maxFutureDate }}
             />

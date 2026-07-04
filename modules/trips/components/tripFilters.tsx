@@ -51,6 +51,12 @@ export default function TripFilters({
 
   console.log("selected from", selectedFrom);
   console.log("selected to", selectedTo);
+
+  const switchDestination = () => {
+    console.log("riggerd");
+    setSelectedFrom(selectedTo);
+    setSelectedTo(selectedFrom);
+  };
   return (
     <div className="w-full flex items-center justify-center p-6 ">
       <form onSubmit={handleSearch} className=" w-full">
@@ -64,7 +70,13 @@ export default function TripFilters({
             value={selectedFrom}
             disable={selectedTo}
           />
-          <Button variant="outline" size="icon" className="rounded-full">
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded-full cursor-pointer"
+            type="button"
+            onClick={switchDestination}
+          >
             <ArrowLeftRight className="w-4 h-4" />
           </Button>
           <SearchFields
