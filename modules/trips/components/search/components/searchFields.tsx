@@ -48,7 +48,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-interface ILocation {
+export interface ILocation {
   label: string;
   value: string;
 }
@@ -58,6 +58,9 @@ interface ISearchFields {
   placeholder: string;
   name: string;
   locations: ILocation[];
+  value: ILocation | null;
+  onSelect: (value: ILocation) => void;
+  disable: ILocation | null;
 }
 
 export default function SearchFields({
@@ -65,10 +68,12 @@ export default function SearchFields({
   placeholder,
   name,
   locations,
+  value,
+  onSelect,
+  disable,
 }: ISearchFields) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<ILocation | null>(null);
-
+  // const [selected, setSelected] = useState<ILocation | null>(null);
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       <MapPin className="w-4 h-4 text-gray-500" />
@@ -76,7 +81,7 @@ export default function SearchFields({
         <span className="text-xs text-gray-500">{label}</span>
 
         {/* Hidden input — yehi le FormData ma value carry garcha */}
-        <input type="hidden" name={name} value={selected?.value ?? ""} />
+        {/* <input type="hidden" name={name} value={selected?.value ?? ""} /> */}
 
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -86,7 +91,7 @@ export default function SearchFields({
               aria-expanded={open}
               className="justify-between p-0 h-6 font-normal text-left"
             >
-              {selected ? selected.label : placeholder}
+              {value ? value.label : placeholder}
               <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -100,19 +105,25 @@ export default function SearchFields({
                     <CommandItem
                       key={loc.value}
                       value={loc.label}
+                      // onSelect={() => {
+                      //   onselect(loc);
+                      //   setOpen(false);
+                      // }}
                       onSelect={() => {
-                        setSelected(loc);
+                        onSelect(loc);
                         setOpen(false);
                       }}
+                      className={`${loc.value === disable?.value ? "cursor-none" : "cursor-pointer"}`}
+                      disabled={loc.value === disable?.value}
                     >
-                      <Check
+                      {/* <Check
                         className={cn(
                           "mr-2 h-4 w-4",
                           selected?.value === loc.value
                             ? "opacity-100"
                             : "opacity-0",
                         )}
-                      />
+                      /> */}
                       {loc.label}
                     </CommandItem>
                   ))}

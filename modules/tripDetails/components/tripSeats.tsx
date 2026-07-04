@@ -11,10 +11,14 @@ import SeatLegend from "./seats/seatLegend";
 import SeatGrid from "./seats/seatGrid";
 import { AuthBookingDialog } from "./seats/authBookingDialog";
 import { ITripDetails } from "../definitions/tripDetails";
+import useAuth from "@/context/authContext";
 
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
+
+  console.log("is logged in", isLoggedIn);
 
   const [state, formAction, isPending] = useActionState(creatBookingAction, {
     success: false,
@@ -28,6 +32,9 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     if (state?.success) {
       toast.success("Seat Booked Successfully!");
       // setIsTicketModalOpen(true)
+      setTimeout(() => {
+        setIsTicketModalOpen(true);
+      }, 0);
       router.refresh();
     }
   }, [state]);
@@ -43,6 +50,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
 
   const handleBookingSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("slected seat", selectedSeat);
     if (!selectedSeat) return;
     if (isLoggedIn) {
       executeBooking(selectedSeat);
@@ -52,7 +60,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   };
 
   const handleAuthSuccess = () => {
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
     setIsAuthModelOpen(false);
     if (selectedSeat) {
       executeBooking(selectedSeat);
@@ -60,58 +68,64 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   };
 
   return (
-    <form onSubmit={handleBookingSubmit}>
-      <input type="hidden" name="trip" value={tripDetails?.id} />
-      <input type="hidden" name="seat_number" value={selectedSeat || ""} />
-      <Card className="rounded-2xl shadow-lg max-w-xl mx-auto">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Select your seat</h2>
-            <span className="text-sm text-muted-foreground">40 seats</span>
-          </div>
-          <SeatLegend />
+    <>
+      <form onSubmit={handleBookingSubmit}>
+        <input type="hidden" name="trip" value={tripDetails?.id} />
+        <input type="hidden" name="seat_number" value={selectedSeat || ""} />
+        <Card className="rounded-2xl shadow-lg max-w-xl mx-auto">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Select your seat</h2>
+              <span className="text-sm text-muted-foreground">40 seats</span>
+            </div>
+            <SeatLegend />
 
-          <div className="w-full bg-slate-100 rounded-t-lg p-2 text-center text-xs text-muted-foreground mb-4 border-b-2 font-medium tracking-wider">
-            🚌 FRONT / DRIVER SIDE
-          </div>
+            <div className="w-full bg-slate-100 rounded-t-lg p-2 text-center text-xs text-muted-foreground mb-4 border-b-2 font-medium tracking-wider">
+              🚌 FRONT / DRIVER SIDE
+            </div>
 
-          <SeatGrid
-            bookedSeats={tripDetails?.booked_seats}
-            onSeatSelect={setSelectedSeat}
-            selectedSeat={selectedSeat}
-            // totalRows={30}
-          />
+            <SeatGrid
+              bookedSeats={tripDetails?.booked_seats}
+              onSeatSelect={setSelectedSeat}
+              selectedSeat={selectedSeat}
+              // totalRows={30}
+            />
 
-          {/* Selected Summary Info */}
-          {selectedSeat && (
-            <p className="text-sm text-center mt-4 text-muted-foreground">
-              Selected Seat:{" "}
-              <span className="font-bold text-blue-600">{selectedSeat}</span>
-            </p>
-          )}
+            {/* Selected Summary Info */}
+            {selectedSeat && (
+              <p className="text-sm text-center mt-4 text-muted-foreground">
+                Selected Seat:{" "}
+                <span className="font-bold text-blue-600">{selectedSeat}</span>
+              </p>
+            )}
 
-          <Button
-            type="submit"
-            // onClick={handleSeatClick}
-            className="w-full mt-6 rounded-full cursor-pointer"
-            disabled={!selectedSeat || isPending}
-          >
-            Book Seat
-          </Button>
+            <Button
+              type="submit"
+              // onClick={handleSeatClick}
+              className="w-full mt-6 rounded-full cursor-pointer"
+              disabled={!selectedSeat || isPending}
+            >
+              Book Seat
+            </Button>
+          </CardContent>
+          {/* {state?.success && (
+            <TicketModal
+              // isTicketModelOpen
+              // setIsTicketModelOpen={setIsTicketModalOpen}
+            />
+          )} */}
 
-          <AuthBookingDialog
-            isOpen={isAuthModelOpen}
-            onOpenChange={setIsAuthModelOpen}
-            onAuthSuccess={handleAuthSuccess}
-          />
-        </CardContent>
-        {state?.success && (
           <TicketModal
-            isTicketModelOpen
+            isTicketModelOpen={isTicketModalOpen}
             setIsTicketModelOpen={setIsTicketModalOpen}
           />
-        )}
-      </Card>
-    </form>
+        </Card>
+      </form>
+      <AuthBookingDialog
+        isOpen={isAuthModelOpen}
+        onOpenChange={setIsAuthModelOpen}
+        onAuthSuccess={handleAuthSuccess}
+      />
+    </>
   );
 }

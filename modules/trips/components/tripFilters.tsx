@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from "lucide-react";
-import SearchFields from "./search/components/searchFields";
+import SearchFields, { ILocation } from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { useState } from "react";
 
 export default function TripFilters({
   locations,
@@ -45,6 +46,11 @@ export default function TripFilters({
     // output: /bookings?from_location=KTM&passenger=2
     router.push(`/trips?${params.toString()}`);
   };
+  const [selectedFrom, setSelectedFrom] = useState<ILocation | null>(null);
+  const [selectedTo, setSelectedTo] = useState<ILocation | null>(null);
+
+  console.log("selected from", selectedFrom);
+  console.log("selected to", selectedTo);
   return (
     <div className="w-full flex items-center justify-center p-6 ">
       <form onSubmit={handleSearch} className=" w-full">
@@ -54,6 +60,9 @@ export default function TripFilters({
             label="From"
             placeholder="Select Origin "
             name="from_destination"
+            onSelect={setSelectedFrom}
+            value={selectedFrom}
+            disable={selectedTo}
           />
           <Button variant="outline" size="icon" className="rounded-full">
             <ArrowLeftRight className="w-4 h-4" />
@@ -63,10 +72,18 @@ export default function TripFilters({
             placeholder="Select Destination"
             label="To"
             name="to_destination"
+            onSelect={setSelectedTo}
+            value={selectedTo}
+            disable={selectedFrom}
           />
           <DateField />
           <PassengerField />
-          <Button className="rounded-xl px-6 cursor-pointer">Search</Button>
+          <Button
+            className="rounded-xl px-6 cursor-pointer"
+            disabled={!selectedFrom || !selectedTo}
+          >
+            Search
+          </Button>
         </div>
       </form>
     </div>

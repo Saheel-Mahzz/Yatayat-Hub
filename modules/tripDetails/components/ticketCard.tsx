@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CheckCircle2, Download, Bus } from "lucide-react";
 import {
   Dialog,
@@ -18,9 +18,11 @@ export default function TicketModal({
   isTicketModelOpen: boolean;
   setIsTicketModelOpen: (type: boolean) => void;
 }) {
+  const [open, setOpen] = useState<boolean>(true);
+  console.log("toggle", open);
   return (
     // Default open={true} for testing static UI popup view
-    <Dialog>
+    <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>
       <DialogContent className="sm:max-w-md p-0 overflow-hidden rounded-2xl gap-0 border-none bg-slate-50">
         {/* Top Decorative Banner */}
         <DialogHeader className="bg-emerald-600 text-white p-6 flex flex-col items-center text-center relative">

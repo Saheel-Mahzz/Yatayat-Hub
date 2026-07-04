@@ -11,6 +11,10 @@ import React, { useState } from "react";
 export default function DateField() {
   // const [date, setDate] = useState();
   const [date, setDate] = useState<Date | undefined>(undefined);
+  // const maxDate = new Date().getDate() + 30;
+  const maxFutureDate = new Date();
+  // Aaja ko date ma 30 din thapeko:
+  maxFutureDate.setDate(maxFutureDate.getDate() + 30);
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       {/* <input type="hidden" name="departure_time" value={date} />
@@ -33,7 +37,11 @@ export default function DateField() {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" onSelect={setDate} />
+            <Calendar
+              mode="single"
+              onSelect={setDate}
+              disabled={{ before: new Date(), after: maxFutureDate }}
+            />
           </PopoverContent>
         </Popover>
       </div>

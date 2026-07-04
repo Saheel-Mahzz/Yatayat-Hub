@@ -33,8 +33,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    if (token) {
-      // Sano queue banayera pathayeko jasle React ko lifecycle disturb hudaina
+    console.log("token", token);
+    // if (token) {
+    //   // Sano queue banayera pathayeko jasle React ko lifecycle disturb hudaina
+    //   setTimeout(() => {
+    //     setIsLoggedIn(true);
+    //   }, 0);
+    // }
+    // const token = localStorage.getItem("access_token");
+    // "undefined" string check validation bypass logic
+    if (token && token !== "undefined" && token !== "null") {
       setTimeout(() => {
         setIsLoggedIn(true);
       }, 0);

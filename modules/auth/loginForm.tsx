@@ -20,12 +20,10 @@ export default function LoginForm({
 
   const { login } = useAuth();
 
-  console.log("state", state);
-
   useEffect(() => {
     if (state.success) {
       toast.success("Login Successfull!");
-      login(state.data.access_token);
+      login(state.data.access);
       onAuthSuccess();
     }
   }, [state, onAuthSuccess]);
@@ -44,7 +42,7 @@ export default function LoginForm({
         placeholder="*******"
         err={state?.error?.password}
       />
-      <Button className="w-full mt-2 cursor-pointer">
+      <Button className="w-full mt-2 cursor-pointer" type="submit">
         {isPending ? "Submitting..." : "Login & Continue"}
       </Button>
     </form>
