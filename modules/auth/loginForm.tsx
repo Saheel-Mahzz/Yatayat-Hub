@@ -6,6 +6,7 @@ import PasswordElement from "../../components/inputFields/passportElement";
 import { Button } from "../../components/ui/button";
 import { loginAction } from "./actions/loginAction";
 import { toast } from "sonner";
+import useAuth from "@/context/authContext";
 
 export default function LoginForm({
   onAuthSuccess,
@@ -17,12 +18,14 @@ export default function LoginForm({
     message: "",
   });
 
+  const { login } = useAuth();
+
   console.log("state", state);
 
   useEffect(() => {
     if (state.success) {
       toast.success("Login Successfull!");
-      localStorage.setItem("access_token", state.data.access_token);
+      login(state.data.access_token);
       onAuthSuccess();
     }
   }, [state, onAuthSuccess]);
