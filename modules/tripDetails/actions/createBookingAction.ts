@@ -1,7 +1,7 @@
 import { api } from "@/lib/axios";
 
 interface BookingActionResponse {
-  data?: string; // Backend response dynamic huna sakcha
+  data?: string;
   success: boolean;
   message: string;
 }
@@ -13,7 +13,7 @@ export async function creatBookingAction(
   console.log("form entries", Object.fromEntries(formData));
 
   const rawData = {
-    // user: 4,
+    user: 4,
     trip: formData?.get("trip"),
     seat_number: formData?.get("seat_number"),
   };
