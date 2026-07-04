@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { ZodError } from "zod";
 
 interface BookingActionResponse {
   data?: string;
@@ -28,8 +29,10 @@ export async function creatBookingAction(
       message: "Booked Successfully!",
     };
   } catch (err) {
-    console.error("DEBUG BOOKING ERROR:", err);
-    console.error("RESPONSE DATA:", err.response?.data);
+    if (err instanceof ZodError) {
+      // Yo block bhitra afei ZodError ko type trigger hunchha
+      console.error("ZOD FORMATTED:", err.flatten().fieldErrors);
+    }
     return {
       success: false,
       message: "Something went wrong!",
