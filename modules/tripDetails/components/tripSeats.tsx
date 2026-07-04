@@ -79,7 +79,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             bookedSeats={tripDetails?.booked_seats}
             onSeatSelect={setSelectedSeat}
             selectedSeat={selectedSeat}
-            totalRows={30}
+            // totalRows={30}
           />
 
           {/* Selected Summary Info */}
