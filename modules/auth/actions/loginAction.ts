@@ -31,7 +31,7 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
   try {
     const response = await api.post("/login/", rawData);
     return {
-      // data: response?.data,
+      data: response?.data,
       success: true,
       message: "Login Succesfull!",
     };

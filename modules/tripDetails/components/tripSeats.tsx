@@ -36,6 +36,7 @@ interface ITripDetails {
 
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   // console.log("trip details", tripDetails);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const router = useRouter();
 
   const [state, formAction, isPending] = useActionState(creatBookingAction, {
@@ -47,8 +48,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   //   const bookedSeats = ["A1", "A5", "B2", "B12"];
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [isModelOpen, setIsModelOpen] = useState<boolean>(false);
-  const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (state?.success) {

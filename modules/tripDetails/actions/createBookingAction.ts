@@ -13,7 +13,7 @@ export async function creatBookingAction(
   console.log("form entries", Object.fromEntries(formData));
 
   const rawData = {
-    user: 4,
+    // user: 4,
     trip: formData?.get("trip"),
     seat_number: formData?.get("seat_number"),
   };

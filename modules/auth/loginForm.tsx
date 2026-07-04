@@ -22,6 +22,7 @@ export default function LoginForm({
   useEffect(() => {
     if (state.success) {
       toast.success("Login Successfull!");
+      localStorage.setItem("access_token", state.data.access_token);
       onAuthSuccess();
     }
   }, [state, onAuthSuccess]);
