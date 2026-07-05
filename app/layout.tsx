@@ -37,7 +37,7 @@ export default function RootLayout({
     <html lang="en" className={poppins.className}>
       <AuthProvider>
         <body className="min-h-full flex flex-col">
-          {children}
+          {children}j
           <Toaster position="top-center" />
         </body>
       </AuthProvider>
