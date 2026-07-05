@@ -5,47 +5,65 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { IBusTrip } from "../definitions/trips.types";
 
-export default function BusTripcard({ trip }: { trip: IBusTrip }) {
+export default function BusTripCard({ trip }: { trip: IBusTrip }) {
   return (
-    <div className="max-w-3xl mx-auto border rounded-xl mb-3 p-4 bg-white shadow-sm flex items-center justify-between gap-6">
-      {/* LEFT SIDE */}
-      <div className="flex flex-col gap-3 w-full">
-        {/* TOP ROW */}
-        <div className="flex items-center justify-between">
-          {/* FROM */}
+    <div className="max-w-3xl mx-auto border rounded-2xl mb-4 p-5 bg-white shadow-sm hover:shadow-md transition-all flex items-center justify-between gap-6">
+      {/* LEFT */}
+      <div className="flex flex-col gap-4 w-full">
+        {/* TOP */}
+        <div className="flex items-start justify-between">
+          {/* BUS INFO */}
           <div className="flex flex-col">
-            <span className="text-sm font-semibold">{trip.bus?.name}</span>
-            <span className="text-xs text-muted-foreground">
-              {trip.from_location}
+            <span className="text-base font-semibold text-slate-900">
+              {trip.bus?.name}
             </span>
+            <span className="text-xs text-muted-foreground">Bus Service</span>
           </div>
 
-          {/* MIDDLE INFO */}
+          {/* ROUTE */}
           <div className="flex flex-col items-center text-xs text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              <span>Trip</span>
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-slate-800">
+                {trip.from_location}
+              </span>
+
+              <div className="w-10 h-px bg-gray-300" />
+
+              <span className="font-medium text-slate-800">
+                {trip.to_location}
+              </span>
             </div>
 
-            <div className="w-24 h-px bg-gray-200 my-1" />
+            <div className="flex items-center gap-4 mt-2 text-[11px]">
+              <div className="flex items-center gap-1">
+                <Clock className="w-3 h-3" />
+                <span>Daily Trip</span>
+              </div>
 
-            <div className="flex items-center gap-1">
-              <Bus className="w-3 h-3" />
-              <span>{trip.bus_type}</span>
+              <div className="flex items-center gap-1">
+                <Bus className="w-3 h-3" />
+                <span>{trip.bus_type}</span>
+              </div>
             </div>
           </div>
 
-          {/* TO */}
-          <div className="flex flex-col text-right">
-            <span className="text-sm font-semibold">{trip.to_location}</span>
-            <span className="text-xs text-muted-foreground">Destination</span>
-          </div>
+          {/* EMPTY SPACER / ALIGNMENT BALANCE */}
+          <div className="w-20" />
         </div>
 
         {/* BOTTOM TAGS */}
         <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="secondary" className="text-xs">
-            Seats: {trip.bus?.total_seats ?? "-"}
+          <Badge
+            variant={trip?.available_seats === 0 ? "destructive" : "default"}
+            className={
+              trip?.available_seats > 0
+                ? "bg-green-600 text-white hover:bg-green-700"
+                : ""
+            }
+          >
+            {trip?.available_seats === 0
+              ? "Sold Out"
+              : `${trip?.available_seats} Seats Left`}
           </Badge>
 
           <Badge variant="outline" className="text-xs">
@@ -54,15 +72,13 @@ export default function BusTripcard({ trip }: { trip: IBusTrip }) {
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
-      <div className="flex flex-col items-end gap-2 min-w-25">
-        <span className="text-lg font-bold text-slate-900">
-          {/* Yedi backend ma price chha bhane display garcha, chaina bhane default fallbacks */}
+      {/* RIGHT */}
+      <div className="flex flex-col items-end justify-between min-w-[120px] h-full">
+        <span className="text-xl font-bold text-slate-900">
           Rs. {trip.price || "1,200"}
         </span>
 
-        {/* asChild use garda HTML markup standard (button inside anchor bug) hudena */}
-        <Button asChild className="rounded-lg cursor-pointer">
+        <Button asChild className="rounded-xl mt-3 w-full">
           <Link href={`/booking/${trip.id}`}>
             Continue <ArrowRight className="w-4 h-4 ml-1" />
           </Link>

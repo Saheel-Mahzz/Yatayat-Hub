@@ -50,6 +50,7 @@ export async function registerAction(
     const response = await api.post("/register/", rawData);
 
     return {
+      data: response?.data,
       success: true,
       message: "User Registered Successfully!",
       error: null,

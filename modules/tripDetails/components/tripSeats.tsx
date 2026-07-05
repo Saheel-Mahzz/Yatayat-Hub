@@ -18,8 +18,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   const router = useRouter();
   const { isLoggedIn } = useAuth();
 
-  console.log("is logged in", isLoggedIn);
-
   const [state, formAction, isPending] = useActionState(creatBookingAction, {
     success: false,
     message: "",
@@ -32,7 +30,9 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     if (state?.success) {
       toast.success("Seat Booked Successfully!");
       // setIsTicketModalOpen(true)
+
       setTimeout(() => {
+        setSelectedSeat(null);
         setIsTicketModalOpen(true);
       }, 0);
       router.refresh();
@@ -50,7 +50,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
 
   const handleBookingSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("slected seat", selectedSeat);
     if (!selectedSeat) return;
     if (isLoggedIn) {
       executeBooking(selectedSeat);
@@ -118,6 +117,10 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
           <TicketModal
             isTicketModelOpen={isTicketModalOpen}
             setIsTicketModelOpen={setIsTicketModalOpen}
+            email={state?.data?.email}
+            seat_number={state?.data?.seat_number}
+            booked_at={state?.data?.booked_at}
+            trip={state?.data?.trip}
           />
         </Card>
       </form>

@@ -49,11 +49,7 @@ export default function TripFilters({
   const [selectedFrom, setSelectedFrom] = useState<ILocation | null>(null);
   const [selectedTo, setSelectedTo] = useState<ILocation | null>(null);
 
-  console.log("selected from", selectedFrom);
-  console.log("selected to", selectedTo);
-
   const switchDestination = () => {
-    console.log("riggerd");
     setSelectedFrom(selectedTo);
     setSelectedTo(selectedFrom);
   };

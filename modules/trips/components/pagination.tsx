@@ -25,9 +25,6 @@ export default function TripPagination({
   const ITEMS_PER_PAGE = 3;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-  // console.log("total pages", totalPages);
-  // console.log("params", searchParams.toString());
-
   const handlePageChange = (newPageNumber: number) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -38,7 +35,6 @@ export default function TripPagination({
   if (totalPages <= 1) return;
 
   // const starsArray = Array.from({ length: 5 }, () => "*");
-  // console.log("stars array", starsArray);
 
   return (
     <div className="flex justify-center mt-6">

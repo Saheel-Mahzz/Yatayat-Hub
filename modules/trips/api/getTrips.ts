@@ -10,7 +10,6 @@ export interface IBusTripResponse {
 export default async function getBuses(searchParams?: {
   [key: string]: string | string[] | undefined;
 }) {
-  // console.log("search", searchParams);
   const res = await api.get<IBusTripResponse>("/trips", {
     params: searchParams,
   });

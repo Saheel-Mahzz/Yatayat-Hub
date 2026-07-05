@@ -5,6 +5,7 @@ import PasswordElement from "../../components/inputFields/passportElement";
 import { Button } from "../../components/ui/button";
 import { registerAction } from "./actions/registerAction";
 import { toast } from "sonner";
+import useAuth from "@/context/authContext";
 
 export default function RegisterForm({
   onAuthSuccess,
@@ -15,10 +16,11 @@ export default function RegisterForm({
     success: false,
     message: "",
   });
-
+  const { register } = useAuth();
   useEffect(() => {
     if (state.success) {
       toast.success("User Registered successfully!");
+      register(state.data.access);
       onAuthSuccess();
     }
   }, [state]);

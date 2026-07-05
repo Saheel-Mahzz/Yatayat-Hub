@@ -16,9 +16,6 @@ export default async function Trips({
     getLocations(),
   ]);
 
-  console.log("trip response", tripsRes);
-  console.log("location res", locationsRes);
-
   const currentPage = Number(searchParams?.page) || 1;
   const allTrips = response?.data?.results;
 
@@ -29,8 +26,6 @@ export default async function Trips({
     };
   });
 
-  // console.log("lcoationssss", locations);
-  console.log("all bueses", allTrips);
   return (
     <div>
       <TripFilters locations={locations} />

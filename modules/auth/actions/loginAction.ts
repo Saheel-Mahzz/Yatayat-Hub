@@ -11,11 +11,8 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
-  console.log("i am triggered");
   const safeData = LoginSchema.safeParse(rawData);
   if (!safeData.success) {
-    console.log("err", safeData?.error?.issues);
-
     // const fieldErrors = safeData?.error?.issues?.reduce((acc, curr) => {
     //   acc[curr?.path] = curr?.message;
     //   return acc;

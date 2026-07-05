@@ -10,16 +10,31 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { ITripDetails } from "../definitions/tripDetails";
+import { format } from "date-fns";
+
+interface ITicketDetails {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  trip: ITripDetails;
+  seat_number: string;
+  isTicketModelOpen: boolean;
+  setIsTicketModelOpen: (type: boolean) => void;
+  booked_at: string;
+}
 
 export default function TicketModal({
   isTicketModelOpen,
   setIsTicketModelOpen,
-}: {
-  isTicketModelOpen: boolean;
-  setIsTicketModelOpen: (type: boolean) => void;
-}) {
+  email,
+  // first_name,
+  // last_name,
+  seat_number,
+  trip,
+  booked_at,
+}: ITicketDetails) {
   const [open, setOpen] = useState<boolean>(true);
-  console.log("toggle", open);
   return (
     // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>
@@ -33,7 +48,7 @@ export default function TicketModal({
             Booking Confirmed!
           </DialogTitle>
           <p className="text-emerald-100 text-xs mt-1 font-medium">
-            Ticket ID: #21 • Booked at 2026-07-03
+            {/* Ticket ID: #21 • Booked at {format()} */}
           </p>
 
           {/* Authentic Ticket Left/Right Circle Cutouts */}
@@ -49,7 +64,9 @@ export default function TicketModal({
               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                 From
               </span>
-              <p className="text-lg font-extrabold text-slate-800">Gorkha</p>
+              <p className="text-lg font-extrabold text-slate-800">
+                {trip?.from_location}
+              </p>
             </div>
 
             {/* Bus Animation Connection Vector */}
@@ -62,7 +79,9 @@ export default function TicketModal({
               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                 To
               </span>
-              <p className="text-lg font-extrabold text-slate-800">Pokhara</p>
+              <p className="text-lg font-extrabold text-slate-800">
+                {trip?.to_location}
+              </p>
             </div>
           </div>
 
@@ -78,7 +97,7 @@ export default function TicketModal({
               variant="outline"
               className="bg-slate-50 font-mono text-xs font-bold px-2.5 py-1 text-slate-700 border-slate-200"
             >
-              Ba 3 Pa 1334
+              {trip?.bus?.number_plate}
             </Badge>
           </div>
 
@@ -90,7 +109,7 @@ export default function TicketModal({
               </span>
               <p className="font-semibold text-slate-800">Sahil Maharjan</p>
               <span className="text-[11px] text-muted-foreground font-mono block">
-                hellosaheel@gmail.com
+                {email}
               </span>
             </div>
 
@@ -102,7 +121,7 @@ export default function TicketModal({
                 variant="secondary"
                 className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border border-emerald-200 font-bold text-sm px-3 py-0.5 rounded-md"
               >
-                A28
+                {seat_number}
               </Badge>
             </div>
 

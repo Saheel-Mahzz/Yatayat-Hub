@@ -6,6 +6,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   login: (token: string) => void;
+  register: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,7 +34,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    console.log("token", token);
     // if (token) {
     //   // Sano queue banayera pathayeko jasle React ko lifecycle disturb hudaina
     //   setTimeout(() => {
@@ -54,8 +54,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoggedIn(true);
   };
 
+  const register = (token: string) => {
+    localStorage.setItem("access_token", token);
+    setIsLoggedIn(true);
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoading, isLoggedIn, login }}>
+    <AuthContext.Provider value={{ isLoading, isLoggedIn, login, register }}>
       {children}
     </AuthContext.Provider>
   );

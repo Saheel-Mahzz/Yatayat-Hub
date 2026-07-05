@@ -7,6 +7,5 @@ export default async function page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const search = await searchParams;
-  console.log("search page", search);
   return <Trips searchParams={search} />;
 }
