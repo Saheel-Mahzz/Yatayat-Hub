@@ -8,6 +8,12 @@ import PassengerField from "./search/components/passengerField";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function TripFilters({
   locations,
@@ -53,6 +59,9 @@ export default function TripFilters({
     setSelectedFrom(selectedTo);
     setSelectedTo(selectedFrom);
   };
+
+  const isDestinationMissing = !selectedFrom || !selectedTo;
+
   return (
     <div className="w-full flex items-center justify-center p-6 ">
       <form onSubmit={handleSearch} className=" w-full">
@@ -86,12 +95,32 @@ export default function TripFilters({
           />
           <DateField />
           <PassengerField />
-          <Button
+          {/* <Button
             className="rounded-xl px-6 cursor-pointer"
             disabled={!selectedFrom || !selectedTo}
           >
             Search
-          </Button>
+          </Button> */}
+          <TooltipProvider>
+            <Tooltip delayDuration={200}>
+              {/* TooltipTrigger le wrapper ko kam garcha yadi button disabled cha bhane */}
+              <TooltipTrigger asChild>
+                {/* Enclose in a div so hover works even if button is disabled */}
+                <div className="w-full">
+                  <Button disabled={isDestinationMissing} className="w-full">
+                    Search Trips
+                  </Button>
+                </div>
+              </TooltipTrigger>
+
+              {/* Yo content taba matrai dekhaune jaba sachikai selection baki chha */}
+              {isDestinationMissing && (
+                <TooltipContent side="top">
+                  <p>Please select both From and To destinations first.</p>
+                </TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </form>
     </div>

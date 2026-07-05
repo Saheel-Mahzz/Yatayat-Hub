@@ -22,7 +22,7 @@ export default function TripPagination({
 }: PaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const ITEMS_PER_PAGE = 3;
+  const ITEMS_PER_PAGE = 5;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   const handlePageChange = (newPageNumber: number) => {

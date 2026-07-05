@@ -15,6 +15,8 @@ import useAuth from "@/context/authContext";
 
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  console.log("trip details", tripDetails);
   const router = useRouter();
   const { isLoggedIn } = useAuth();
 
@@ -66,6 +68,8 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     }
   };
 
+  const calculatedRows = Math.ceil(Number(tripDetails?.bus?.total_seats) / 4); // Assuming 4 seats per row
+
   return (
     <>
       <form onSubmit={handleBookingSubmit}>
@@ -75,7 +79,9 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Select your seat</h2>
-              <span className="text-sm text-muted-foreground">40 seats</span>
+              <span className="text-sm text-muted-foreground">
+                {tripDetails?.bus?.total_seats} seats
+              </span>
             </div>
             <SeatLegend />
 
@@ -87,7 +93,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
               bookedSeats={tripDetails?.booked_seats}
               onSeatSelect={setSelectedSeat}
               selectedSeat={selectedSeat}
-              // totalRows={30}
+              totalRows={calculatedRows}
             />
 
             {/* Selected Summary Info */}
