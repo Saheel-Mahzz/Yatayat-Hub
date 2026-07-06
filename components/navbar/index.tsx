@@ -6,11 +6,16 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import useAuth from "@/context/authContext";
 import { useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
+  const handleTicketNavigation = () => {
+    router.push("/my-bookings/");
+  };
   console.log("state", open);
   return (
     <header className=" w-full z-50 bg-green-400 ">
@@ -24,6 +29,7 @@ export default function Navbar() {
             {/* My Ticket */}
             <Button
               variant="ghost"
+              onClick={handleTicketNavigation}
               className="flex items-center gap-2 text-gray-700 cursor-pointer"
             >
               <Ticket size={18} />

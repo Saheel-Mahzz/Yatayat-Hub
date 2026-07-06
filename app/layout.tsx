@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/authContext";
+import Navbar from "@/components/navbar";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en" className={poppins.className}>
       <AuthProvider>
         <body className="min-h-full flex flex-col">
+          <Navbar />
           {children}
           <Toaster position="top-center" />
         </body>
