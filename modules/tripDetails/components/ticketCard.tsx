@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ITripDetails } from "../definitions/tripDetails";
-import { format } from "date-fns";
 
 interface ITicketDetails {
   first_name?: string;
