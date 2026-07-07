@@ -15,12 +15,12 @@ import { ITripDetails } from "../definitions/tripDetails";
 interface ITicketDetails {
   first_name?: string;
   last_name?: string;
-  email: string;
+  email?: string;
   trip: ITripDetails;
   seat_number: string;
   isTicketModelOpen: boolean;
   setIsTicketModelOpen: (type: boolean) => void;
-  booked_at: string;
+  booked_at?: string;
 }
 
 export default function TicketModal({
@@ -33,7 +33,7 @@ export default function TicketModal({
   trip,
   booked_at,
 }: ITicketDetails) {
-  const [open, setOpen] = useState<boolean>(true);
+  // const [open, setOpen] = useState<boolean>(true);
   return (
     // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>

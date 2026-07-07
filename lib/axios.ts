@@ -26,3 +26,39 @@ api.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+// export const getAuthApi = () => {
+//   const cookieStore = cookies();
+//   const token = cookieStore.get("access_token")?.value;
+
+//   // 1. Base headers object tayar parne
+//   const headers: Record<string, string> = {};
+
+//   // 2. Yedi cookie ma token bhetiyo bhane dynamic Authorization header thapne
+//   if (token) {
+//     headers.Authorization = `Bearer ${token}`;
+//   }
+
+//   // 3. Dynamic configurations sahita fresh Axios instance return garne
+//   return axios.create({
+//     baseURL: process.env.NEXT_PUBLIC_API_URL,
+//     headers: headers,
+//   });
+// };
+
+// export const getAuthApi = async () => {
+//   // 2. cookies() ko madait ma await thapeko
+//   const cookieStore = await cookies();
+//   const token = cookieStore.get("access_token")?.value;
+
+//   const headers: Record<string, string> = {};
+
+//   if (token) {
+//     headers.Authorization = `Bearer ${token}`;
+//   }
+
+//   return axios.create({
+//     baseURL: process.env.NEXT_PUBLIC_API_URL,
+//     headers: headers,
+//   });
+// };

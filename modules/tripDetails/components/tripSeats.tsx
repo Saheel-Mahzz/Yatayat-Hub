@@ -16,7 +16,6 @@ import useAuth from "@/context/authContext";
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  console.log("trip details", tripDetails);
   const router = useRouter();
   const { isLoggedIn } = useAuth();
 
@@ -134,6 +133,8 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
         isOpen={isAuthModelOpen}
         onOpenChange={setIsAuthModelOpen}
         onAuthSuccess={handleAuthSuccess}
+        title="Continue your Booking"
+        description="Please login or create an account to secure your seat.s"
       />
     </>
   );
