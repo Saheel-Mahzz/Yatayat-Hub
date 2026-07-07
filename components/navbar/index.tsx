@@ -11,12 +11,34 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
+  const [modelTitle, setModelTitle] = useState<string>("");
+  const [modelDesc, setModeDesc] = useState<string>("");
   const router = useRouter();
 
   const handleTicketNavigation = () => {
-    router.push("/my-bookings/");
+    if (isLoggedIn) {
+      router.push("/my-bookings/");
+    } else {
+      setModelTitle("View My Bookings");
+      setModeDesc("Please login to view your bookings.");
+      setOpen(true);
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (isLoggedIn) {
+      router.push("/profile");
+    } else {
+      setModelTitle("Welcome Back!");
+      setModeDesc("Please login to access your profile.");
+      setOpen(true);
+    }
   };
   console.log("state", open);
+
+  const handleAuthSuccess = () => {
+    setOpen(false);
+  };
   return (
     <header className=" w-full z-50 bg-green-400 ">
       <div className="backdrop-blur-md bg-red/60 border-b border-white/30">
@@ -29,6 +51,7 @@ export default function Navbar() {
             {/* My Ticket */}
             <Button
               variant="ghost"
+              // onClick={isLoggedIn ? handleTicketNavigation : setOpen(true)}
               onClick={handleTicketNavigation}
               className="flex items-center gap-2 text-gray-700 cursor-pointer"
             >
@@ -51,15 +74,19 @@ export default function Navbar() {
               </button>
             ) : (
               <button
-                onClick={() => {
-                  setOpen(true);
-                }}
+                onClick={handleProfileClick}
                 className="bg-green-600 text-white cursor-pointer rounded-full p-1"
               >
                 <User />
               </button>
             )}
-
+            <AuthBookingDialog
+              isOpen={open}
+              onAuthSuccess={handleAuthSuccess}
+              onOpenChange={setOpen}
+              description={modelDesc}
+              title={modelTitle}
+            />
             {/* <Avatar
               className="bg-green-600 text-white cursor-pointer"
               //   onClick={() => {
@@ -80,11 +107,6 @@ export default function Navbar() {
                 <User />
               </AvatarFallback>
             </Avatar> */}
-            <AuthBookingDialog
-              isOpen={open}
-              onAuthSuccess={() => {}}
-              onOpenChange={setOpen}
-            />
           </div>
         </div>
       </div>

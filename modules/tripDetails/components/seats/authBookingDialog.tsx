@@ -15,22 +15,26 @@ interface AuthBookingDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onAuthSuccess: () => void;
+  title: string;
+  description: string;
 }
 
 export function AuthBookingDialog({
   isOpen,
   onOpenChange,
   onAuthSuccess,
+  title,
+  description,
 }: AuthBookingDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-center">
-            Continue your Booking
+            {title}
           </DialogTitle>
           <DialogDescription className="text-center">
-            Please login or create an account to secure your seat.
+            {description}
           </DialogDescription>
         </DialogHeader>
 
