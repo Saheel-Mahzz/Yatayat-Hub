@@ -51,11 +51,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = (token: string) => {
     localStorage.setItem("access_token", token);
+    document.cookie = `access_token=${token}; path=/; max-age=86400`;
     setIsLoggedIn(true);
   };
 
   const register = (token: string) => {
     localStorage.setItem("access_token", token);
+    document.cookie = `access_token=${token}; path=/; max-age=86400`;
     setIsLoggedIn(true);
   };
 

@@ -1,9 +1,12 @@
 import React from "react";
 import { getBookings } from "./api/getBookings";
 import { List } from "@/components/list";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 export interface Column {
   header: string;
   accessorKey: string;
+  cell?: (row: string, index?: number) => React.ReactNode;
 }
 
 export default async function MyBookings() {
@@ -13,8 +16,9 @@ export default async function MyBookings() {
 
   const columns: Column[] = [
     {
-      header: "User Name",
-      accessorKey: "user.first_name",
+      header: "S.N.",
+      accessorKey: "sn", // Yesle farak pardaina, just key ko lagi
+      cell: (row, index) => <span>{(index ?? 0) + 1}</span>, // Index dynamic pass garchu hami
     },
     {
       header: "Bus Name",
@@ -30,10 +34,10 @@ export default async function MyBookings() {
       accessorKey: "seat_number",
     },
 
-    {
-      header: "Email",
-      accessorKey: "user.email",
-    },
+    // {
+    //   header: "Email",
+    //   accessorKey: "user.email",
+    // },
     {
       header: "From Destination",
       accessorKey: "trip.from_location",
@@ -42,15 +46,16 @@ export default async function MyBookings() {
       header: "To Destination",
       accessorKey: "trip.to_location",
     },
+    {
+      header: "Actions",
+      accessorKey: "",
+      cell: (row) => {
+        return <Eye className="cursor-pointer" />;
+      },
+    },
   ];
   return (
-    // <div className="max-w-5xl mx-auto">
-    //   List of bookings..
-    //   {allBooking.map((booking) => (
-    //     <div key={booking.booked_at}>{booking.seat_number}</div>
-    //   ))}
-    // </div>
-    <div className="  max-w-5xl ">
+    <div className="w-full max-w-5xl mx-auto ">
       <List columns={columns} rows={allBooking} />
     </div>
   );
