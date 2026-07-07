@@ -7,6 +7,7 @@ import useAuth from "@/context/authContext";
 import { useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Navbar() {
   const { isLoggedIn } = useAuth();
@@ -44,7 +45,9 @@ export default function Navbar() {
       <div className="backdrop-blur-md bg-red/60 border-b border-white/30">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
           {/* LEFT */}
-          <div className="text-lg font-bold text-green-700">Yatayat Hub</div>
+          <Link href="/" className="text-lg font-bold text-green-700">
+            Yatayat Hub
+          </Link>
 
           {/* RIGHT */}
           <div className="flex items-center gap-3">

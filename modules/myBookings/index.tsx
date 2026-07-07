@@ -3,6 +3,8 @@ import { getBookings } from "./api/getBookings";
 import { List } from "@/components/list";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
+import ViewTicket from "./components/viewTicket";
+import { IBooking } from "./definitions/bookings.defination";
 export interface Column {
   header: string;
   accessorKey: string;
@@ -50,7 +52,7 @@ export default async function MyBookings() {
       header: "Actions",
       accessorKey: "",
       cell: (row) => {
-        return <Eye className="cursor-pointer" />;
+        return <ViewTicket ticket={row} />;
       },
     },
   ];
