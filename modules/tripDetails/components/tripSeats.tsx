@@ -16,7 +16,6 @@ import useAuth from "@/context/authContext";
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  console.log("trip details", tripDetails);
   const router = useRouter();
   const { isLoggedIn } = useAuth();
 

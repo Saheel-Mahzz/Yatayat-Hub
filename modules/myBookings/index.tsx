@@ -5,18 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
-export interface Column {
+export interface Column<T> {
   header: string;
-  accessorKey: string;
-  cell?: (row: string, index?: number) => React.ReactNode;
+  accessorKey: keyof T | string;
+  cell?: (row: T, index?: number) => React.ReactNode;
 }
 
 export default async function MyBookings() {
   const response = await getBookings();
   const allBooking = response?.data?.results || [];
-  console.log("al booking", allBooking);
 
-  const columns: Column[] = [
+  const columns: Column<IBooking>[] = [
     {
       header: "S.N.",
       accessorKey: "sn", // Yesle farak pardaina, just key ko lagi

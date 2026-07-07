@@ -9,19 +9,45 @@ import {
 } from "@/components/ui/table";
 import { Column } from "@/modules/myBookings";
 
-interface IList {
-  columns: Column[];
-  rows: any[];
-  cell?: (row: any, index?: number) => React.ReactNode;
+interface IList<T> {
+  columns: Column<T>[];
+  rows: T[];
+  cell?: (row: T, index?: number) => React.ReactNode;
 }
 
-function getNestedValue(obj: any, path: any) {
-  return path?.split(".").reduce((acc, curr) => {
-    return acc[curr] !== undefined ? acc[curr] : undefined;
-  }, obj);
+// function getNestedValue(obj: Record<string, any>, path: string):string | boolean | null | undefined {
+//   return path?.split(".").reduce((acc, curr) => {
+//     return acc[curr] !== undefined ? acc[curr] : undefined;
+//   }, obj);
+// }
+// function getNestedValue(
+//   obj: Record<string, unknown>,
+//   path: string,
+// ): string | boolean | null | undefined {
+//   // .reduce<any> थपेर TypeScript लाई ढुक्क बनाउने
+//   return path?.split(".").reduce((acc, curr) => {
+//     return acc && acc[curr] !== undefined ? acc[curr] : undefined;
+//   }, obj);
+// }
+
+function getNestedValue<T>(
+  // obj: Record<string, unknown>,
+  obj: T,
+  path: string,
+): string | boolean | null | undefined {
+  const result = path
+    ?.split(".")
+    .reduce<Record<string, unknown> | unknown>((acc, curr) => {
+      if (acc && typeof acc === "object" && curr in acc) {
+        return (acc as Record<string, unknown>)[curr];
+      }
+      return undefined;
+    }, obj);
+
+  return result as string | boolean | null | undefined;
 }
 
-export function List({ columns, rows }: IList) {
+export function List<T extends object>({ columns, rows }: IList<T>) {
   if (rows.length === 0)
     return (
       <div className="flex items-center justify-center text-3xl mt-7">
@@ -45,7 +71,7 @@ export function List({ columns, rows }: IList) {
               <TableCell key={colIndex}>
                 {col?.cell
                   ? col.cell?.(row, rowIndex)
-                  : getNestedValue(row, col?.accessorKey)}
+                  : getNestedValue(row, col?.accessorKey as string)}
               </TableCell>
             ))}
           </TableRow>

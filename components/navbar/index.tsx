@@ -35,7 +35,6 @@ export default function Navbar() {
       setOpen(true);
     }
   };
-  console.log("state", open);
 
   const handleAuthSuccess = () => {
     setOpen(false);

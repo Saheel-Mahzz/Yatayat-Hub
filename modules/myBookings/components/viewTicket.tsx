@@ -13,6 +13,7 @@ export default function ViewTicket({ ticket }: { ticket: IBooking }) {
         isTicketModelOpen={open}
         setIsTicketModelOpen={setOpen}
         trip={ticket.trip}
+        seat_number={ticket.seat_number}
       />
     </>
   );
