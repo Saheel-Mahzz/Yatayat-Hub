@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ITripDetails } from "../definitions/tripDetails";
+import { format, parseISO } from "date-fns";
 
 interface ITicketDetails {
   first_name?: string;
@@ -27,13 +28,25 @@ export default function TicketModal({
   isTicketModelOpen,
   setIsTicketModelOpen,
   email,
-  // first_name,
-  // last_name,
+  first_name,
+  last_name,
   seat_number,
   trip,
   booked_at,
 }: ITicketDetails) {
   // const [open, setOpen] = useState<boolean>(true);
+
+  // const dateObject = parseISO(booked_at as string);
+  // 1. Paila string lai JavaScript Date object ma convert garne
+  // const dateObject = parseISO(booked_at as string);
+
+  // // 2. Ani afule khojeko pattern ma format garne
+  // const formattedDate = format(dateObject, "yyyy-MM-dd");
+  const formattedDate = booked_at
+    ? format(new Date(booked_at), "yyyy-MM-dd")
+    : "Not Available";
+  // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
+  console.log(formattedDate);
   return (
     // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>
@@ -87,7 +100,9 @@ export default function TicketModal({
           {/* Vehicle Information Panel */}
           <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex justify-between items-center">
             <div>
-              <h4 className="font-bold text-slate-800 text-sm">Hamro Deluxe</h4>
+              <h4 className="font-bold text-slate-800 text-sm">
+                {trip?.bus?.name}
+              </h4>
               <p className="text-xs text-muted-foreground font-medium">
                 Type: Deluxe
               </p>
@@ -106,7 +121,9 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Passenger
               </span>
-              <p className="font-semibold text-slate-800">Sahil Maharjan</p>
+              <p className="font-semibold text-slate-800">
+                {first_name} {last_name}
+              </p>
               <span className="text-[11px] text-muted-foreground font-mono block">
                 {email}
               </span>
@@ -132,7 +149,7 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Departure Date
               </span>
-              <p className="font-semibold text-slate-800">2026-07-01</p>
+              <p className="font-semibold text-slate-800">{formattedDate}</p>
             </div>
 
             <div>
