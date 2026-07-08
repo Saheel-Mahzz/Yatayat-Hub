@@ -6,6 +6,8 @@ import { IBooking } from "../definitions/bookings.defination";
 
 export default function ViewTicket({ ticket }: { ticket: IBooking }) {
   const [open, setOpen] = useState<boolean>(false);
+
+  console.log("ticket details", ticket);
   return (
     <>
       <Eye className="cursor-pointer" onClick={() => setOpen(true)} />
@@ -14,6 +16,9 @@ export default function ViewTicket({ ticket }: { ticket: IBooking }) {
         setIsTicketModelOpen={setOpen}
         trip={ticket.trip}
         seat_number={ticket.seat_number}
+        booked_at={ticket.booked_at}
+        first_name={ticket.user.first_name}
+        last_name={ticket.user.last_name}
       />
     </>
   );

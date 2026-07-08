@@ -15,6 +15,8 @@ export async function registerAction(
     last_name: formData?.get("last_name"),
     email: formData?.get("email"),
     password: formData?.get("password"),
+    phone_number: formData.get("phone_number"),
+    confirm_password: formData.get("confirm_password"),
   };
 
   const safeData = RegisterSchema.safeParse(rawData);
