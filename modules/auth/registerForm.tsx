@@ -6,6 +6,7 @@ import { Button } from "../../components/ui/button";
 import { registerAction } from "./actions/registerAction";
 import { toast } from "sonner";
 import useAuth from "@/context/authContext";
+import { Input } from "@/components/ui/input";
 
 export default function RegisterForm({
   onAuthSuccess,
@@ -25,7 +26,7 @@ export default function RegisterForm({
     }
   }, [state]);
   return (
-    <form action={formAction}>
+    <form action={formAction} noValidate>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <InputElement
@@ -50,12 +51,29 @@ export default function RegisterForm({
           type="email"
           err={state?.error?.email}
         />
-        <PasswordElement
-          label="Password"
-          name="password"
-          placeholder="*******"
-          err={state?.error?.password}
+        {/* <Input name="phone_number" type="tel" placeholder="+1 (555) 123-4567" />
+         */}
+        <InputElement
+          label="Phone Number"
+          type="tel"
+          name="phone_number"
+          placeholder="+1 (555) 123-4567"
+          err={state?.error?.phone_number}
         />
+        <div className="grid grid-cols-2 gap-4">
+          <PasswordElement
+            label="Password"
+            name="password"
+            placeholder="*******"
+            err={state?.error?.password}
+          />
+          <PasswordElement
+            label="Confirm Password"
+            name="confirm_password"
+            placeholder="*******"
+            err={state?.error?.confirm_password}
+          />
+        </div>
         <Button className="w-full mt-2">
           {isPending ? "Creating..." : "Create Account"}
         </Button>
