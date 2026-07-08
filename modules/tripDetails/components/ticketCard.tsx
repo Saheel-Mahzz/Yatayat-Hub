@@ -47,6 +47,10 @@ export default function TicketModal({
     : "Not Available";
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
   console.log(formattedDate);
+
+  const isPastTrip =
+    new Date(formattedDate).setHours(0, 0, 0, 0) <
+    new Date().setHours(0, 0, 0, 0);
   return (
     // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>
@@ -56,8 +60,11 @@ export default function TicketModal({
           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
             <CheckCircle2 className="w-7 h-7 text-white" />
           </div>
-          <DialogTitle className="text-xl font-bold tracking-wide text-white">
+          {/* <DialogTitle className="text-xl font-bold tracking-wide text-white">
             Booking Confirmed!
+          </DialogTitle> */}
+          <DialogTitle className="text-xl font-bold tracking-wide text-white">
+            {isPastTrip ? "Trip Completed" : "Booking Confirmed!"}
           </DialogTitle>
           <p className="text-emerald-100 text-xs mt-1 font-medium">
             {/* Ticket ID: #21 • Booked at {format()} */}

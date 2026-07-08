@@ -40,7 +40,7 @@ export default function Navbar() {
     setOpen(false);
   };
   return (
-    <header className=" w-full z-50 bg-green-400 ">
+    <header className="sticky top-0 z-50 w-full bg-green-50/80 backdrop-blur-md border-b border-green-100">
       <div className="backdrop-blur-md bg-red/60 border-b border-white/30">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
           {/* LEFT */}

@@ -66,61 +66,67 @@ export default function TripFilters({
     <div className="w-full flex items-center justify-center p-6 ">
       <form onSubmit={handleSearch} className=" w-full">
         <div className="flex items-center gap-3 bg-white shadow-md rounded-2xl p-4 w-full max-w-5xl mx-auto">
-          <SearchFields
-            locations={locations}
-            label="From"
-            placeholder="Select Origin "
-            name="from_destination"
-            onSelect={setSelectedFrom}
-            value={selectedFrom}
-            disable={selectedTo}
-          />
+          <div className="flex-1 min-w-0">
+            <SearchFields
+              locations={locations}
+              label="From"
+              placeholder="Select Origin"
+              name="from_destination"
+              onSelect={setSelectedFrom}
+              value={selectedFrom}
+              disable={selectedTo}
+            />
+          </div>
+
           <Button
             variant="outline"
             size="icon"
-            className="rounded-full cursor-pointer"
+            className="rounded-full cursor-pointer shrink-0"
             type="button"
             onClick={switchDestination}
           >
             <ArrowLeftRight className="w-4 h-4" />
           </Button>
-          <SearchFields
-            locations={locations}
-            placeholder="Select Destination"
-            label="To"
-            name="to_destination"
-            onSelect={setSelectedTo}
-            value={selectedTo}
-            disable={selectedFrom}
-          />
-          <DateField />
-          <PassengerField />
-          {/* <Button
-            className="rounded-xl px-6 cursor-pointer"
-            disabled={!selectedFrom || !selectedTo}
-          >
-            Search
-          </Button> */}
-          <TooltipProvider>
-            <Tooltip delayDuration={200}>
-              {/* TooltipTrigger le wrapper ko kam garcha yadi button disabled cha bhane */}
-              <TooltipTrigger asChild>
-                {/* Enclose in a div so hover works even if button is disabled */}
-                <div className="w-full">
-                  <Button disabled={isDestinationMissing} className="w-full">
-                    Search Trips
-                  </Button>
-                </div>
-              </TooltipTrigger>
 
-              {/* Yo content taba matrai dekhaune jaba sachikai selection baki chha */}
-              {isDestinationMissing && (
-                <TooltipContent side="top">
-                  <p>Please select both From and To destinations first.</p>
-                </TooltipContent>
-              )}
-            </Tooltip>
-          </TooltipProvider>
+          <div className="flex-1 min-w-0">
+            <SearchFields
+              locations={locations}
+              placeholder="Select Destination"
+              label="To"
+              name="to_destination"
+              onSelect={setSelectedTo}
+              value={selectedTo}
+              disable={selectedFrom}
+            />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <DateField />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <PassengerField />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <TooltipProvider>
+              <Tooltip delayDuration={200}>
+                <TooltipTrigger asChild>
+                  <div className="w-full">
+                    <Button disabled={isDestinationMissing} className="w-full">
+                      Search Trips
+                    </Button>
+                  </div>
+                </TooltipTrigger>
+
+                {isDestinationMissing && (
+                  <TooltipContent side="top">
+                    <p>Please select both From and To destinations first.</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
       </form>
     </div>

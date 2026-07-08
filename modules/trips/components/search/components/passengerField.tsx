@@ -48,36 +48,36 @@ export default function PassengerField() {
   };
 
   return (
-    <div className="flex items-center gap-4 border border-input rounded-xl px-4 py-3 w-full justify-between bg-background shadow-sm hover:border-accent-foreground/20 transition-all duration-200">
+    <div className="flex items-center justify-between gap-3 border border-input rounded-xl px-3 py-2.5 w-full bg-background shadow-sm transition-all hover:border-accent-foreground/20">
       <input type="hidden" name="passenger" value={count} />
-      <div className="flex items-center gap-3">
-        <div className="p-2 bg-muted rounded-lg text-muted-foreground">
-          <Users className="w-5 h-5" />
+
+      {/* Passenger Info */}
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center justify-center w-9 h-9 bg-muted rounded-lg shrink-0">
+          <Users className="w-4 h-4 text-muted-foreground" />
         </div>
-        <div className="flex flex-col">
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Passengers
-          </span>
-          <span className="text-sm font-semibold text-foreground mt-0.5">
+
+        <div className="flex flex-col min-w-0">
+          <span className="text-sm font-semibold truncate">
             {count} Passenger{count > 1 ? "s" : ""}
           </span>
         </div>
       </div>
 
-      {/* Modern Compact Counter Box */}
-      <div className="flex items-center border border-input bg-muted/50 rounded-lg p-1 min-w-[100px] justify-between">
+      {/* Counter */}
+      <div className="flex items-center gap-1 border border-input bg-muted/50 rounded-lg p-1 shrink-0">
         <Button
           type="button"
           variant="ghost"
           size="icon"
-          className="w-7 h-7 rounded-md hover:bg-background hover:text-foreground transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+          className="h-7 w-7 rounded-md"
           onClick={handleDecrement}
           disabled={count === 1}
         >
           <Minus className="w-3 h-3" />
         </Button>
 
-        <span className="text-sm font-bold text-foreground tabular-nums select-none">
+        <span className="w-5 text-center text-sm font-bold tabular-nums">
           {count}
         </span>
 
@@ -85,7 +85,7 @@ export default function PassengerField() {
           type="button"
           variant="ghost"
           size="icon"
-          className="w-7 h-7 rounded-md hover:bg-background hover:text-foreground transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+          className="h-7 w-7 rounded-md"
           onClick={handleIncrement}
           disabled={count === 5}
         >

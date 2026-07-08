@@ -26,8 +26,63 @@ export default function RegisterForm({
     }
   }, [state]);
   return (
+    // <form action={formAction} noValidate>
+    //   <div className="space-y-4">
+    //     <div className="grid grid-cols-2 gap-4">
+    //       <InputElement
+    //         label="First Name"
+    //         name="first_name"
+    //         placeholder="Saheel"
+    //         type="text"
+    //         err={state?.error?.first_name}
+    //       />
+    //       <InputElement
+    //         label="Last Name"
+    //         name="last_name"
+    //         placeholder="Maharjan"
+    //         type="text"
+    //         err={state?.error?.last_name}
+    //       />
+    //     </div>
+    //     <InputElement
+    //       label="Email"
+    //       name="email"
+    //       placeholder="test@yopmail.com"
+    //       type="email"
+    //       err={state?.error?.email}
+    //     />
+    //     {/* <Input name="phone_number" type="tel" placeholder="+1 (555) 123-4567" />
+    //      */}
+    //     <InputElement
+    //       label="Phone Number"
+    //       type="tel"
+    //       name="phone_number"
+    //       placeholder="+1 (555) 123-4567"
+    //       err={state?.error?.phone_number}
+    //     />
+    //     <div className="grid grid-cols-2 gap-4">
+    //       <PasswordElement
+    //         label="Password"
+    //         name="password"
+    //         placeholder="*******"
+    //         err={state?.error?.password}
+    //       />
+    //       <PasswordElement
+    //         label="Confirm Password"
+    //         name="confirm_password"
+    //         placeholder="*******"
+    //         err={state?.error?.confirm_password}
+    //       />
+    //     </div>
+    //     <Button className="w-full mt-2">
+    //       {isPending ? "Creating..." : "Create Account"}
+    //     </Button>
+    //   </div>
+    // </form>
+
     <form action={formAction} noValidate>
-      <div className="space-y-4">
+      <div className="space-y-5">
+        {/* Name Section */}
         <div className="grid grid-cols-2 gap-4">
           <InputElement
             label="First Name"
@@ -36,6 +91,7 @@ export default function RegisterForm({
             type="text"
             err={state?.error?.first_name}
           />
+
           <InputElement
             label="Last Name"
             name="last_name"
@@ -44,37 +100,53 @@ export default function RegisterForm({
             err={state?.error?.last_name}
           />
         </div>
+
         <InputElement
-          label="Email"
+          label="Email Address"
           name="email"
           placeholder="test@yopmail.com"
           type="email"
           err={state?.error?.email}
         />
-        {/* <Input name="phone_number" type="tel" placeholder="+1 (555) 123-4567" />
-         */}
+
         <InputElement
           label="Phone Number"
           type="tel"
           name="phone_number"
-          placeholder="+1 (555) 123-4567"
+          placeholder="+977 98XXXXXXXX"
           err={state?.error?.phone_number}
         />
+
+        {/* Password Group */}
         <div className="grid grid-cols-2 gap-4">
           <PasswordElement
             label="Password"
             name="password"
-            placeholder="*******"
+            placeholder="••••••••"
             err={state?.error?.password}
           />
+
           <PasswordElement
             label="Confirm Password"
             name="confirm_password"
-            placeholder="*******"
+            placeholder="••••••••"
             err={state?.error?.confirm_password}
           />
         </div>
-        <Button className="w-full mt-2">
+
+        <Button
+          className="
+        w-full
+        h-11
+        mt-3
+        rounded-xl
+        bg-green-600
+        hover:bg-green-700
+        font-semibold
+        shadow-sm
+        cursor-pointer
+      "
+        >
           {isPending ? "Creating..." : "Create Account"}
         </Button>
       </div>

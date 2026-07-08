@@ -55,28 +55,85 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
       </div>
     );
   return (
-    <Table>
-      <TableCaption>A list of Bookings.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          {columns.map((col, index) => (
-            <TableHead key={index}>{col?.header}</TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {rows.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
-            {columns.map((col, colIndex) => (
-              <TableCell key={colIndex}>
-                {col?.cell
-                  ? col.cell?.(row, rowIndex)
-                  : getNestedValue(row, col?.accessorKey as string)}
-              </TableCell>
+    <>
+      {/* <Table>
+        <TableCaption>A list of Bookings.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            {columns.map((col, index) => (
+              <TableHead key={index}>{col?.header}</TableHead>
             ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row, rowIndex) => (
+            <TableRow key={rowIndex}>
+              {columns.map((col, colIndex) => (
+                <TableCell key={colIndex}>
+                  {col?.cell
+                    ? col.cell?.(row, rowIndex)
+                    : getNestedValue(row, col?.accessorKey as string)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table> */}
+      <div className="rounded-2xl border bg-white shadow-sm overflow-hidden my-7">
+        <Table>
+          <TableCaption className="py-4 text-muted-foreground">
+            A list of Bookings.
+          </TableCaption>
+
+          <TableHeader>
+            <TableRow className="bg-muted/50 hover:bg-muted/50">
+              {columns.map((col, index) => (
+                <TableHead
+                  key={index}
+                  className="
+              h-12
+              font-semibold
+              text-slate-700
+              uppercase
+              text-xs
+              tracking-wide
+            "
+                >
+                  {col?.header}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {rows.map((row, rowIndex) => (
+              <TableRow
+                key={rowIndex}
+                className="
+            transition-colors
+            hover:bg-green-50/50
+            border-b
+          "
+              >
+                {columns.map((col, colIndex) => (
+                  <TableCell
+                    key={colIndex}
+                    className="
+                py-4
+                text-sm
+                text-slate-700
+              "
+                  >
+                    {col?.cell
+                      ? col.cell?.(row, rowIndex)
+                      : getNestedValue(row, col?.accessorKey as string)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </>
   );
 }
