@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import React from "react";
+import AddTripButton from "./components/addTripButton";
 
 export default function TripsList() {
   return (
@@ -13,10 +14,7 @@ export default function TripsList() {
           <p className="text-muted-foreground">Create and manage trips</p>
         </div>
 
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Trip
-        </Button>
+        <AddTripButton />
       </div>
 
       <Card>

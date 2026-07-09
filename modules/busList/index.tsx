@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bus, Plus } from "lucide-react";
 import React from "react";
+import CreateBusbutton from "./components/createBusbutton";
 
 export default function BusList() {
   return (
@@ -19,10 +20,7 @@ items-center
           <p className="text-muted-foreground">Manage your buses</p>
         </div>
 
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Bus
-        </Button>
+        <CreateBusbutton />
       </div>
 
       <Card>
