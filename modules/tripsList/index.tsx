@@ -39,7 +39,6 @@ export default async function TripsList() {
       accessorKey: "price",
     },
   ];
-  console.log("response", response);
   return (
     //     <div className="space-y-6">
     //       <div className="flex justify-between">

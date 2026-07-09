@@ -7,7 +7,6 @@ import { IBooking } from "../definitions/bookings.defination";
 export default function ViewTicket({ ticket }: { ticket: IBooking }) {
   const [open, setOpen] = useState<boolean>(false);
 
-  console.log("ticket details", ticket);
   return (
     <>
       <Eye className="cursor-pointer" onClick={() => setOpen(true)} />

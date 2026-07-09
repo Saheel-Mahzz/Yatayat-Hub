@@ -8,7 +8,6 @@ export default async function BusList() {
 
   const allBuses = response?.data?.results || [];
   const totalCount = response?.data?.count;
-  console.log("response", response);
 
   const columns: Column<Buses>[] = [
     {

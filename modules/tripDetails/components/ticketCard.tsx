@@ -46,7 +46,6 @@ export default function TicketModal({
     ? format(new Date(booked_at), "yyyy-MM-dd")
     : "Not Available";
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
-  console.log(formattedDate);
 
   const isPastTrip =
     new Date(formattedDate).setHours(0, 0, 0, 0) <
