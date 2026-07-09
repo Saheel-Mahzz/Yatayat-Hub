@@ -4,7 +4,7 @@ import BusTripcard from "./busTripCard";
 export default function TripList({ allTrips }: { allTrips: IBusTrip[] }) {
   if (!allTrips || allTrips.length === 0) {
     return (
-      <div className="text-center text-gray-500 mt-10">
+      <div className="text-center text-gray-500">
         No buses found for the selected criteria.
       </div>
     );

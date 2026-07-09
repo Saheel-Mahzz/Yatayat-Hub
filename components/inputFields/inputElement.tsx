@@ -5,7 +5,7 @@ import { Input } from "../ui/input";
 interface InputElementProps {
   label: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   err?: string;
   type: string;
 }

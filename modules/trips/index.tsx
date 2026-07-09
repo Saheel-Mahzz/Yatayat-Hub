@@ -9,32 +9,30 @@ export default async function Trips({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const response = await getTrips(searchParams);
-
   const [tripsRes, locationsRes] = await Promise.all([
     getTrips(searchParams),
     getLocations(),
   ]);
 
   const currentPage = Number(searchParams?.page) || 1;
-  const allTrips = response?.data?.results;
+  const allTrips = tripsRes?.data?.results || [];
+  const totalCount = tripsRes?.data?.count;
 
-  const locations = locationsRes?.map((loc) => {
-    return {
-      label: loc?.name,
-      value: loc?.id,
-    };
-  });
+  const locations =
+    (Array.isArray(locationsRes) &&
+      locationsRes?.map((loc) => {
+        return {
+          label: loc?.name,
+          value: loc?.id,
+        };
+      })) ||
+    [];
 
   return (
-    <div>
+    <div className="space-y-4">
       <TripFilters locations={locations} />
-
       <TripList allTrips={allTrips} />
-      <TripPagination
-        totalCount={response?.data?.count}
-        currentPage={currentPage}
-      />
+      <TripPagination totalCount={totalCount} currentPage={currentPage} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { IBusTrip } from "../definitions/trips.types";
 
 export default function BusTripCard({ trip }: { trip: IBusTrip }) {
   return (
-    <div className="max-w-3xl mx-auto border rounded-2xl mb-4 p-5 bg-white shadow-sm hover:shadow-md transition-all flex items-center justify-between gap-6">
+    <div className="max-w-3xl mx-auto border rounded-2xl  p-5 bg-white shadow-sm hover:shadow-md transition-all flex items-center justify-between gap-6">
       {/* LEFT */}
       <div className="flex flex-col gap-4 w-full">
         {/* TOP */}

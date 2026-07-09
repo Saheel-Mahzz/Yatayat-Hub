@@ -90,14 +90,7 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
-                  className="
-              h-12
-              font-semibold
-              text-slate-700
-              uppercase
-              text-xs
-              tracking-wide
-            "
+                  className=" h-12 font-semibold text-slate-700 uppercase text-xs tracking-wide"
                 >
                   {col?.header}
                 </TableHead>
@@ -109,11 +102,7 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
             {rows.map((row, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className="
-            transition-colors
-            hover:bg-green-50/50
-            border-b
-          "
+                className="transition-colors hover:bg-green-50/50 border-b"
               >
                 {columns.map((col, colIndex) => (
                   <TableCell

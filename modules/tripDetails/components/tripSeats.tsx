@@ -134,7 +134,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
         onOpenChange={setIsAuthModelOpen}
         onAuthSuccess={handleAuthSuccess}
         title="Continue your Booking"
-        description="Please login or create an account to secure your seat.s"
+        description="Please login or create an account to secure your seat."
       />
     </>
   );
