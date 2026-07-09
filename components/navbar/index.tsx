@@ -71,7 +71,10 @@ export default function Navbar() {
             </Avatar> */}
 
             {isLoggedIn ? (
-              <button className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1">
+              <button
+                className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1"
+                onClick={handleProfileClick}
+              >
                 {/* <User /> */}S
               </button>
             ) : (
