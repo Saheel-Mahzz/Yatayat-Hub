@@ -1,7 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
-import CreateBusbutton from "./components/createBusbutton";
 import { getBuslist } from "./api/getBuslist";
 import { Column } from "../myBookings";
 import { Buses } from "./definitions/buses.definitions";
@@ -15,6 +11,13 @@ export default async function BusList() {
   console.log("response", response);
 
   const columns: Column<Buses>[] = [
+    {
+      header: "S.N",
+      accessorKey: "",
+      cell: (_, index) => {
+        return <span>{(index || 0) + 1}</span>;
+      },
+    },
     {
       header: "Name",
       accessorKey: "name",

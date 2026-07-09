@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Lock, Mail, Phone, Pencil } from "lucide-react";
 import ProfileSecurity from "./components/profileSecurity";
 import EditProfileButton from "./components/editProfileButton";
+import { getProfile } from "./api/getProfile";
 
 interface User {
   first_name: string;
@@ -20,7 +21,10 @@ const user: User = {
   email: "saheel@example.com",
 };
 
-export default function Profile() {
+export default async function Profile() {
+  const response = await getProfile();
+  const user = response?.data?.user;
+  console.log("repsonse", response);
   return (
     <div className="min-h-screen bg-muted/40 p-6">
       <div className="mx-auto max-w-5xl space-y-6">
