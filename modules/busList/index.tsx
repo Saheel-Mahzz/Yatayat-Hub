@@ -3,6 +3,8 @@ import { Column } from "../myBookings";
 import { Buses } from "./definitions/buses.definitions";
 import { List } from "@/components/list";
 import CreateBusbutton from "./components/createBusbutton";
+import CreateButton from "@/components/createButton";
+import CreateBusModel from "./components/createBusModel";
 
 export default async function BusList() {
   const response = await getBuslist();
@@ -39,7 +41,10 @@ export default async function BusList() {
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Buses</h1>
-        <CreateBusbutton />
+        {/* <CreateBusbutton /> */}
+        <CreateButton addButtonText="Add Bus" modelTitle="Create New Bus">
+          <CreateBusModel />
+        </CreateButton>
       </div>
       <List columns={columns} rows={allBuses} />
     </>

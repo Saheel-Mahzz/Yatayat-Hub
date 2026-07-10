@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { ILocation, ILocationResponse } from "../definitions/trips.types";
+import { ILocation } from "../definitions/trips.types";
 
 export async function getLocations() {
   const res = await api.get<ILocation[]>("/locations/");

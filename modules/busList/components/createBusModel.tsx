@@ -1,25 +1,10 @@
 "use client";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
-
 import InputElement from "@/components/inputFields/inputElement";
 import { useActionState, useEffect } from "react";
 import busCreateAction from "../actions/busListAction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
-interface ICreateBus {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}
-
 const initialState = {
   message: "",
   data: null,
@@ -27,7 +12,7 @@ const initialState = {
   success: false,
 };
 
-export default function CreateBusModel({ open, setOpen }: ICreateBus) {
+export default function CreateBusModel() {
   const router = useRouter();
 
   const [state, formAction, isPending] = useActionState(
@@ -42,58 +27,51 @@ export default function CreateBusModel({ open, setOpen }: ICreateBus) {
     }
   }, [state]);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Add New Bus</DialogTitle>
-        </DialogHeader>
-        <form action={formAction}>
-          <div className="space-y-5 pt-4">
-            <InputElement
-              placeholder="Ex: Mountain Express"
-              label="Bus Name"
-              name="name"
-              type="text"
-              err={state?.error?.name}
-              // value={state?.data?.name || ""}
-            />
-            <InputElement
-              placeholder="BA 2 KHA 1234"
-              label="Number Plate"
-              name="number_plate"
-              type="text"
-              err={state?.error?.number_plate}
-              // value={state?.data?.number_plate || ""}
-            />
-            <InputElement
-              placeholder="Ex: Deluxe / AC / Tourist"
-              label="Bus Type"
-              name="bus_type"
-              type="text"
-              err={state?.error?.bus_type}
-              // value={state?.data?.bus_type || ""}
-            />
-            <InputElement
-              placeholder="40"
-              label="Total Seats"
-              name="total_seats"
-              type="text"
-              err={state?.error?.total_seats}
-              // value={state?.data?.total_seats || ""}
-            />
+    <form action={formAction}>
+      <div className="space-y-5 pt-4">
+        <InputElement
+          placeholder="Ex: Mountain Express"
+          label="Bus Name"
+          name="name"
+          type="text"
+          err={state?.error?.name}
+          // value={state?.data?.name || ""}
+        />
+        <InputElement
+          placeholder="BA 2 KHA 1234"
+          label="Number Plate"
+          name="number_plate"
+          type="text"
+          err={state?.error?.number_plate}
+          // value={state?.data?.number_plate || ""}
+        />
+        <InputElement
+          placeholder="Ex: Deluxe / AC / Tourist"
+          label="Bus Type"
+          name="bus_type"
+          type="text"
+          err={state?.error?.bus_type}
+          // value={state?.data?.bus_type || ""}
+        />
+        <InputElement
+          placeholder="40"
+          label="Total Seats"
+          name="total_seats"
+          type="text"
+          err={state?.error?.total_seats}
+          // value={state?.data?.total_seats || ""}
+        />
 
-            <div className="flex justify-end gap-3 pt-4">
-              <Button variant="outline" type="button">
-                Cancel
-              </Button>
+        <div className="flex justify-end gap-3 pt-4">
+          <Button variant="outline" type="button">
+            Cancel
+          </Button>
 
-              <Button type="submit">
-                {isPending ? "Creating.." : "Create Bus"}
-              </Button>
-            </div>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          <Button type="submit">
+            {isPending ? "Creating.." : "Create Bus"}
+          </Button>
+        </div>
+      </div>
+    </form>
   );
 }

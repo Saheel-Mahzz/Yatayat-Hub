@@ -32,7 +32,7 @@ interface ICreateTrip {
   setOpen: (value: boolean) => void;
 }
 
-export default function CreateTripModel({ open, setOpen }: ICreateTrip) {
+export default function CreateTripModel() {
   const [state, formAction, isPending] = useActionState(tripCreateAction);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
