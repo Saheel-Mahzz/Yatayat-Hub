@@ -8,6 +8,7 @@ interface InputElementProps {
   placeholder?: string;
   err?: string;
   type: string;
+  // value?: string;
 }
 
 export default function InputElement({
@@ -16,6 +17,7 @@ export default function InputElement({
   err,
   type,
   placeholder,
+  // value,
 }: InputElementProps) {
   return (
     <div className="space-y-2">
