@@ -2,6 +2,8 @@ import { getTripsList } from "./api/getTripsList";
 import { Column } from "../myBookings";
 import { Trip } from "./definitions/tripList.definitions";
 import { List } from "@/components/list";
+import CreateTripModel from "./components/createTripModel";
+import AddTripButton from "./components/addTripButton";
 
 export default async function TripsList() {
   const response = await getTripsList();
@@ -35,7 +37,10 @@ export default async function TripsList() {
   ];
   return (
     <>
-      <h1 className="text-2xl font-bold">Trips</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Trips</h1>
+        <AddTripButton />
+      </div>
       <List columns={columns} rows={allTrips} />
     </>
   );

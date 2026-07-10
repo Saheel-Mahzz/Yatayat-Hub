@@ -23,6 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useActionState } from "react";
+import tripCreateAction from "../actions/createTripAction";
+import InputElement from "@/components/inputFields/inputElement";
 
 interface ICreateTrip {
   open: boolean;
@@ -30,6 +33,7 @@ interface ICreateTrip {
 }
 
 export default function CreateTripModel({ open, setOpen }: ICreateTrip) {
+  const [state, formAction, isPending] = useActionState(tripCreateAction);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[600px]">
@@ -107,17 +111,12 @@ export default function CreateTripModel({ open, setOpen }: ICreateTrip) {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Available Seats</Label>
-
-              <Input type="number" placeholder="40" />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Price</Label>
-
-              <Input type="number" placeholder="800" />
-            </div>
+            <InputElement
+              type="number"
+              placeholder="800"
+              label="Price"
+              name="price"
+            />
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
