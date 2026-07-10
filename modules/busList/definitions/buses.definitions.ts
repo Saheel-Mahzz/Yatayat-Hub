@@ -8,13 +8,6 @@ export interface Buses {
   bus_type: string;
 }
 
-export interface BusResponse {
-  count: number;
-  prev: string;
-  next: string;
-  results: Buses[];
-}
-
 export const BusSchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1, "This field is required!"),

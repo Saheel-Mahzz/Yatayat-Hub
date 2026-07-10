@@ -14,13 +14,6 @@ export interface Trip {
   to_location: string;
 }
 
-export interface TripResponse {
-  count: number;
-  prev: string;
-  next: string;
-  results: Trip[];
-}
-
 export const TripSchema = z.object({
   id: z.string().optional(),
   bus_name: z.string().min(1, "This field is required!"),
