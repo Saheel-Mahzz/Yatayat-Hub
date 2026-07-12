@@ -1,13 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ticket, User } from "lucide-react";
+import { Bus, Ticket, User } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import useAuth from "@/context/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
+import { MyTokenPayload } from "@/proxy";
 
 export default function Navbar() {
   const { isLoggedIn } = useAuth();
@@ -39,6 +41,39 @@ export default function Navbar() {
   const handleAuthSuccess = () => {
     setOpen(false);
   };
+  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+    // Client side (browser) ma chhas ki nai check garne
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        try {
+          const decoded = jwtDecode<MyTokenPayload>(token);
+          return decoded.is_superuser; // direct initial state setup!
+        } catch (e) {
+          return false;
+        }
+      }
+    }
+    return false; // token chaina bhane by default false
+  });
+
+  // useEffect(() => {
+  //   // 1. Browser ma matra localStorage hunchha, tya bata token line
+  //   const token = localStorage.getItem("access_token");
+
+  //   if (token) {
+  //     try {
+  //       // 2. Clear type safe token decode garne
+  //       const decoded = jwtDecode<MyTokenPayload>(token);
+
+  //       // 3. User superuser ho bhane state lai true handine
+  //       setIsAdmin(decoded.is_superuser);
+  //     } catch (error) {
+  //       console.error("Invalid token:", error);
+  //     }
+  //   }
+  // }, []);
   return (
     <header className="sticky top-0 z-50 w-full bg-green-50/80 backdrop-blur-md border-b border-green-100">
       <div className="backdrop-blur-md bg-red/60 border-b border-white/30">
@@ -51,15 +86,26 @@ export default function Navbar() {
           {/* RIGHT */}
           <div className="flex items-center gap-3">
             {/* My Ticket */}
-            <Button
-              variant="ghost"
-              // onClick={isLoggedIn ? handleTicketNavigation : setOpen(true)}
-              onClick={handleTicketNavigation}
-              className="flex items-center gap-2 text-gray-700 cursor-pointer"
-            >
-              <Ticket size={18} />
-              My Ticket
-            </Button>
+
+            {isAdmin ? (
+              <Link
+                href="/admin/buses/"
+                className="text-gray-700 space-x-2 flex gap-2 items-center"
+              >
+                <Bus size={18} />
+                Manage Trips & Buses
+              </Link>
+            ) : (
+              <Button
+                variant="ghost"
+                // onClick={isLoggedIn ? handleTicketNavigation : setOpen(true)}
+                onClick={handleTicketNavigation}
+                className="flex items-center gap-2 text-gray-700 cursor-pointer"
+              >
+                <Ticket size={18} />
+                My Ticket
+              </Button>
+            )}
 
             {/* Profile */}
 
@@ -69,22 +115,13 @@ export default function Navbar() {
                 U
               </AvatarFallback>
             </Avatar> */}
+            <button
+              className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1"
+              onClick={handleProfileClick}
+            >
+              {isLoggedIn ? "S" : <User />}
+            </button>
 
-            {isLoggedIn ? (
-              <button
-                className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1"
-                onClick={handleProfileClick}
-              >
-                {/* <User /> */}S
-              </button>
-            ) : (
-              <button
-                onClick={handleProfileClick}
-                className="bg-green-600 text-white cursor-pointer rounded-full p-1"
-              >
-                <User />
-              </button>
-            )}
             <AuthBookingDialog
               isOpen={open}
               onAuthSuccess={handleAuthSuccess}

@@ -24,6 +24,8 @@ const user: User = {
 export default async function Profile() {
   const response = await getProfile();
   const user = response?.data?.user;
+
+  console.log("user", user);
   return (
     <div className="min-h-screen bg-muted/40 p-6">
       <div className="mx-auto max-w-5xl space-y-6">
