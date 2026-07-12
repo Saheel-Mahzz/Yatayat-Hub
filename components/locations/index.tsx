@@ -1,8 +1,22 @@
 import { getLocations } from "@/modules/trips/api/getLocations";
 import React from "react";
-import Select from "./components/locationSelect";
+import Select, { ILocation } from "./components/locationSelect";
 
-export default async function LocationSelect() {
+interface ILocationSelect {
+  name: string;
+  label: string;
+  onSelect: (value: ILocation) => void;
+  disable: ILocation | null;
+  value: ILocation | null;
+}
+
+export default async function LocationSelect({
+  disable,
+  label,
+  name,
+  onSelect,
+  value,
+}: ILocationSelect) {
   const locationRes = await getLocations();
 
   const locations =
@@ -18,10 +32,13 @@ export default async function LocationSelect() {
   return (
     <div>
       <Select
-        label="From Location"
+        label={label}
         locations={locations}
-        name="from_location"
+        name={name}
         placeholder="From Destination"
+        disable={disable}
+        onSelect={onSelect}
+        value={value}
       />
     </div>
   );

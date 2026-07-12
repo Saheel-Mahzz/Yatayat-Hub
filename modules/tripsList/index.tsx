@@ -3,11 +3,22 @@ import { Column } from "../myBookings";
 import { Trip } from "./definitions/tripList.definitions";
 import { List } from "@/components/list";
 import CreateTripModel from "./components/createTripModel";
-import AddTripButton from "./components/addTripButton";
 import CreateButton from "@/components/createButton";
+import { getLocations } from "../trips/api/getLocations";
 
 export default async function TripsList() {
   const response = await getTripsList();
+  const locationsRes = await getLocations();
+
+  const locations =
+    (Array.isArray(locationsRes) &&
+      locationsRes?.map((loc) => {
+        return {
+          label: loc?.name,
+          value: loc?.id,
+        };
+      })) ||
+    [];
 
   const allTrips = response?.data?.results || [];
 
@@ -42,7 +53,7 @@ export default async function TripsList() {
         <h1 className="text-2xl font-bold">Trips</h1>
 
         <CreateButton addButtonText="Add Trip" modelTitle="Create New trip">
-          <CreateTripModel />
+          <CreateTripModel locations={locations} />
         </CreateButton>
       </div>
       <List columns={columns} rows={allTrips} />

@@ -5,7 +5,7 @@ import { ArrowLeftRight } from "lucide-react";
 import SearchFields, { ILocation } from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { useState } from "react";
 import {
@@ -24,6 +24,9 @@ export default function TripFilters({
   }[];
 }) {
   const router = useRouter();
+
+  const params = useSearchParams();
+  console.log("parms", params.get("from_location"));
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

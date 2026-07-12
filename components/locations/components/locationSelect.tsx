@@ -27,8 +27,8 @@ interface ISearchFields {
   placeholder: string;
   name: string;
   locations: ILocation[];
-  value: ILocation | null;
-  onSelect: (value: ILocation) => void;
+  value?: ILocation | null;
+  onSelect?: (value: ILocation) => void;
   disable: ILocation | null;
 }
 
@@ -79,7 +79,7 @@ export default function Select({
                       //   setOpen(false);
                       // }}
                       onSelect={() => {
-                        onSelect(loc);
+                        onSelect?.(loc);
                         setOpen(false);
                       }}
                       className={`${loc.value === disable?.value ? "cursor-none" : "cursor-pointer"}`}
