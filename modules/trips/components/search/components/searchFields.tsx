@@ -1,37 +1,8 @@
-// import { Input } from "@/components/ui/input";
-// import { MapPin } from "lucide-react";
-
-// interface ISearchFields {
-//   label: string;
-//   placeholder: string;
-//   name: string;
-// }
-
-// export default function SearchFields({
-//   label,
-//   placeholder,
-//   name,
-// }: ISearchFields) {
-//   return (
-//     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
-//       <MapPin className="w-4 h-4 text-gray-500" />
-//       <div className="flex flex-col w-full">
-//         <span className="text-xs text-gray-500">{label}</span>
-//         <Input
-//           placeholder={placeholder}
-//           className="border-0 p-0 h-6 focus-visible:ring-0"
-//           name={name}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState } from "react";
-import { Check, ChevronsUpDown, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronsUpDown, MapPin } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 import {
@@ -60,7 +31,7 @@ interface ISearchFields {
   locations: ILocation[];
   value?: ILocation | null;
   onSelect?: (value: ILocation) => void;
-  disable: ILocation | null;
+  disable?: ILocation | null;
 }
 
 export default function SearchFields({

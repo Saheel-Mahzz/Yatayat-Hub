@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { Trip, TripSchema } from "../definitions/tripList.definitions";
+import { time } from "console";
 
 interface IPrevState {
   success: boolean;
@@ -18,6 +19,8 @@ export default async function tripCreateAction(
     from_location: (formData.get("from_location") as string) || "",
     to_location: (formData.get("to_location") as string) || "",
     price: (formData.get("to_location") as string) || "",
+    time: (formData.get("departure_time") as string) || "",
+    date: (formData.get("date") as string) || "",
   };
 
   const result = TripSchema.safeParse(rawData);

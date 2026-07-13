@@ -1,4 +1,4 @@
-import { getTripsList } from "./api/getTripsList";
+import { getBusDropdown, getTripsList } from "./api/getTripsList";
 import { Column } from "../myBookings";
 import { Trip } from "./definitions/tripList.definitions";
 import { List } from "@/components/list";
@@ -7,8 +7,13 @@ import CreateButton from "@/components/createButton";
 import { getLocations } from "../trips/api/getLocations";
 
 export default async function TripsList() {
-  const response = await getTripsList();
-  const locationsRes = await getLocations();
+  const [tripsRes, locationsRes, busRes] = await Promise.all([
+    getTripsList(),
+    getLocations(),
+    getBusDropdown(),
+  ]);
+
+  console.log("bus repsonse", busRes);
 
   const locations =
     (Array.isArray(locationsRes) &&
@@ -20,7 +25,19 @@ export default async function TripsList() {
       })) ||
     [];
 
-  const allTrips = response?.data?.results || [];
+  const buses =
+    (Array.isArray(busRes) &&
+      busRes?.map((loc) => {
+        return {
+          label: loc?.name,
+          value: loc?.id,
+        };
+      })) ||
+    [];
+
+  console.log("bus arrau", buses);
+
+  const allTrips = tripsRes?.data?.results || [];
 
   const columns: Column<Trip>[] = [
     {
@@ -53,7 +70,7 @@ export default async function TripsList() {
         <h1 className="text-2xl font-bold">Trips</h1>
 
         <CreateButton addButtonText="Add Trip" modelTitle="Create New trip">
-          <CreateTripModel locations={locations} />
+          <CreateTripModel locations={locations} buses={buses} />
         </CreateButton>
       </div>
       <List columns={columns} rows={allTrips} />

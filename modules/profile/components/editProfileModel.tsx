@@ -60,6 +60,7 @@ export default function ProfileUpdateDialog({ open, setOpen }: IProfile) {
             type="email"
             label="Email Address"
             name="email"
+            disabled
             // defaultValue={user.email}
           />
 
@@ -67,6 +68,7 @@ export default function ProfileUpdateDialog({ open, setOpen }: IProfile) {
             type="tel"
             label="Phone Number"
             name="phone_number"
+            disabled
             // defaultValue={user.phone_number}
           />
 

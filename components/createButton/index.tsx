@@ -26,7 +26,9 @@ export default function CreateButton({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{modelTitle}</DialogTitle>
+            <DialogTitle className="text-xl font-bold">
+              {modelTitle}
+            </DialogTitle>
           </DialogHeader>
           {children}
         </DialogContent>

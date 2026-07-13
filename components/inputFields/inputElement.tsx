@@ -8,6 +8,7 @@ interface InputElementProps {
   placeholder?: string;
   err?: string;
   type: string;
+  disabled?: boolean;
   // value?: string;
 }
 
@@ -17,12 +18,18 @@ export default function InputElement({
   err,
   type,
   placeholder,
+  disabled,
   // value,
 }: InputElementProps) {
   return (
     <div className="space-y-2">
       <Label>{label}</Label>
-      <Input type={type} name={name} placeholder={placeholder} />
+      <Input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        disabled={disabled}
+      />
       {err && <span className="text-red-700 text-sm">{err}</span>}
     </div>
   );
