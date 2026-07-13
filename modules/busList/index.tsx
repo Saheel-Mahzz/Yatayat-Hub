@@ -1,12 +1,12 @@
-import { getBuslist } from "./api/getBuslist";
 import { Column } from "../myBookings";
 import { Buses } from "./definitions/buses.definitions";
 import { List } from "@/components/list";
 import CreateButton from "@/components/createButton";
 import CreateBusModel from "./components/createBusModel";
+import { getBusList } from "./api/getBuslist";
 
 export default async function BusList() {
-  const response = await getBuslist();
+  const response = await getBusList();
 
   const allBuses = response?.data?.results || [];
   const totalCount = response?.data?.count;

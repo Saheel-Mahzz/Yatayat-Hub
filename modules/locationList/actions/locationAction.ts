@@ -1,28 +1,25 @@
 import { api } from "@/lib/axios";
-import { Trip, TripSchema } from "../definitions/tripList.definitions";
+import {
+  ILocation,
+  LocationSchema,
+} from "../definitions/locations.definitions";
 
 interface IPrevState {
   success: boolean;
   error: null | Record<string, string>;
   message: string | null;
-  data: Trip | null;
+  data: ILocation | null;
 }
 
-export default async function tripCreateAction(
+export default async function locationCreateAction(
   prevstate: IPrevState,
   formData: FormData,
 ) {
   const rawData = {
-    bus_name: (formData.get("name") as string) || "",
-    departure_time: (formData.get("departure_time") as string) || "",
-    from_location: (formData.get("from_location") as string) || "",
-    to_location: (formData.get("to_location") as string) || "",
-    price: (formData.get("to_location") as string) || "",
-    time: (formData.get("departure_time") as string) || "",
-    date: (formData.get("date") as string) || "",
+    name: (formData.get("name") as string) || "",
   };
 
-  const result = TripSchema.safeParse(rawData);
+  const result = LocationSchema.safeParse(rawData);
 
   if (!result.success) {
     const fieldErrors = result?.error?.issues?.reduce<Record<string, string>>(
@@ -46,11 +43,11 @@ export default async function tripCreateAction(
   }
 
   try {
-    const reponse = await api.post("/buses/", rawData);
+    const reponse = await api.post("/locations/", rawData);
     return {
       data: reponse.data,
       success: true,
-      message: "Bus Created Successfully!",
+      message: "Location Created Successfully!",
       error: null,
     };
   } catch (err) {

@@ -11,7 +11,6 @@ export default function ToastHandler() {
   useEffect(() => {
     if (error === "unauthorized") {
       toast.warning("Permission Denied!");
-      console.log("toast handler");
 
       // Optional: URL bata tyo fohor query parameter `?error=unauthorized`
       // lai clean garna clean-up route handle garna sakincha.

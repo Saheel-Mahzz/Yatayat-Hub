@@ -17,7 +17,6 @@ export default function middleware(request: NextRequest) {
 
   // 2. Direct decode handine bina try-catch
   const decode = jwtDecode<MyTokenPayload>(token);
-  console.log("decode", decode);
 
   // 3. Simple checking: admin haina bhane out!
   if (!decode.is_superuser) {

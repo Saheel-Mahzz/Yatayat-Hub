@@ -13,8 +13,6 @@ export default async function TripsList() {
     getBusDropdown(),
   ]);
 
-  console.log("bus repsonse", busRes);
-
   const locations =
     (Array.isArray(locationsRes) &&
       locationsRes?.map((loc) => {
@@ -34,8 +32,6 @@ export default async function TripsList() {
         };
       })) ||
     [];
-
-  console.log("bus arrau", buses);
 
   const allTrips = tripsRes?.data?.results || [];
 

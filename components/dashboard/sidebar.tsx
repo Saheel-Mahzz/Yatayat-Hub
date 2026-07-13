@@ -18,6 +18,11 @@ const menu = [
     icon: Route,
     href: "/admin/trips-list",
   },
+  {
+    title: "Location",
+    icon: Route,
+    href: "/admin/locations",
+  },
   //   {
   //     title: "Bookings",
   //     icon: Ticket,
@@ -27,14 +32,7 @@ const menu = [
 
 export default function Sidebar() {
   return (
-    <aside
-      className="
-w-64
-border-r
-bg-white
-p-5
-"
-    >
+    <aside className="w-64 border-r bg-white p-5">
       <h1 className="text-xl font-bold mb-8">Yatayat Hub</h1>
 
       <nav className="space-y-2">

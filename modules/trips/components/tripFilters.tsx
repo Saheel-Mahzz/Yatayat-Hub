@@ -26,7 +26,6 @@ export default function TripFilters({
   const router = useRouter();
 
   const params = useSearchParams();
-  console.log("parms", params.get("from_location"));
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
