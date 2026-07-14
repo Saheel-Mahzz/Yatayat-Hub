@@ -4,11 +4,19 @@ import { List } from "@/components/list";
 import CreateButton from "@/components/createButton";
 import CreateBusModel from "./components/createBusModel";
 import { getBusList } from "./api/getBuslist";
+import TripPagination from "../trips/components/pagination";
 
-export default async function BusList() {
-  const response = await getBusList();
+export default async function BusList({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}) {
+  const response = await getBusList(searchParams);
 
   const allBuses = response?.data?.results || [];
+
   const totalCount = response?.data?.count;
 
   const columns: Column<Buses>[] = [
@@ -46,6 +54,7 @@ export default async function BusList() {
         </CreateButton>
       </div>
       <List columns={columns} rows={allBuses} />
+      <TripPagination totalCount={totalCount} />
     </>
   );
 }

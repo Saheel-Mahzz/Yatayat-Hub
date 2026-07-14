@@ -1,5 +1,13 @@
 import BusList from "@/modules/busList";
 
-export default function BusPage() {
-  return <BusList />;
+export default async function BusPage({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}) {
+  const params = await searchParams;
+
+  return <BusList searchParams={params} />;
 }

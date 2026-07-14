@@ -14,7 +14,6 @@ export default async function Trips({
     getLocations(),
   ]);
 
-  const currentPage = Number(searchParams?.page) || 1;
   const allTrips = tripsRes?.data?.results || [];
   const totalCount = tripsRes?.data?.count;
 
@@ -32,7 +31,7 @@ export default async function Trips({
     <div className="space-y-4">
       <TripFilters locations={locations} />
       <TripList allTrips={allTrips} />
-      <TripPagination totalCount={totalCount} currentPage={currentPage} />
+      <TripPagination totalCount={totalCount} />
     </div>
   );
 }

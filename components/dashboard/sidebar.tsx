@@ -1,13 +1,8 @@
-import { Bus, Route, LayoutDashboard, Ticket } from "lucide-react";
+import { Bus, Route, Map } from "lucide-react";
 
 import Link from "next/link";
 
 const menu = [
-  //   {
-  //     title: "Dashboard",
-  //     icon: LayoutDashboard,
-  //     href: "/admin",
-  //   },
   {
     title: "Buses",
     icon: Bus,
@@ -20,7 +15,7 @@ const menu = [
   },
   {
     title: "Location",
-    icon: Route,
+    icon: Map,
     href: "/admin/locations",
   },
   //   {

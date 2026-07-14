@@ -9,18 +9,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
-  currentPage: number;
   totalCount: number;
 }
 
-export default function TripPagination({
-  currentPage,
-  totalCount,
-}: PaginationProps) {
+export default function TripPagination({ totalCount }: PaginationProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const searchParams = useSearchParams();
   const ITEMS_PER_PAGE = 5;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
@@ -29,8 +27,10 @@ export default function TripPagination({
     const params = new URLSearchParams(searchParams.toString());
 
     params.set("page", newPageNumber.toString());
-    router.push(`/trips/?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
+
+  const currentPageNumber = Number(searchParams.get("page")) || 1;
 
   if (totalPages <= 1) return;
 
@@ -43,7 +43,8 @@ export default function TripPagination({
           <PaginationItem>
             <PaginationPrevious
               onClick={() => {
-                if (currentPage > 1) handlePageChange(currentPage - 1);
+                if (currentPageNumber > 1)
+                  handlePageChange(currentPageNumber - 1);
               }}
             />
           </PaginationItem>
@@ -53,7 +54,7 @@ export default function TripPagination({
               <PaginationItem>
                 <PaginationLink
                   //   href="#"
-                  isActive={currentPage === index + 1}
+                  isActive={currentPageNumber === index + 1}
                   onClick={() => {
                     handlePageChange(index + 1);
                   }}
@@ -105,11 +106,11 @@ export default function TripPagination({
           <PaginationItem>
             <PaginationNext
               onClick={() => {
-                if (currentPage < totalPages) {
-                  handlePageChange(currentPage + 1);
+                if (currentPageNumber < totalPages) {
+                  handlePageChange(currentPageNumber + 1);
                 }
               }}
-              className={`${currentPage < totalPages ? "cursor-pointer" : "cursor-not-allowed"}`}
+              className={`${currentPageNumber < totalPages ? "cursor-pointer" : "cursor-not-allowed"}`}
             />
           </PaginationItem>
         </PaginationContent>
