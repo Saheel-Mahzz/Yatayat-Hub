@@ -31,5 +31,8 @@ export const BusSchema = z.object({
     .int("Seats must be a whole number")
     .min(10, "Number huna paryo, min: 10, max: 60")
     .max(40, "Number huna paryo, min: 10, max: 40"),
-  bus_type: z.string().trim().min(1, "This field is required!"),
+  // bus_type: z.string().trim().min(1, "This field is required!"),
+  bus_type: z.enum(["AC", "NON_AC", "DELUXE", "SLEEPER"], {
+    error: "Bus type select garnu paryo",
+  }),
 });

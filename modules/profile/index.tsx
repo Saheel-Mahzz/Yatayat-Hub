@@ -1,11 +1,11 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Lock, Mail, Phone, Pencil } from "lucide-react";
+import { Lock, Mail, Phone } from "lucide-react";
 import ProfileSecurity from "./components/profileSecurity";
-import EditProfileButton from "./components/editProfileButton";
 import { getProfile } from "./api/getProfile";
+import CreateButton from "@/components/createButton";
+import ProfileUpdateModal from "./components/editProfileModel";
 
 interface User {
   first_name: string;
@@ -48,7 +48,16 @@ export default async function Profile() {
               </div>
             </div>
 
-            <EditProfileButton />
+            {/* <EditProfileButton />
+             */}
+            <CreateButton
+              addButtonText="Edit Profile"
+              modelTitle="Edit Profile"
+              withIcon={false}
+              variant="outline"
+            >
+              <ProfileUpdateModal />
+            </CreateButton>
           </CardContent>
         </Card>
 
@@ -74,7 +83,7 @@ export default async function Profile() {
 
             <ProfileItem
               label="Email Address"
-              value={user.email}
+              value={user.email ?? ""}
               icon={<Mail className="h-4 w-4" />}
               locked
             />
@@ -83,7 +92,7 @@ export default async function Profile() {
 
             <ProfileItem
               label="Phone Number"
-              value={user.phone_number}
+              value={user.phone_number ?? ""}
               icon={<Phone className="h-4 w-4" />}
               locked
             />

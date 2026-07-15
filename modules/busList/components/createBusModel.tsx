@@ -53,6 +53,7 @@ export default function CreateBusModel() {
           err={state?.error?.bus_type}
           // value={state?.data?.bus_type || ""}
         />
+
         <InputElement
           placeholder="40"
           label="Total Seats"
