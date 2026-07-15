@@ -4,14 +4,22 @@ import { List } from "@/components/list";
 
 import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
+import TripPagination from "../trips/components/pagination";
 export interface Column<T> {
   header: string;
   accessorKey: keyof T | string;
   cell?: (row: T, index?: number) => React.ReactNode;
 }
 
-export default async function MyBookings() {
-  const response = await getBookings();
+export default async function MyBookings({
+  search,
+}: {
+  search: {
+    [key: string]: string | undefined;
+  };
+}) {
+  const response = await getBookings(search);
+  const totalCount = response?.data?.count || 0;
   const allBooking = response?.data?.results || [];
 
   const columns: Column<IBooking>[] = [
@@ -57,6 +65,7 @@ export default async function MyBookings() {
   return (
     <div className="w-full max-w-5xl mx-auto ">
       <List columns={columns} rows={allBooking} />
+      <TripPagination totalCount={totalCount} />
     </div>
   );
 }
