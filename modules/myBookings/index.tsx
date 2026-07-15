@@ -1,8 +1,7 @@
 import React from "react";
 import { getBookings } from "./api/getBookings";
 import { List } from "@/components/list";
-import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+
 import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
 export interface Column<T> {

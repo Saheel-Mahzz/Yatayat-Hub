@@ -1,34 +1,31 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import InputElement from "@/components/inputFields/inputElement";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import editProfileAction from "../actions/editProfile";
+import { User } from "../definitions/profile.definitions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-interface User {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-const user: User = {
-  first_name: "Saheel",
-  last_name: "Mahazz",
-  phone_number: "+9779800000000",
-  email: "saheel@gmail.com",
-};
-
-const initialState = {
-  success: false,
-  error: null,
-  message: "",
-  data: { ...user },
-};
-
-export default function ProfileUpdateModal() {
+export default function ProfileUpdateModal({ user }: { user: User }) {
+  const router = useRouter();
+  const initialState = {
+    success: false,
+    error: null,
+    message: "",
+    data: { ...user },
+  };
   const [state, formAction, isPending] = useActionState(
     editProfileAction,
     initialState,
   );
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Profile Updated Sucessfully!");
+      router.refresh();
+    }
+  }, [state.success]);
   return (
     <form className="space-y-5" action={formAction}>
       <div className="grid grid-cols-2 gap-4">

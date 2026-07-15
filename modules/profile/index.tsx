@@ -7,20 +7,6 @@ import { getProfile } from "./api/getProfile";
 import CreateButton from "@/components/createButton";
 import ProfileUpdateModal from "./components/editProfileModel";
 
-interface User {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-
-const user: User = {
-  first_name: "Saheel",
-  last_name: "Mahazz",
-  phone_number: "+977 9800000000",
-  email: "saheel@example.com",
-};
-
 export default async function Profile() {
   const response = await getProfile();
   const user = response?.data?.user;
@@ -56,7 +42,7 @@ export default async function Profile() {
               withIcon={false}
               variant="outline"
             >
-              <ProfileUpdateModal />
+              <ProfileUpdateModal user={user} />
             </CreateButton>
           </CardContent>
         </Card>
