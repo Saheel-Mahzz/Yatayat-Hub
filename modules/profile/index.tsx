@@ -10,11 +10,9 @@ import ProfileUpdateModal from "./components/editProfileModel";
 export default async function Profile() {
   const response = await getProfile();
   const user = response?.data?.user;
-
   return (
     <div className="min-h-screen bg-muted/40 p-6">
       <div className="mx-auto max-w-5xl space-y-6">
-        {/* Profile Header */}
         <Card className="rounded-2xl shadow-sm">
           <CardContent className="flex items-center justify-between p-6">
             <div className="flex items-center gap-5">
@@ -34,8 +32,6 @@ export default async function Profile() {
               </div>
             </div>
 
-            {/* <EditProfileButton />
-             */}
             <CreateButton
               addButtonText="Edit Profile"
               modelTitle="Edit Profile"
@@ -47,8 +43,6 @@ export default async function Profile() {
           </CardContent>
         </Card>
 
-        {/* Personal Information */}
-
         <Card className="rounded-2xl">
           <CardHeader>
             <CardTitle>Personal Information</CardTitle>
@@ -56,16 +50,12 @@ export default async function Profile() {
 
           <CardContent className="space-y-5">
             <div className="grid grid-cols-2 gap-6">
-              {/* First Name */}
               <ProfileItem label="First Name" value={user.first_name} />
 
-              {/* Last Name */}
               <ProfileItem label="Last Name" value={user.last_name} />
             </div>
 
             <Separator />
-
-            {/* Email */}
 
             <ProfileItem
               label="Email Address"
@@ -73,8 +63,6 @@ export default async function Profile() {
               icon={<Mail className="h-4 w-4" />}
               locked
             />
-
-            {/* Phone */}
 
             <ProfileItem
               label="Phone Number"
@@ -84,8 +72,6 @@ export default async function Profile() {
             />
           </CardContent>
         </Card>
-
-        {/* Security */}
 
         <ProfileSecurity />
       </div>

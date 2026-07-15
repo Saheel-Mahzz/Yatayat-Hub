@@ -1,11 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React, { useState } from "react";
 import { ChangePasswordDialog } from "./changePasswordModel";
+import CreateButton from "@/components/createButton";
 
 export default function ProfileSecurity() {
-  const [open, setOpen] = useState<boolean>(false);
   return (
     <Card className="rounded-2xl">
       <CardHeader>
@@ -21,12 +19,15 @@ export default function ProfileSecurity() {
               Change your account password
             </p>
           </div>
-
-          <Button variant="outline" onClick={() => setOpen(true)}>
-            Change Password
-          </Button>
+          <CreateButton
+            addButtonText="Change Password"
+            modelTitle="Change Password"
+            withIcon={false}
+            variant="outline"
+          >
+            <ChangePasswordDialog />
+          </CreateButton>
         </div>
-        <ChangePasswordDialog open={open} setOpen={setOpen} />
       </CardContent>
     </Card>
   );
