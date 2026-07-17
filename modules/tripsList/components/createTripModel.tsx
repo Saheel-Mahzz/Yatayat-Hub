@@ -7,6 +7,7 @@ import tripCreateAction from "../actions/createTripAction";
 import InputElement from "@/components/inputFields/inputElement";
 import SearchFields from "@/modules/trips/components/search/components/searchFields";
 import { Loader2 } from "lucide-react";
+import DateField from "@/modules/trips/components/search/components/dateField";
 
 export interface IDropdown {
   label: string;
@@ -69,13 +70,10 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Date</Label>
-
-            <Input type="date" name="date" />
-          </div>
+          <DateField />
           <InputElement type="time" label="Time" name="time" />
         </div>
+
         <div className="grid grid-cols-2 gap-4">
           <InputElement
             type="number"

@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Buses } from "../definitions/buses.definitions";
+import { SelectElement } from "@/components/select";
+import { BUS_TYPE } from "../constants/busType.const";
 
 export default function CreateBusModel({ bus }: { bus?: Buses }) {
   const router = useRouter();
@@ -55,15 +57,14 @@ export default function CreateBusModel({ bus }: { bus?: Buses }) {
           err={state?.error?.number_plate}
           defaultValue={state?.data?.number_plate}
         />
-        <InputElement
-          placeholder="Ex: Deluxe / AC / Tourist"
+
+        <SelectElement
+          options={BUS_TYPE}
+          placeholder="Select a bus type.."
           label="Bus Type"
           name="bus_type"
-          type="text"
           err={state?.error?.bus_type}
-          defaultValue={state?.data?.bus_type}
         />
-
         <InputElement
           placeholder="40"
           label="Total Seats"
@@ -72,7 +73,6 @@ export default function CreateBusModel({ bus }: { bus?: Buses }) {
           err={state?.error?.total_seats}
           defaultValue={state?.data?.total_seats}
         />
-
         <div className="flex justify-end gap-3 pt-4">
           <Button variant="outline" type="button">
             Cancel

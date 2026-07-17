@@ -65,7 +65,6 @@ export default async function BusList({
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Buses</h1>
-        {/* <CreateBusbutton /> */}
         <CreateButton addButtonText="Add Bus" modelTitle="Create New Bus">
           <CreateBusModel />
         </CreateButton>

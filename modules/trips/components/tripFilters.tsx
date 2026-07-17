@@ -25,7 +25,7 @@ export default function TripFilters({
 }) {
   const router = useRouter();
 
-  const params = useSearchParams();
+  const path = useSearchParams();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export default function TripFilters({
     }
     // 4. Clean URL push handine
     // output: /bookings?from_location=KTM&passenger=2
-    router.push(`/trips?${params.toString()}`);
+    router.push(`/${path}?${params.toString()}`);
   };
   const [selectedFrom, setSelectedFrom] = useState<ILocation | null>(null);
   const [selectedTo, setSelectedTo] = useState<ILocation | null>(null);

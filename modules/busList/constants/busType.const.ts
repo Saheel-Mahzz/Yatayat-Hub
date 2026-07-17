@@ -15,4 +15,4 @@ export const BUS_TYPE = [
     value: "SLEEPER",
     label: "SLEEPER",
   },
-] as const;
+];
