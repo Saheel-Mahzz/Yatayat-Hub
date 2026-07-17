@@ -8,13 +8,14 @@ export default async function tripCreateAction(
 ) {
   const rawData = {
     bus_name: (formData.get("name") as string) || "",
-    departure_time: (formData.get("departure_time") as string) || "",
+    departure_time: (formData.get("time") as string) || "",
     from_location: (formData.get("from_location") as string) || "",
     to_location: (formData.get("to_location") as string) || "",
     price: (formData.get("to_location") as string) || "",
-    time: (formData.get("departure_time") as string) || "",
     date: (formData.get("date") as string) || "",
   };
+
+  console.log("rawdtaa", rawData);
 
   const result = TripSchema.safeParse(rawData);
 

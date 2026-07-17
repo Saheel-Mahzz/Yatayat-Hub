@@ -73,14 +73,8 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
 
             <Input type="date" name="date" />
           </div>
-
-          <div className="space-y-2">
-            <Label>Time</Label>
-
-            <Input type="time" name="time" />
-          </div>
+          <InputElement type="time" label="Time" name="time" />
         </div>
-
         <div className="grid grid-cols-2 gap-4">
           <InputElement
             type="number"

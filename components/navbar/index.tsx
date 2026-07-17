@@ -2,9 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Bus, Ticket, User } from "lucide-react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
 import useAuth from "@/context/authContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

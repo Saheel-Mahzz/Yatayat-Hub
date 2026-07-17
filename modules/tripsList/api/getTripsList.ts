@@ -2,8 +2,12 @@ import { api } from "@/lib/axios";
 import { IDropdown, Trip } from "../definitions/tripList.definitions";
 import { IListReponse } from "@/types/apiResponse";
 
-export async function getTripsList() {
-  const response = await api.get<IListReponse<Trip>>("/trips/");
+export async function getTripsList(search: {
+  [key: string]: string | undefined;
+}) {
+  const response = await api.get<IListReponse<Trip>>("/trips/", {
+    params: search,
+  });
   return response;
 }
 

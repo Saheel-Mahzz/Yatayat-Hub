@@ -5,10 +5,17 @@ import { List } from "@/components/list";
 import CreateTripModel from "./components/createTripModel";
 import CreateButton from "@/components/createButton";
 import { getLocations } from "../trips/api/getLocations";
+import TripPagination from "../trips/components/pagination";
 
-export default async function TripsList() {
+export default async function TripsList({
+  search,
+}: {
+  search: {
+    [key: string]: string | undefined;
+  };
+}) {
   const [tripsRes, locationsRes, busRes] = await Promise.all([
-    getTripsList(),
+    getTripsList(search),
     getLocations(),
     getBusDropdown(),
   ]);
@@ -34,6 +41,7 @@ export default async function TripsList() {
     [];
 
   const allTrips = tripsRes?.data?.results || [];
+  const total = tripsRes?.data?.count;
 
   const columns: Column<Trip>[] = [
     {
@@ -70,6 +78,7 @@ export default async function TripsList() {
         </CreateButton>
       </div>
       <List columns={columns} rows={allTrips} />
+      <TripPagination totalCount={total} />
     </>
   );
 }
