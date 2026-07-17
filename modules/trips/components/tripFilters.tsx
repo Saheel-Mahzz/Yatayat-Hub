@@ -5,7 +5,7 @@ import { ArrowLeftRight } from "lucide-react";
 import SearchFields, { ILocation } from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { useState } from "react";
 import {
@@ -25,7 +25,8 @@ export default function TripFilters({
 }) {
   const router = useRouter();
 
-  const path = useSearchParams();
+  const path = usePathname();
+  const searchParams = useSearchParams();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,8 +55,12 @@ export default function TripFilters({
     // output: /bookings?from_location=KTM&passenger=2
     router.push(`/${path}?${params.toString()}`);
   };
-  const [selectedFrom, setSelectedFrom] = useState<ILocation | null>(null);
-  const [selectedTo, setSelectedTo] = useState<ILocation | null>(null);
+  const [selectedFrom, setSelectedFrom] = useState<string | null>(
+    searchParams.get("from_location"),
+  );
+  const [selectedTo, setSelectedTo] = useState<string | null>(
+    searchParams.get("to_location"),
+  );
 
   const switchDestination = () => {
     setSelectedFrom(selectedTo);
