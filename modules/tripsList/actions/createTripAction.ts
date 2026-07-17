@@ -1,15 +1,9 @@
 import { api } from "@/lib/axios";
 import { Trip, TripSchema } from "../definitions/tripList.definitions";
-
-interface IPrevState {
-  success: boolean;
-  error: null | Record<string, string>;
-  message: string | null;
-  data: Trip | null;
-}
+import { ActionState } from "@/types/action-state";
 
 export default async function tripCreateAction(
-  prevstate: IPrevState,
+  prevstate: ActionState<Trip>,
   formData: FormData,
 ) {
   const rawData = {

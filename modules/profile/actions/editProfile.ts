@@ -1,15 +1,9 @@
 import { api } from "@/lib/axios";
 import { User, UserSchema } from "../definitions/profile.definitions";
-
-interface IPrevState {
-  success: boolean;
-  error: null | Record<string, string>;
-  message: string | null;
-  data: User | null;
-}
+import { ActionState } from "@/types/action-state";
 
 export default async function editProfileAction(
-  prevstate: IPrevState,
+  prevstate: ActionState<User>,
   formData: FormData,
 ) {
   console.log("form data", Object.fromEntries(formData));

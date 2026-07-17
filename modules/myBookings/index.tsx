@@ -19,6 +19,7 @@ export default async function MyBookings({
   };
 }) {
   const response = await getBookings(search);
+
   const totalCount = response?.data?.count || 0;
   const allBooking = response?.data?.results || [];
 

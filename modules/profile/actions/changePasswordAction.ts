@@ -2,19 +2,11 @@ import { api } from "@/lib/axios";
 import {
   PasswordFormValues,
   passwordSchema,
-  User,
-  UserSchema,
 } from "../definitions/profile.definitions";
-
-interface IPrevState {
-  success: boolean;
-  error: null | Record<string, string>;
-  message: string | null;
-  data: PasswordFormValues | null;
-}
+import { ActionState } from "@/types/action-state";
 
 export default async function changePasswordAction(
-  prevstate: IPrevState,
+  prevstate: ActionState<PasswordFormValues>,
   formData: FormData,
 ) {
   const rawData = {

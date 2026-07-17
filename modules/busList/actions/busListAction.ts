@@ -1,15 +1,9 @@
 import { api } from "@/lib/axios";
 import { Buses, BusSchema } from "../definitions/buses.definitions";
-
-interface IPrevState {
-  success: boolean;
-  error: null | Record<string, string>;
-  message: string | null;
-  data: Buses | null;
-}
+import { ActionState } from "@/types/action-state";
 
 export default async function busCreateAction(
-  prevstate: IPrevState,
+  prevstate: ActionState<Buses>,
   formData: FormData,
 ) {
   const rawData = {
@@ -24,7 +18,6 @@ export default async function busCreateAction(
   if (!result.success) {
     const fieldErrors = result?.error?.issues?.reduce<Record<string, string>>(
       (acc, curr) => {
-        // Path array ko first indexing item extract garera string typed conversion deko
         const key = curr.path[0] as string;
 
         if (key) {
