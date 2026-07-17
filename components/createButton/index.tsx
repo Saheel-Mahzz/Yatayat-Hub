@@ -16,7 +16,7 @@ type ButtonVariant =
   | undefined;
 
 interface ButtonProps {
-  addButtonText: string;
+  addButtonText: string | React.ReactNode;
   children: React.ReactNode;
   modelTitle: string;
   withIcon?: boolean;
@@ -37,7 +37,7 @@ export default function CreateButton({
     <>
       <Button
         onClick={() => setOpen(true)}
-        className={className}
+        className={`${className} cursor-pointer`}
         variant={variant}
       >
         {withIcon && <Plus className="mr-2 h-4 w-4" />}

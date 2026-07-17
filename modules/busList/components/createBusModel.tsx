@@ -6,16 +6,16 @@ import busCreateAction from "../actions/busListAction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-const initialState = {
-  message: "",
-  data: null,
-  error: null,
-  success: false,
-};
+import { Buses } from "../definitions/buses.definitions";
 
-export default function CreateBusModel() {
+export default function CreateBusModel({ bus }: { bus?: Buses }) {
   const router = useRouter();
-
+  const initialState = {
+    message: "",
+    data: { ...bus },
+    error: null,
+    success: false,
+  };
   const [state, formAction, isPending] = useActionState(
     busCreateAction,
     initialState,
@@ -27,6 +27,15 @@ export default function CreateBusModel() {
       router.refresh();
     }
   }, [state]);
+
+  const buttonText = isPending
+    ? bus
+      ? "Editing.."
+      : "Creating.."
+    : bus
+      ? "Edit Bus"
+      : "Create Bus";
+
   return (
     <form action={formAction}>
       <div className="space-y-5 pt-4">
@@ -36,7 +45,7 @@ export default function CreateBusModel() {
           name="name"
           type="text"
           err={state?.error?.name}
-          // value={state?.data?.name || ""}
+          defaultValue={state?.data?.name}
         />
         <InputElement
           placeholder="BA 2 KHA 1234"
@@ -44,7 +53,7 @@ export default function CreateBusModel() {
           name="number_plate"
           type="text"
           err={state?.error?.number_plate}
-          // value={state?.data?.number_plate || ""}
+          defaultValue={state?.data?.number_plate}
         />
         <InputElement
           placeholder="Ex: Deluxe / AC / Tourist"
@@ -52,7 +61,7 @@ export default function CreateBusModel() {
           name="bus_type"
           type="text"
           err={state?.error?.bus_type}
-          // value={state?.data?.bus_type || ""}
+          defaultValue={state?.data?.bus_type}
         />
 
         <InputElement
@@ -61,7 +70,7 @@ export default function CreateBusModel() {
           name="total_seats"
           type="text"
           err={state?.error?.total_seats}
-          // value={state?.data?.total_seats || ""}
+          defaultValue={state?.data?.total_seats}
         />
 
         <div className="flex justify-end gap-3 pt-4">
@@ -70,13 +79,8 @@ export default function CreateBusModel() {
           </Button>
 
           <Button type="submit" disabled={isPending}>
-            {isPending ? (
-              <>
-                <Loader2 className="animate-spin" size={16} /> Creating..{" "}
-              </>
-            ) : (
-              "Create Bus"
-            )}
+            {isPending && <Loader2 className="animate-spin" size={18} />}
+            {buttonText}
           </Button>
         </div>
       </div>

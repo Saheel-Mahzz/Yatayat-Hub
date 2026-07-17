@@ -5,6 +5,7 @@ import CreateButton from "@/components/createButton";
 import CreateBusModel from "./components/createBusModel";
 import { getBusList } from "./api/getBuslist";
 import TripPagination from "../trips/components/pagination";
+import { SquarePen } from "lucide-react";
 
 export default async function BusList({
   searchParams,
@@ -42,6 +43,22 @@ export default async function BusList({
     {
       header: "Total Seats",
       accessorKey: "total_seats",
+    },
+    {
+      header: "Actions",
+      accessorKey: "actions",
+      cell: (row) => {
+        return (
+          <CreateButton
+            addButtonText={<SquarePen />}
+            modelTitle="Edit Bus"
+            withIcon={false}
+            variant="outline"
+          >
+            <CreateBusModel bus={row} />
+          </CreateButton>
+        );
+      },
     },
   ];
   return (

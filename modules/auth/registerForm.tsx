@@ -17,6 +17,7 @@ export default function RegisterForm({
     success: false,
     message: "",
   });
+  
   const { register } = useAuth();
   useEffect(() => {
     if (state.success) {

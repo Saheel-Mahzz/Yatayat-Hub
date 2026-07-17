@@ -6,6 +6,10 @@ export default async function busCreateAction(
   prevstate: ActionState<Buses>,
   formData: FormData,
 ) {
+  const id = prevstate?.data?.id;
+
+  const method: "patch" | "post" = id ? "patch" : "post";
+  const url = id ? `/buses/${id}/` : "/buses/";
   const rawData = {
     name: (formData.get("name") as string) || "",
     number_plate: (formData.get("number_plate") as string) || "",
@@ -36,7 +40,7 @@ export default async function busCreateAction(
   }
 
   try {
-    const reponse = await api.post("/buses/", rawData);
+    const reponse = await api[method](url, rawData);
     return {
       data: reponse.data,
       success: true,
