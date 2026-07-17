@@ -6,6 +6,7 @@ import { useActionState, useState } from "react";
 import tripCreateAction from "../actions/createTripAction";
 import InputElement from "@/components/inputFields/inputElement";
 import SearchFields from "@/modules/trips/components/search/components/searchFields";
+import { Loader2 } from "lucide-react";
 
 export interface IDropdown {
   label: string;
@@ -87,7 +88,16 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
         <div className="flex justify-end gap-3 pt-4">
           <Button variant="outline">Cancel</Button>
 
-          <Button>{isPending ? "Creating.." : "Create Trip"}</Button>
+          <Button disabled={isPending}>
+            {isPending ? (
+              <>
+                <Loader2 className="animate-spin" size={16} />
+                Creating..
+              </>
+            ) : (
+              "Create Trip"
+            )}
+          </Button>
         </div>
       </div>
     </form>

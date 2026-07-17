@@ -3,6 +3,7 @@ import InputElement from "@/components/inputFields/inputElement";
 import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import changePasswordAction from "../actions/changePasswordAction";
+import { Loader2 } from "lucide-react";
 
 export function ChangePasswordDialog() {
   const initialState = {
@@ -38,8 +39,15 @@ export function ChangePasswordDialog() {
         placeholder="Confirm new password.."
         err={state?.error?.confirm_password}
       />
-      <Button type="submit" className="cursor-pointer">
-        {isPending ? "Confirming.." : "Confirm"}
+      <Button type="submit" className="cursor-pointer" disabled={isPending}>
+        {isPending ? (
+          <>
+            <Loader2 className="animate-spin" size={16} />
+            Confirming..
+          </>
+        ) : (
+          "Confirm"
+        )}
       </Button>
     </form>
   );

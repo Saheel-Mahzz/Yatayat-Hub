@@ -6,6 +6,7 @@ import editProfileAction from "../actions/editProfile";
 import { User } from "../definitions/profile.definitions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export default function ProfileUpdateModal({ user }: { user: User }) {
   const router = useRouter();
@@ -69,8 +70,14 @@ export default function ProfileUpdateModal({ user }: { user: User }) {
           Cancel
         </Button>
 
-        <Button type="submit">
-          {isPending ? "Updating.." : "Update Profile"}
+        <Button type="submit" disabled={isPending}>
+          {isPending ? (
+            <>
+              <Loader2 /> Updating...
+            </>
+          ) : (
+            "Update Profile"
+          )}
         </Button>
       </div>
     </form>

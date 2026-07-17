@@ -34,11 +34,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    if (token && token !== "undefined" && token !== "null") {
-      setTimeout(() => {
-        setIsLoggedIn(true);
-      }, 0);
-    }
     // if (token) {
     //   // Sano queue banayera pathayeko jasle React ko lifecycle disturb hudaina
     //   setTimeout(() => {
@@ -47,6 +42,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // }
     // const token = localStorage.getItem("access_token");
     // "undefined" string check validation bypass logic
+    if (token && token !== "undefined" && token !== "null") {
+      setTimeout(() => {
+        setIsLoggedIn(true);
+      }, 0);
+    }
   }, []);
 
   const login = (token: string) => {

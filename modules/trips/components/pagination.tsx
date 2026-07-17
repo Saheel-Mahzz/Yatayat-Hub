@@ -50,19 +50,17 @@ export default function TripPagination({ totalCount }: PaginationProps) {
           </PaginationItem>
 
           {Array.from({ length: totalPages }, (_, index) => (
-            <>
-              <PaginationItem>
-                <PaginationLink
-                  //   href="#"
-                  isActive={currentPageNumber === index + 1}
-                  onClick={() => {
-                    handlePageChange(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            </>
+            <PaginationItem key={index}>
+              <PaginationLink
+                //   href="#"
+                isActive={currentPageNumber === index + 1}
+                onClick={() => {
+                  handlePageChange(index + 1);
+                }}
+              >
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
           ))}
           {/* 
           <PaginationItem>

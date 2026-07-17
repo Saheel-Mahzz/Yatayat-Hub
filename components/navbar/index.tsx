@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Bus, Ticket, User } from "lucide-react";
 import useAuth from "@/context/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -40,22 +40,35 @@ export default function Navbar() {
   const handleAuthSuccess = () => {
     setOpen(false);
   };
-  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
-    // Client side (browser) ma chhas ki nai check garne
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("access_token");
-      if (token) {
-        try {
-          const decoded = jwtDecode<MyTokenPayload>(token);
-          return decoded.is_superuser; // direct initial state setup!
-        } catch (e) {
-          return false;
-        }
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      try {
+        const decoded = jwtDecode<MyTokenPayload>(token);
+        setTimeout(() => {
+          setIsAdmin(decoded.is_superuser); // dynamic process queue ma pathaune
+        }, 0);
+      } catch (error) {
+        console.error("Invalid token:", error);
       }
     }
-    return false; // token chaina bhane by default false
-  });
+  }, []);
+  // const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+  //   // Client side (browser) ma chhas ki nai check garne
+  //   if (typeof window !== "undefined") {
+  //     const token = localStorage.getItem("access_token");
+  //     if (token) {
+  //       try {
+  //         const decoded = jwtDecode<MyTokenPayload>(token);
+  //         return decoded.is_superuser; // direct initial state setup!
+  //       } catch (e) {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  //   return false; // token chaina bhane by default false
+  // });
 
   // useEffect(() => {
   //   // 1. Browser ma matra localStorage hunchha, tya bata token line

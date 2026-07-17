@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -81,10 +80,6 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
       </Table> */}
       <div className="rounded-2xl border bg-white shadow-sm overflow-hidden my-7">
         <Table>
-          <TableCaption className="py-4 text-muted-foreground">
-            A list of Bookings.
-          </TableCaption>
-
           <TableHeader>
             <TableRow className="bg-muted/50 hover:bg-muted/50">
               {columns.map((col, index) => (

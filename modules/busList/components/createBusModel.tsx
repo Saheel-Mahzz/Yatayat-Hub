@@ -5,6 +5,7 @@ import { useActionState, useEffect } from "react";
 import busCreateAction from "../actions/busListAction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 const initialState = {
   message: "",
   data: null,
@@ -68,8 +69,14 @@ export default function CreateBusModel() {
             Cancel
           </Button>
 
-          <Button type="submit">
-            {isPending ? "Creating.." : "Create Bus"}
+          <Button type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <Loader2 className="animate-spin" size={16} /> Creating..{" "}
+              </>
+            ) : (
+              "Create Bus"
+            )}
           </Button>
         </div>
       </div>
