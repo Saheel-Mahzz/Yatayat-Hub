@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { Buses, BusSchema } from "../definitions/buses.definitions";
 import { ActionState } from "@/types/action-state";
+import axios from "axios";
 
 export default async function busCreateAction(
   prevstate: ActionState<Buses>,
@@ -44,13 +45,26 @@ export default async function busCreateAction(
     return {
       data: reponse.data,
       success: true,
-      message: "Bus Created Successfully!",
+      message: id ? "Bus Edited Successfully!" : "Bus Created Successfully!",
       error: null,
     };
   } catch (err) {
+    console.error("Bus create/update error:", err); // debugging को लागि (server log ma देखिन्छ)
+
+    if (axios.isAxiosError(err)) {
+      return {
+        success: false,
+        message:
+          err.response?.data?.message ??
+          "Something went wrong. Please try again.",
+        data: rawData,
+        error: err.response?.data ?? null, // backend ko validation error (field-wise) frontend मा पठाउने
+      };
+    }
+
     return {
       success: false,
-      message: "Internal Server Error!",
+      message: "Something went wrong. Please try again.",
       data: rawData,
       error: null,
     };

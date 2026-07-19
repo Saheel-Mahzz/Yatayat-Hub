@@ -25,7 +25,7 @@ export default function CreateBusModel({ bus }: { bus?: Buses }) {
 
   useEffect(() => {
     if (state.success) {
-      toast.message("Bus Created Successfully!");
+      toast.message(state.message);
       router.refresh();
     }
   }, [state]);

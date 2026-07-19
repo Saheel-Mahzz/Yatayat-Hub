@@ -2,7 +2,7 @@ import React from "react";
 
 interface ISeatGrid {
   bookedSeats: string[];
-  selectedSeat: string | null;
+  selectedSeat: string[] | null;
   onSeatSelect: (seatName: string) => void;
   totalRows?: number;
 }
@@ -13,6 +13,8 @@ export default function SeatGrid({
   selectedSeat,
   totalRows = 10,
 }: ISeatGrid) {
+  // const test = ["A1,A3"];
+  console.log("this is slected seats", selectedSeat);
   return (
     <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 bg-slate-50/50">
       {/* Main 5-Column Grid (Left 2, Middle Aisle 1, Right 2) */}
@@ -44,8 +46,10 @@ export default function SeatGrid({
             }
 
             const isBooked = bookedSeats.includes(seatName);
-            const isSelected = selectedSeat === seatName;
-
+            const isSelected = selectedSeat?.includes(seatName);
+            // console.log("testoing", test);
+            // const isSelected = test.includes(seatName);
+            // console.log("is lseectec", isSelected);
             let seatStyle =
               "bg-white text-gray-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300 cursor-pointer";
             if (isBooked) {

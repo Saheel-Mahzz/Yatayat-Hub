@@ -46,9 +46,6 @@ export default function SearchFields({
   onSelect,
   disable,
 }: ISearchFields) {
-  console.log("valye", value);
-  console.log("location", locations);
-
   const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState<ILocation | null>(null);
   // const selectedLocation = locations.find((loc) => loc.value === value);
@@ -56,7 +53,6 @@ export default function SearchFields({
     (loc) => String(loc.value) === String(value),
   );
 
-  console.log("selcted location", selectedLocation);
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       <MapPin className="w-4 h-4 text-gray-500" />
@@ -94,7 +90,6 @@ export default function SearchFields({
                       //   setOpen(false);
                       // }}
                       onSelect={() => {
-                        console.log("loc", loc);
                         // onSelect?.(loc);
                         onSelect?.(loc?.value);
                         setOpen(false);

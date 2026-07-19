@@ -42,7 +42,12 @@ export default function RootLayout({
           <Navbar />
 
           {children}
-          <Toaster position="top-center" />
+          <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            duration={4000}
+          />
           <ToastHandler />
         </body>
       </AuthProvider>

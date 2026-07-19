@@ -14,36 +14,67 @@ import { ITripDetails } from "../definitions/tripDetails";
 import useAuth from "@/context/authContext";
 
 export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
   const router = useRouter();
   const { isLoggedIn } = useAuth();
-
   const [state, formAction, isPending] = useActionState(creatBookingAction, {
     success: false,
     message: "",
   });
-  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  // const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
   const [isAuthModelOpen, setIsAuthModelOpen] = useState<boolean>(false);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (state?.success) {
       toast.success("Seat Booked Successfully!");
-      // setIsTicketModalOpen(true)
-
       setTimeout(() => {
-        setSelectedSeat(null);
+        // setSelectedSeat(null);
+        setSelectedSeat([]);
         setIsTicketModalOpen(true);
       }, 0);
       router.refresh();
     }
   }, [state]);
 
-  const executeBooking = (seat: string) => {
+  // const handleSeatSelect = (seatId: string) => {
+  //   if (selectedSeat.includes(seatId)) {
+  //     setSelectedSeat((seat) => seat.filter((s) => s !== seatId));
+  //   } else {
+  //     if (selectedSeat.length >= 5) {
+  //       toast.warning("You can only select upto 5 seats!");
+  //     } else {
+  //       setSelectedSeat([...selectedSeat, seatId]);
+  //     }
+  //   }
+  // };
+
+  const MAX_SEATS = 5;
+
+  const handleSeatSelect = (seatId: string) => {
+    if (selectedSeat.includes(seatId)) {
+      setSelectedSeat((seat) => seat.filter((s) => s !== seatId));
+      return;
+    }
+
+    if (selectedSeat.length >= MAX_SEATS) {
+      toast.error(`You can only select up to ${MAX_SEATS} seats!`);
+      return;
+    }
+    // setSelectedSeat([...selectedSeat, seatId]);
+    setSelectedSeat((seat) => [...seat, seatId]);
+  };
+
+  console.log("seelected seats", selectedSeat);
+
+  const executeBooking = (seat: string[]) => {
     const formData = new FormData();
     formData.append("trip", String(tripDetails?.id));
-    formData.append("seat_number", seat);
+    // seat.forEach((s) => {
+    //   formData.append("seat_number", s);
+    // });
+    formData.append("seat_number", JSON.stringify(seat));
+    // formData.append("seat_number", seat);
     startTransition(() => {
       formAction(formData);
     });
@@ -90,34 +121,30 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
 
             <SeatGrid
               bookedSeats={tripDetails?.booked_seats}
-              onSeatSelect={setSelectedSeat}
+              // onSeatSelect={setSelectedSeat}
+              // selectedSeat={selectedSeat}
               selectedSeat={selectedSeat}
+              onSeatSelect={handleSeatSelect}
               totalRows={calculatedRows}
             />
 
-            {/* Selected Summary Info */}
             {selectedSeat && (
               <p className="text-sm text-center mt-4 text-muted-foreground">
                 Selected Seat:{" "}
-                <span className="font-bold text-blue-600">{selectedSeat}</span>
+                <span className="font-bold text-blue-600">
+                  {selectedSeat.join(",")}
+                </span>
               </p>
             )}
 
             <Button
               type="submit"
-              // onClick={handleSeatClick}
               className="w-full mt-6 rounded-full cursor-pointer"
               disabled={!selectedSeat || isPending}
             >
               Book Seat
             </Button>
           </CardContent>
-          {/* {state?.success && (
-            <TicketModal
-              // isTicketModelOpen
-              // setIsTicketModelOpen={setIsTicketModalOpen}
-            />
-          )} */}
 
           <TicketModal
             isTicketModelOpen={isTicketModalOpen}
