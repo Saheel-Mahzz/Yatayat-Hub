@@ -8,13 +8,13 @@ import TripPagination from "../trips/components/pagination";
 import { SquarePen } from "lucide-react";
 
 export default async function BusList({
-  searchParams,
+  search,
 }: {
-  searchParams: {
+  search: {
     [key: string]: string | undefined;
   };
 }) {
-  const response = await getBusList(searchParams);
+  const response = await getBusList(search);
 
   const allBuses = response?.data?.results || [];
 

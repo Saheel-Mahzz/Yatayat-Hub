@@ -9,5 +9,5 @@ export default async function BusPage({
 }) {
   const params = await searchParams;
 
-  return <BusList searchParams={params} />;
+  return <BusList search={params} />;
 }
