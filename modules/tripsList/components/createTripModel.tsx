@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { useActionState, useState } from "react";
 import tripCreateAction from "../actions/createTripAction";
 import InputElement from "@/components/inputFields/inputElement";
@@ -31,9 +30,11 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
     tripCreateAction,
     initialState,
   );
-  const [fromLocation, setFromLocation] = useState<IDropdown | null>(null);
-  const [toLocation, setToLocation] = useState<IDropdown | null>(null);
-  const [selectedBus, setSelectedBus] = useState<IDropdown | null>(null);
+  const [fromLocation, setFromLocation] = useState<string | null>(null);
+  const [toLocation, setToLocation] = useState<string | null>(null);
+  const [selectedBus, setSelectedBus] = useState<string | null>(null);
+
+  const buttonText = isPending ? "Creating.." : "Create Trip";
 
   return (
     <form action={formAction}>
@@ -71,7 +72,12 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
 
         <div className="grid grid-cols-2 gap-4">
           <DateField />
-          <InputElement type="time" label="Time" name="time" />
+          <InputElement
+            type="time"
+            label="Time"
+            name="time"
+            defaultValue={state?.data?.time}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -80,21 +86,16 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
             placeholder="800"
             label="Price"
             name="price"
+            defaultValue={state?.data?.price}
           />
         </div>
 
         <div className="flex justify-end gap-3 pt-4">
           <Button variant="outline">Cancel</Button>
 
-          <Button disabled={isPending}>
-            {isPending ? (
-              <>
-                <Loader2 className="animate-spin" size={16} />
-                Creating..
-              </>
-            ) : (
-              "Create Trip"
-            )}
+          <Button>
+            {isPending && <Loader2 className="animate-spin" size={16} />}
+            {buttonText}
           </Button>
         </div>
       </div>
