@@ -20,7 +20,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     success: false,
     message: "",
   });
-  // const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
   const [isAuthModelOpen, setIsAuthModelOpen] = useState<boolean>(false);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(false);
@@ -37,18 +36,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
     }
   }, [state]);
 
-  // const handleSeatSelect = (seatId: string) => {
-  //   if (selectedSeat.includes(seatId)) {
-  //     setSelectedSeat((seat) => seat.filter((s) => s !== seatId));
-  //   } else {
-  //     if (selectedSeat.length >= 5) {
-  //       toast.warning("You can only select upto 5 seats!");
-  //     } else {
-  //       setSelectedSeat([...selectedSeat, seatId]);
-  //     }
-  //   }
-  // };
-
   const MAX_SEATS = 5;
 
   const handleSeatSelect = (seatId: string) => {
@@ -61,11 +48,8 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
       toast.error(`You can only select up to ${MAX_SEATS} seats!`);
       return;
     }
-    // setSelectedSeat([...selectedSeat, seatId]);
     setSelectedSeat((seat) => [...seat, seatId]);
   };
-
-  console.log("seelected seats", selectedSeat);
 
   const executeBooking = (seat: string[]) => {
     const formData = new FormData();
