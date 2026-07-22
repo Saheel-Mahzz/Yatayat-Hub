@@ -15,8 +15,6 @@ export default async function tripCreateAction(
     date: (formData.get("date") as string) || "",
   };
 
-  console.log("rawdtaa", rawData);
-
   const result = TripSchema.safeParse(rawData);
 
   if (!result.success) {

@@ -8,6 +8,7 @@ interface InputElementProps {
   name: string;
   placeholder: string;
   err?: string;
+  defaultValue?: string;
 }
 
 export default function PasswordElement({
@@ -15,6 +16,7 @@ export default function PasswordElement({
   name,
   placeholder,
   err,
+  defaultValue,
 }: InputElementProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   return (
@@ -26,6 +28,7 @@ export default function PasswordElement({
           type={showPassword ? "text" : "password"}
           name={name}
           placeholder={placeholder}
+          defaultValue={defaultValue}
         />
         <span
           className="mr-2 cursor-pointer"

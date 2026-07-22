@@ -1,18 +1,21 @@
 import { api } from "@/lib/axios";
 import { User, UserSchema } from "../definitions/profile.definitions";
 import { ActionState } from "@/types/action-state";
+import { email } from "zod";
 
 export default async function editProfileAction(
   prevstate: ActionState<User>,
   formData: FormData,
 ) {
-  console.log("form data", Object.fromEntries(formData));
   const rawData = {
     first_name: (formData.get("first_name") as string) || "",
     last_name: (formData.get("last_name") as string) || "",
+    phone_number: "9745328656",
+    email: prevstate?.data?.email,
   };
+  const { email, phone_number, ...payload } = rawData;
 
-  const result = UserSchema.safeParse(rawData);
+  const result = UserSchema.safeParse(payload);
 
   if (!result.success) {
     const fieldErrors = result?.error?.issues?.reduce<Record<string, string>>(
@@ -36,8 +39,7 @@ export default async function editProfileAction(
   }
 
   try {
-    const reponse = await api.patch("/profile/me/", rawData);
-    console.log("response", reponse);
+    const reponse = await api.patch("/profile/me/", payload);
     return {
       data: reponse.data,
       success: true,

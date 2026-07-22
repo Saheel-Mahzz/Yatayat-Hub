@@ -105,7 +105,7 @@ export default function Navbar() {
                 className="text-gray-700 space-x-2 flex gap-2 items-center"
               >
                 <Bus size={18} />
-                Manage Trips & Buses
+                Admin Dashboard
               </Link>
             ) : (
               <Button

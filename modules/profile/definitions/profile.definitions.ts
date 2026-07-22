@@ -18,31 +18,33 @@ export const UserSchema = z.object({
     .trim()
     .min(1, "This field cannot be left empty!")
     .max(100, "Characters cannot exceed more than 100 characters"),
-  email: z
-    .string()
-    .min(1, "This field cannot be left empty!")
-    .email("Invalid email address!"), // Email format checking thapeko standard ko lagi
-  phone_number: z
-    .string()
-    .trim()
-    .superRefine((val, ctx) => {
-      // 1. Empty check
-      if (val.length === 0) {
-        ctx.addIssue({
-          code: "custom",
-          message: "This field cannot be left empty!",
-        });
-        return;
-      }
+  email: z.string().optional(),
+  // email: z
+  //   .string()
+  //   .min(1, "This field cannot be left empty!")
+  //   .email("Invalid email address!"), // Email format checking thapeko standard ko lagi
+  // phone_number: z
+  //   .string()
+  //   .trim()
+  //   .superRefine((val, ctx) => {
+  //     // 1. Empty check
+  //     if (val.length === 0) {
+  //       ctx.addIssue({
+  //         code: "custom",
+  //         message: "This field cannot be left empty!",
+  //       });
+  //       return;
+  //     }
 
-      // 2. Regex format check
-      if (!/^9[678]\d{8}$/.test(val)) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Invalid Nepali phone number!",
-        });
-      }
-    }),
+  //     // 2. Regex format check
+  //     if (!/^9[678]\d{8}$/.test(val)) {
+  //       ctx.addIssue({
+  //         code: "custom",
+  //         message: "Invalid Nepali phone number!",
+  //       });
+  //     }
+  //   }),
+  phone_number: z.string().optional(),
 });
 
 export interface UserResponse {
