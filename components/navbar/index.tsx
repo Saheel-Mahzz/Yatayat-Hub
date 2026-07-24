@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Bus, Ticket, User } from "lucide-react";
+import { Bus, LogOut, Settings, Ticket, User } from "lucide-react";
 import useAuth from "@/context/authContext";
 import { useEffect, useState } from "react";
 import { AuthBookingDialog } from "@/modules/tripDetails/components/seats/authBookingDialog";
@@ -9,9 +9,17 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import { MyTokenPayload } from "@/proxy";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
   const [modelTitle, setModelTitle] = useState<string>("");
   const [modelDesc, setModeDesc] = useState<string>("");
@@ -127,12 +135,93 @@ export default function Navbar() {
                 U
               </AvatarFallback>
             </Avatar> */}
-            <button
+            {/* <button
               className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1"
               onClick={handleProfileClick}
             >
               {isLoggedIn ? "S" : <User />}
-            </button>
+            </button> */}
+            {/* <DropdownMenu>
+              {/* Dynamic Trigger Button */}
+            {/* <DropdownMenuTrigger asChild>
+                <button className="bg-green-600 text-white cursor-pointer rounded-full px-3 py-1 flex items-center justify-center h-9 w-9 font-semibold hover:bg-green-700 transition">
+                  {isLoggedIn ? (
+                    "S"
+                  ) : (
+                    <User className="h-4 w-4" onClick={handleProfileClick} />
+                  )}
+                </button>
+              </DropdownMenuTrigger> */}
+
+            {/* Muni aahune Float Menu */}
+            {/* <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator /> */}
+
+            {/* Profile Link
+                <DropdownMenuItem
+                  onClick={() => router.push("/profile")}
+                  className="cursor-pointer"
+                >
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem> */}
+
+            {/* Settings or extra links */}
+            {/* <DropdownMenuItem
+                  onClick={() => router.push("/settings")}
+                  className="cursor-pointer"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator /> */}
+
+            {/* Danger Zone: Logout */}
+            {/* <DropdownMenuItem
+                  // onClick={handleLogout}
+                  className="text-red-600 cursor-pointer focus:bg-red-50 focus:text-red-600"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>  */}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="bg-green-600 text-white cursor-pointer rounded-full h-9 w-9 flex items-center justify-center font-bold">
+                  {isLoggedIn ? "S" : <User className="h-4 w-4" />}
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end" className="w-48">
+                {isLoggedIn ? (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => router.push("/profile")}
+                      className="cursor-pointer"
+                    >
+                      My Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={logout}
+                      className="text-red-600 cursor-pointer"
+                    >
+                      Log Out
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <DropdownMenuItem
+                    onClick={() => setOpen(true)}
+                    className="cursor-pointer"
+                  >
+                    Log In / Register
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <AuthBookingDialog
               isOpen={open}

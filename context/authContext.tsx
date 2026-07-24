@@ -6,6 +6,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   login: (token: string, refreshToken: string) => void;
+  logout: () => void;
   register: (token: string) => void;
 }
 
@@ -62,8 +63,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoggedIn(true);
   };
 
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+  };
   return (
-    <AuthContext.Provider value={{ isLoading, isLoggedIn, login, register }}>
+    <AuthContext.Provider
+      value={{ isLoading, isLoggedIn, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

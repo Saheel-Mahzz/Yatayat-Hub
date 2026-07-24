@@ -10,7 +10,13 @@ import { Buses } from "../definitions/buses.definitions";
 import { SelectElement } from "@/components/select";
 import { BUS_TYPE } from "../constants/busType.const";
 
-export default function CreateBusModel({ bus }: { bus?: Buses }) {
+export default function CreateBusModel({
+  bus,
+  onSuccess,
+}: {
+  bus?: Buses;
+  onSuccess: () => void;
+}) {
   const router = useRouter();
   const initialState = {
     message: "",
@@ -25,7 +31,8 @@ export default function CreateBusModel({ bus }: { bus?: Buses }) {
 
   useEffect(() => {
     if (state.success) {
-      toast.message(state.message);
+      toast.success(state.message);
+      onSuccess?.();
       router.refresh();
     }
   }, [state]);

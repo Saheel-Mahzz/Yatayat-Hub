@@ -1,11 +1,9 @@
 import { Column } from "../myBookings";
 import { Buses } from "./definitions/buses.definitions";
 import { List } from "@/components/list";
-import CreateButton from "@/components/createButton";
-import CreateBusModel from "./components/createBusModel";
 import { getBusList } from "./api/getBuslist";
 import TripPagination from "../trips/components/pagination";
-import { SquarePen } from "lucide-react";
+import Bus from "./components/bus";
 
 export default async function BusList({
   search,
@@ -49,14 +47,15 @@ export default async function BusList({
       accessorKey: "actions",
       cell: (row) => {
         return (
-          <CreateButton
-            addButtonText={<SquarePen />}
-            modelTitle="Edit Bus"
-            withIcon={false}
-            variant="outline"
-          >
-            <CreateBusModel bus={row} />
-          </CreateButton>
+          // <CreateButton
+          //   addButtonText={<SquarePen />}
+          //   modelTitle="Edit Bus"
+          //   withIcon={false}
+          //   variant="outline"
+          // >
+          //   <CreateBusModel bus={row} />
+          // </CreateButton>
+          <Bus row={row} />
         );
       },
     },
@@ -65,9 +64,10 @@ export default async function BusList({
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Buses</h1>
-        <CreateButton addButtonText="Add Bus" modelTitle="Create New Bus">
+        {/* <CreateButton addButtonText="Add Bus" modelTitle="Create New Bus">
           <CreateBusModel />
-        </CreateButton>
+        </CreateButton> */}
+        <Bus />
       </div>
       <List columns={columns} rows={allBuses} />
       <TripPagination totalCount={totalCount} />
