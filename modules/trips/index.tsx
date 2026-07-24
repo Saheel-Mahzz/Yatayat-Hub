@@ -14,9 +14,6 @@ export default async function Trips({
     getLocations(),
   ]);
 
-  console.log("trip response", tripsRes);
-  console.log("lcaotion res", locationsRes);
-
   const allTrips = tripsRes?.data?.results || [];
   const totalCount = tripsRes?.data?.count || 0;
 

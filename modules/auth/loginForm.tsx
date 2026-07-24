@@ -24,7 +24,7 @@ export default function LoginForm({
   useEffect(() => {
     if (state.success) {
       toast.success("Login Successfull!");
-      login(state.data.access);
+      login(state.data.access, state.data.refresh);
       onAuthSuccess();
     }
   }, [state, onAuthSuccess]);

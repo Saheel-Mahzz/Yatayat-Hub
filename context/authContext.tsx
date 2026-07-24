@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
-  login: (token: string) => void;
+  login: (token: string, refreshToken: string) => void;
   register: (token: string) => void;
 }
 
@@ -49,9 +49,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const login = (token: string) => {
-    localStorage.setItem("access_token", token);
-    document.cookie = `access_token=${token}; path=/; max-age=86400`;
+  const login = (accessToken: string, refreshToken: string) => {
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
+    document.cookie = `access_token=${accessToken}; path=/; max-age=86400`;
     setIsLoggedIn(true);
   };
 

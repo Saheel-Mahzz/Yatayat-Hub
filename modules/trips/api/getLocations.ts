@@ -3,7 +3,7 @@ import { ILocation } from "../definitions/trips.types";
 
 export async function getLocations() {
   try {
-    const res = await api.get<ILocation[]>("/locatiions/");
+    const res = await api.get<ILocation[]>("/locations/");
     return res.data;
   } catch (err) {
     return [];
