@@ -17,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
@@ -47,6 +48,11 @@ export default function Navbar() {
 
   const handleAuthSuccess = () => {
     setOpen(false);
+  };
+
+  const handleLogOut = () => {
+    logout();
+    toast.success("Successfully logged out!");
   };
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   useEffect(() => {
@@ -206,7 +212,7 @@ export default function Navbar() {
                       My Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={logout}
+                      onClick={handleLogOut}
                       className="text-red-600 cursor-pointer"
                     >
                       Log Out
