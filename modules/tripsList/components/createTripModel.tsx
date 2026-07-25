@@ -1,12 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import tripCreateAction from "../actions/createTripAction";
 import InputElement from "@/components/inputFields/inputElement";
 import SearchFields from "@/modules/trips/components/search/components/searchFields";
 import { Loader2 } from "lucide-react";
 import DateField from "@/modules/trips/components/search/components/dateField";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export interface IDropdown {
   label: string;
@@ -16,6 +18,7 @@ export interface IDropdown {
 interface ICreateTrip {
   locations: IDropdown[];
   buses: IDropdown[];
+  onSuccess: () => void;
 }
 
 const initialState = {
@@ -25,7 +28,11 @@ const initialState = {
   data: null,
 };
 
-export default function CreateTripModel({ locations, buses }: ICreateTrip) {
+export default function CreateTripModel({
+  locations,
+  buses,
+  onSuccess,
+}: ICreateTrip) {
   const [state, formAction, isPending] = useActionState(
     tripCreateAction,
     initialState,
@@ -35,6 +42,17 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
   const [selectedBus, setSelectedBus] = useState<string | null>(null);
 
   const buttonText = isPending ? "Creating.." : "Create Trip";
+  const router = useRouter();
+
+  console.log("state", state);
+
+  useEffect(() => {
+    if (state.success) {
+      router.refresh();
+      toast.success(state.message);
+      onSuccess?.();
+    }
+  }, [state.success]);
 
   return (
     <form action={formAction}>
@@ -64,14 +82,14 @@ export default function CreateTripModel({ locations, buses }: ICreateTrip) {
         <SearchFields
           label="Choose Bus"
           locations={buses}
-          name="name"
+          name="bus"
           placeholder="Choose a bus "
           value={selectedBus}
           onSelect={setSelectedBus}
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <DateField />
+          <DateField name="date" />
           <InputElement
             type="time"
             label="Time"

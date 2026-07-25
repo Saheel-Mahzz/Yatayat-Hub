@@ -6,7 +6,8 @@ export interface Trip {
   booked_seats?: string[];
   bus?: Buses;
   date: string;
-  departure_time: string;
+  time: string;
+  // departure_time: string;
   from_location: string;
   id?: string;
   price: string;
@@ -15,8 +16,9 @@ export interface Trip {
 
 export const TripSchema = z.object({
   id: z.string().optional(),
-  bus_name: z.string().min(1, "This field is required!"),
-  departure_time: z.string().min(1, "This field is required!"),
+  bus: z.string().min(1, "This field is required!"),
+  time: z.string().min(1, "This field is required!"),
+  date: z.string().min(1, "This field is required!"),
   from_location: z.string().min(1, "This field is required!"),
   to_location: z.string().min(1, "This field is required!"),
   price: z.string().min(1, "This field is required!"),

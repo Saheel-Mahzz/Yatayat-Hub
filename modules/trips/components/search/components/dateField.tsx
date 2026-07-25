@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
 
-export default function DateField() {
+export default function DateField({ name }: { name: string }) {
   // const [date, setDate] = useState();
   const [date, setDate] = useState<Date | undefined>(undefined);
   // const maxDate = new Date().getDate() + 30;
@@ -20,11 +20,7 @@ export default function DateField() {
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       {/* <input type="hidden" name="departure_time" value={date} />
        */}
-      <input
-        type="hidden"
-        name="departure_time"
-        value={date ? date.toISOString() : ""}
-      />
+      <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
       <CalendarIcon className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">Departure</span>

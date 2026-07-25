@@ -6,6 +6,7 @@ import CreateTripModel from "./components/createTripModel";
 import CreateButton from "@/components/createButton";
 import { getLocations } from "../trips/api/getLocations";
 import TripPagination from "../trips/components/pagination";
+import Trips from "./components/trips";
 
 export default async function TripsList({
   search,
@@ -67,15 +68,21 @@ export default async function TripsList({
       header: "Price",
       accessorKey: "price",
     },
+    {
+      header: "Actions",
+      accessorKey: "",
+      cell: (row) => <Trips row={row} buses={buses} locations={locations} />,
+    },
   ];
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Trips</h1>
+        <Trips locations={locations} buses={buses} />
 
-        <CreateButton addButtonText="Add Trip" modelTitle="Create New trip">
+        {/* <CreateButton addButtonText="Add Trip" modelTitle="Create New trip">
           <CreateTripModel locations={locations} buses={buses} />
-        </CreateButton>
+        </CreateButton> */}
       </div>
       <List columns={columns} rows={allTrips} />
       <TripPagination totalCount={total} />

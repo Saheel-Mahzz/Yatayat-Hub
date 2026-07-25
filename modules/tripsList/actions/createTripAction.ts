@@ -1,20 +1,25 @@
 import { api } from "@/lib/axios";
 import { Trip, TripSchema } from "../definitions/tripList.definitions";
 import { ActionState } from "@/types/action-state";
+import { format } from "date-fns";
 
 export default async function tripCreateAction(
   prevstate: ActionState<Trip>,
   formData: FormData,
 ) {
+  const date = formData.get("date") as string;
+  const formattedDate = format(date, "yyyy-MM-dd");
   const rawData = {
-    bus_name: (formData.get("name") as string) || "",
-    departure_time: (formData.get("time") as string) || "",
+    bus: (formData.get("bus") as string) || "",
+    time: (formData.get("time") as string) || "",
     from_location: (formData.get("from_location") as string) || "",
     to_location: (formData.get("to_location") as string) || "",
-    price: (formData.get("to_location") as string) || "",
-    date: (formData.get("date") as string) || "",
+    price: (formData.get("price") as string) || "",
+    // date: (formData.get("date") as string) || "",
+    date: formattedDate,
   };
 
+  console.log("raw data", rawData);
   const result = TripSchema.safeParse(rawData);
 
   if (!result.success) {
@@ -39,7 +44,7 @@ export default async function tripCreateAction(
   }
 
   try {
-    const reponse = await api.post("/buses/", rawData);
+    const reponse = await api.post("/trips/", rawData);
     return {
       data: reponse.data,
       success: true,
@@ -47,6 +52,8 @@ export default async function tripCreateAction(
       error: null,
     };
   } catch (err) {
+    console.log("err", err);
+    console.log("BACKEND ERROR DATA:", err?.response?.data);
     return {
       success: false,
       message: "Internal Server Error!",
