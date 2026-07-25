@@ -15,24 +15,30 @@ export function SelectElement({
   placeholder,
   label,
   err,
+  defaultValue,
 }: {
   options: ILocation[];
   placeholder: string;
   label: string;
   name: string;
   err?: string;
+  defaultValue?: string;
 }) {
   return (
     <Field className="w-full ">
       <FieldLabel>{label}</FieldLabel>
-      <Select name={name}>
+      <Select name={name} defaultValue={defaultValue}>
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             {options.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
+              <SelectItem
+                key={item.value}
+                value={item.value}
+                defaultValue={defaultValue}
+              >
                 {item.label}
               </SelectItem>
             ))}

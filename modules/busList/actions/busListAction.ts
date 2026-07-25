@@ -8,7 +8,6 @@ export default async function busCreateAction(
   formData: FormData,
 ) {
   const id = prevstate?.data?.id;
-
   const method: "patch" | "post" = id ? "patch" : "post";
   const url = id ? `/buses/${id}/` : "/buses/";
   const rawData = {
@@ -50,7 +49,6 @@ export default async function busCreateAction(
     };
   } catch (err) {
     console.error("Bus create/update error:", err); // debugging को लागि (server log ma देखिन्छ)
-
     if (axios.isAxiosError(err)) {
       return {
         success: false,

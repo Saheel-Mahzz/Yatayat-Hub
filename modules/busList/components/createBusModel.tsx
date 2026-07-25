@@ -44,7 +44,6 @@ export default function CreateBusModel({
     : bus
       ? "Edit Bus"
       : "Create Bus";
-
   return (
     <form action={formAction}>
       <div className="space-y-5 pt-4">
@@ -71,6 +70,7 @@ export default function CreateBusModel({
           label="Bus Type"
           name="bus_type"
           err={state?.error?.bus_type}
+          defaultValue={state?.data?.bus_type}
         />
         <InputElement
           placeholder="40"
