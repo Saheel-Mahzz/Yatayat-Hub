@@ -9,7 +9,9 @@ export interface Buses {
 }
 
 export const BusSchema = z.object({
-  id: z.string().optional(),
+  // id: z.string().optional(),
+  id: z.union([z.string(), z.number()]).optional(),
+
   name: z
     .string()
     .trim()

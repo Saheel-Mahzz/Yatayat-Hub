@@ -3,6 +3,7 @@ import TripFilters from "./components/tripFilters";
 import TripPagination from "./components/pagination";
 import TripList from "./components/tripList";
 import { getLocations } from "./api/getLocations";
+import SecondaryFilters from "./components/secondaryFilters";
 
 export default async function Trips({
   searchParams,
@@ -30,7 +31,14 @@ export default async function Trips({
   return (
     <div className="space-y-4">
       <TripFilters locations={locations} />
-      <TripList allTrips={allTrips} />
+      <div className="grid grid-cols-12 gap-6 w-full max-w-5xl mx-auto">
+        <div className="col-span-4">
+          <SecondaryFilters />
+        </div>
+        <div className="col-span-8 space-y-3">
+          <TripList allTrips={allTrips} />
+        </div>
+      </div>
       <TripPagination totalCount={totalCount} />
     </div>
   );

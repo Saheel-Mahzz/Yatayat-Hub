@@ -34,6 +34,8 @@ export default function CreateBusModel({
       toast.success(state.message);
       onSuccess?.();
       router.refresh();
+    } else if (state.message && !state.success) {
+      toast.error(state.message);
     }
   }, [state]);
 

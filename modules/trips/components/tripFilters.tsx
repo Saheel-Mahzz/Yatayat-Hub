@@ -33,7 +33,7 @@ export default function TripFilters({
     const formData = new FormData(e.currentTarget);
 
     // 1. Initial empty search params initialize garne
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams);
 
     // 2. Form fields bata values line
     const from = formData.get("from_destination") as string;

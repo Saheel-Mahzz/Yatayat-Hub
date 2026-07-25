@@ -11,6 +11,7 @@ export default async function busCreateAction(
   const method: "patch" | "post" = id ? "patch" : "post";
   const url = id ? `/buses/${id}/` : "/buses/";
   const rawData = {
+    id: id,
     name: (formData.get("name") as string) || "",
     number_plate: (formData.get("number_plate") as string) || "",
     total_seats: (formData.get("total_seats") as string) || "",
