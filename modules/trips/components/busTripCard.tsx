@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { IBusTrip } from "../definitions/trips.types";
 
 export default function BusTripCard({ trip }: { trip: IBusTrip }) {
+  console.log("trip", trip);
   return (
     <div className="max-w-4xl mx-auto border rounded-2xl p-4 bg-white shadow-sm hover:shadow-md transition">
       {/* TOP ROW */}
@@ -56,13 +57,13 @@ export default function BusTripCard({ trip }: { trip: IBusTrip }) {
           <div className="flex items-center gap-1 text-muted-foreground">
             <CalendarDays className="w-4 h-4" />
 
-            <span>24 July 2026</span>
+            <span>{trip.date}</span>
           </div>
 
           <div className="flex items-center gap-1 text-muted-foreground">
             <Clock3 className="w-4 h-4" />
 
-            <span>07:30 AM</span>
+            <span>{trip.time}</span>
           </div>
 
           <Badge className="bg-green-600 hover:bg-green-600">

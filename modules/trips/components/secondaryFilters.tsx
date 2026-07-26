@@ -18,7 +18,8 @@ export default function SecondaryFilters() {
   const pathname = usePathname();
   const params = new URLSearchParams(search);
   const handleFilterChange = (key: string, value: string) => {
-    if (value === "ALL" || !value) {
+    const currentValue = params.get(key);
+    if (value === "ALL" || currentValue === value) {
       params.delete(key);
     } else {
       params.set(key, value);

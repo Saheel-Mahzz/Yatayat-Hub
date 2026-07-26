@@ -108,7 +108,7 @@ export default function TripFilters({
           </div>
 
           <div className="flex-1 min-w-0">
-            <DateField />
+            <DateField name="date" />
           </div>
 
           <div className="flex-1 min-w-0">

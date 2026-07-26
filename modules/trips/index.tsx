@@ -35,7 +35,10 @@ export default async function Trips({
         <div className="col-span-4">
           <SecondaryFilters />
         </div>
-        <div className="col-span-8 space-y-3">
+        <div
+          className="col-span-8 space-y-3
+        "
+        >
           <TripList allTrips={allTrips} />
         </div>
       </div>
