@@ -7,15 +7,22 @@ export default async function tripCreateAction(
   prevstate: ActionState<Trip>,
   formData: FormData,
 ) {
+  const id = prevstate?.data?.id;
+  const method = id ? "patch" : "post";
+  const url = id ? `/trips/${id}/` : "/trips/";
+  const message = id
+    ? "Trip edited Successfully!"
+    : "Trip created Successfully!";
+
   const rawDate = formData.get("date") as string;
   const formattedDate = rawDate ? format(rawDate, "yyyy-MM-dd") : "";
   const rawData = {
+    id: id,
     bus: (formData.get("bus") as string) || "",
     time: (formData.get("time") as string) || "",
     from_location: (formData.get("from_location") as string) || "",
     to_location: (formData.get("to_location") as string) || "",
     price: (formData.get("price") as string) || "",
-    // date: (formData.get("date") as string) || "",
     date: formattedDate,
   };
 
@@ -44,11 +51,11 @@ export default async function tripCreateAction(
   }
 
   try {
-    const reponse = await api.post("/trips/", rawData);
+    const reponse = await api[method](url, rawData);
     return {
       data: reponse.data,
       success: true,
-      message: "Bus Created Successfully!",
+      message: message,
       error: null,
     };
   } catch (err) {

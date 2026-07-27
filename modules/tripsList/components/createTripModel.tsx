@@ -43,10 +43,16 @@ export default function CreateTripModel({
   const [toLocation, setToLocation] = useState<string | null>(null);
   const [selectedBus, setSelectedBus] = useState<string | null>(null);
 
-  const buttonText = isPending ? "Creating.." : "Create Trip";
-  const router = useRouter();
+  console.log("seelcted location", fromLocation);
 
-  console.log("state", state);
+  const buttonText = isPending
+    ? trips
+      ? "Editing"
+      : "Creating.."
+    : trips
+      ? "Edit Trip"
+      : "Create Trip";
+  const router = useRouter();
 
   useEffect(() => {
     if (state.success) {
@@ -90,11 +96,11 @@ export default function CreateTripModel({
           placeholder="Choose a bus "
           value={selectedBus}
           onSelect={setSelectedBus}
-          defaultValue={state?.data?.bus?.id}
+          defaultValue={state?.data?.bus?.id || state?.data?.bus}
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <DateField name="date" />
+          <DateField name="date" defaultValue={state?.data?.date} />
           <InputElement
             type="time"
             label="Time"

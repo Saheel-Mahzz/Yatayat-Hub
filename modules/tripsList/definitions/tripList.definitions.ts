@@ -15,7 +15,8 @@ export interface Trip {
 }
 
 export const TripSchema = z.object({
-  id: z.string().optional(),
+  // id: z.string().optional(),
+  id: z.union([z.string(), z.number()]).optional(),
   bus: z.string().min(1, "This field is required!"),
   time: z.string().min(1, "This field is required!"),
   date: z.string().min(1, "This field is required!"),

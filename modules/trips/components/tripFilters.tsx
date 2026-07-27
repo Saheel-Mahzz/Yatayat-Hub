@@ -46,11 +46,11 @@ export default function TripFilters({
     if (from) params.set("from_location", from);
     if (to) params.set("to_location", to);
     if (passenger) params.set("passenger", passenger);
-    if (date) params.set("departure_time", date);
-
     if (date) {
       const formattedDate = format(date, "yyyy-MM-dd");
-      params.set("departure_time", formattedDate);
+      params.set("date", formattedDate);
+    } else {
+      params.delete("date");
     }
     // 4. Clean URL push handine
     // output: /bookings?from_location=KTM&passenger=2

@@ -11,6 +11,9 @@ export async function handleApi<T>(requestFn: () => Promise<T>): Promise<T> {
       const serverMessage = err.response?.data?.message;
       const statusCode = err.response?.status;
 
+      console.log("err", err);
+      console.log("backend err", err?.response?.data);
+
       throw new Error(
         serverMessage ||
           `Request failed with status code ${statusCode || "Unknown"}`,

@@ -9,9 +9,18 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
 
-export default function DateField({ name }: { name: string }) {
+export default function DateField({
+  name,
+  defaultValue,
+}: {
+  name: string;
+  defaultValue?: string;
+}) {
   // const [date, setDate] = useState();
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  // const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date | undefined>(
+    defaultValue ? new Date(defaultValue) : new Date(),
+  );
   // const maxDate = new Date().getDate() + 30;
   const maxFutureDate = new Date();
   // Aaja ko date ma 30 din thapeko:
@@ -20,7 +29,13 @@ export default function DateField({ name }: { name: string }) {
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       {/* <input type="hidden" name="departure_time" value={date} />
        */}
-      <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
+      {/* <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
+       */}
+      <input
+        type="hidden"
+        name={name}
+        value={date ? format(date, "yyyy-MM-dd") : ""}
+      />
       <CalendarIcon className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">Departure</span>
