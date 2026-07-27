@@ -11,6 +11,18 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BUS_TYPE } from "@/modules/busList/constants/busType.const";
+import { SelectElement } from "@/components/select";
+
+const PRICES = [
+  {
+    value: "price_asc",
+    label: "Price: Low to High",
+  },
+  {
+    value: "price_desc",
+    label: "Price: High to Low",
+  },
+];
 
 export default function SecondaryFilters() {
   const search = useSearchParams();
@@ -18,6 +30,7 @@ export default function SecondaryFilters() {
   const pathname = usePathname();
   const params = new URLSearchParams(search);
   const handleFilterChange = (key: string, value: string) => {
+    params.delete("page");
     const currentValue = params.get(key);
     if (value === "ALL" || currentValue === value) {
       params.delete(key);
@@ -58,6 +71,14 @@ export default function SecondaryFilters() {
             </SelectItem>
           </SelectContent>
         </Select>
+
+        <SelectElement
+          label="Sort by price"
+          name="price_sort"
+          options={PRICES}
+          placeholder="Sort by price"
+          onChange={handleFilterChange}
+        />
       </div>
 
       <div className="flex flex-col gap-2.5">

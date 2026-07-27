@@ -35,6 +35,7 @@ export default function Trips({
           onSuccess={() => setOpen(false)}
           locations={locations}
           buses={buses}
+          trips={row}
         />
       }
     />

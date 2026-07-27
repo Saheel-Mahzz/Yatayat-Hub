@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from "lucide-react";
-import SearchFields, { ILocation } from "./search/components/searchFields";
+import SearchFields from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -30,16 +30,17 @@ export default function TripFilters({
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
 
+    const formData = new FormData(e.currentTarget);
     // 1. Initial empty search params initialize garne
     const params = new URLSearchParams(searchParams);
+    params.delete("page");
 
     // 2. Form fields bata values line
     const from = formData.get("from_destination") as string;
     const to = formData.get("to_destination") as string;
     const passenger = formData.get("passenger") as string; // Check dynamic passenger name attribute
-    const date = formData.get("departure_time") as string; // Check dynamic date name attribute
+    const date = formData.get("date") as string; // Check dynamic date name attribute
 
     // 3. Backend ko logic jastai input check garera query set garne
     if (from) params.set("from_location", from);
@@ -56,16 +57,18 @@ export default function TripFilters({
     router.push(`/${path}?${params.toString()}`);
   };
   const [selectedFrom, setSelectedFrom] = useState<string | null>(
-    searchParams.get("from_location"),
+    searchParams.get("from_location") ?? null,
   );
   const [selectedTo, setSelectedTo] = useState<string | null>(
-    searchParams.get("to_location"),
+    searchParams.get("to_location") ?? null,
   );
 
   const switchDestination = () => {
     setSelectedFrom(selectedTo);
     setSelectedTo(selectedFrom);
   };
+
+  console.log("search params", searchParams.get("from_location"));
 
   const isDestinationMissing = !selectedFrom || !selectedTo;
 

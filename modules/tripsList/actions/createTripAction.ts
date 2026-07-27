@@ -7,8 +7,8 @@ export default async function tripCreateAction(
   prevstate: ActionState<Trip>,
   formData: FormData,
 ) {
-  const date = formData.get("date") as string;
-  const formattedDate = format(date, "yyyy-MM-dd");
+  const rawDate = formData.get("date") as string;
+  const formattedDate = rawDate ? format(rawDate, "yyyy-MM-dd") : "";
   const rawData = {
     bus: (formData.get("bus") as string) || "",
     time: (formData.get("time") as string) || "",

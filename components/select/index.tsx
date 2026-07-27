@@ -16,6 +16,7 @@ export function SelectElement({
   label,
   err,
   defaultValue,
+  onChange,
 }: {
   options: ILocation[];
   placeholder: string;
@@ -23,22 +24,23 @@ export function SelectElement({
   name: string;
   err?: string;
   defaultValue?: string;
+  onChange?: (key: string, value: string) => void;
 }) {
   return (
     <Field className="w-full ">
       <FieldLabel>{label}</FieldLabel>
-      <Select name={name} defaultValue={defaultValue}>
+      <Select
+        name={name}
+        defaultValue={defaultValue}
+        onValueChange={(val) => onChange?.(name, val)}
+      >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             {options.map((item) => (
-              <SelectItem
-                key={item.value}
-                value={item.value}
-                defaultValue={defaultValue}
-              >
+              <SelectItem key={item.value} value={item.value}>
                 {item.label}
               </SelectItem>
             ))}

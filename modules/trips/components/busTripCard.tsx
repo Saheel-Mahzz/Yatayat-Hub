@@ -4,9 +4,18 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IBusTrip } from "../definitions/trips.types";
+import { format, parse } from "date-fns";
 
 export default function BusTripCard({ trip }: { trip: IBusTrip }) {
-  console.log("trip", trip);
+  const formatTimeString = (timeString?: string) => {
+    if (!timeString) return "";
+    try {
+      const parsedDate = parse(timeString, "HH:mm:ss", new Date());
+      return format(parsedDate, "hh:mm a"); // Output e.g., "03:00 PM"
+    } catch (error) {
+      return timeString; // Fail-safe: kasei garera format milena bhane original pathaideune UI freeze huna nadina
+    }
+  };
   return (
     <div className="max-w-4xl mx-auto border rounded-2xl p-4 bg-white shadow-sm hover:shadow-md transition">
       {/* TOP ROW */}
@@ -63,7 +72,7 @@ export default function BusTripCard({ trip }: { trip: IBusTrip }) {
           <div className="flex items-center gap-1 text-muted-foreground">
             <Clock3 className="w-4 h-4" />
 
-            <span>{trip.time}</span>
+            <span>{formatTimeString(trip.time)}</span>
           </div>
 
           <Badge className="bg-green-600 hover:bg-green-600">

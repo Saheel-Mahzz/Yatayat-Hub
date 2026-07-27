@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 import DateField from "@/modules/trips/components/search/components/dateField";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Trip } from "../definitions/tripList.definitions";
 
 export interface IDropdown {
   label: string;
@@ -18,21 +19,22 @@ export interface IDropdown {
 interface ICreateTrip {
   locations: IDropdown[];
   buses: IDropdown[];
+  trips?: Trip;
   onSuccess: () => void;
 }
 
-const initialState = {
-  success: false,
-  error: null,
-  message: "",
-  data: null,
-};
-
 export default function CreateTripModel({
+  trips,
   locations,
   buses,
   onSuccess,
 }: ICreateTrip) {
+  const initialState = {
+    success: false,
+    error: null,
+    message: "",
+    data: { ...trips },
+  };
   const [state, formAction, isPending] = useActionState(
     tripCreateAction,
     initialState,
@@ -66,6 +68,7 @@ export default function CreateTripModel({
             onSelect={setFromLocation}
             placeholder="Select "
             value={fromLocation}
+            defaultValue={state?.data?.from_location}
           />
 
           <SearchFields
@@ -76,6 +79,7 @@ export default function CreateTripModel({
             onSelect={setToLocation}
             placeholder="Select "
             value={toLocation}
+            defaultValue={state?.data?.to_location}
           />
         </div>
 
@@ -86,6 +90,7 @@ export default function CreateTripModel({
           placeholder="Choose a bus "
           value={selectedBus}
           onSelect={setSelectedBus}
+          defaultValue={state?.data?.bus?.id}
         />
 
         <div className="grid grid-cols-2 gap-4">

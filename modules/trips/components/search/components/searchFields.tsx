@@ -35,6 +35,7 @@ interface ISearchFields {
   onSelect?: (value: string) => void;
   // disable?: ILocation | null;
   disable?: string | null;
+  defaultValue?: string;
 }
 
 export default function SearchFields({
@@ -45,12 +46,20 @@ export default function SearchFields({
   value,
   onSelect,
   disable,
+  defaultValue,
 }: ISearchFields) {
   const [open, setOpen] = useState(false);
+  const currentValue = value || defaultValue;
   // const [selected, setSelected] = useState<ILocation | null>(null);
   // const selectedLocation = locations.find((loc) => loc.value === value);
+  // const selectedLocation = locations.find(
+  //   (loc) => String(loc.value) === String(currentValue),
+  // );
+
   const selectedLocation = locations.find(
-    (loc) => String(loc.value) === String(value),
+    (loc) =>
+      String(loc.value) === String(currentValue) ||
+      String(loc.label).toLowerCase() === String(currentValue).toLowerCase(),
   );
 
   return (
@@ -60,7 +69,7 @@ export default function SearchFields({
         <span className="text-xs text-gray-500">{label}</span>
 
         {/* Hidden input — yehi le FormData ma value carry garcha */}
-        <input type="hidden" name={name} value={value ?? ""} />
+        <input type="hidden" name={name} value={currentValue ?? ""} />
 
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
