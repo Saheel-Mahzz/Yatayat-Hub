@@ -1,28 +1,11 @@
 "use client";
 
-import { Bus, ArrowUpDown, Filter } from "lucide-react";
+import { Bus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BUS_TYPE } from "@/modules/busList/constants/busType.const";
 import { SelectElement } from "@/components/select";
-
-const PRICES = [
-  {
-    value: "price_asc",
-    label: "Price: Low to High",
-  },
-  {
-    value: "price_desc",
-    label: "Price: High to Low",
-  },
-];
+import { PRICES } from "../constants/passenger.const";
 
 export default function SecondaryFilters() {
   const search = useSearchParams();
@@ -51,29 +34,8 @@ export default function SecondaryFilters() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
-          <ArrowUpDown className="w-3.5 h-3.5 text-gray-500" /> Sort By Price
-        </label>
-
-        <Select
-          defaultValue="default"
-          onValueChange={(val) => handleFilterChange("price_sort", val)}
-        >
-          <SelectTrigger className="w-full h-10 text-xs rounded-xl border-gray-200">
-            <SelectValue placeholder="Sort by Price" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="price_asc" className="text-xs">
-              Price: Low to High
-            </SelectItem>
-            <SelectItem value="price_desc" className="text-xs">
-              Price: High to Low
-            </SelectItem>
-          </SelectContent>
-        </Select>
-
         <SelectElement
-          label="Sort by price"
+          label="Trip Price"
           name="price_sort"
           options={PRICES}
           placeholder="Sort by price"

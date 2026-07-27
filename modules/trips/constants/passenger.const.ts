@@ -12,3 +12,14 @@ export const PASSENGERS = [
     label: "3 Passenger",
   },
 ];
+
+export const PRICES = [
+  {
+    value: "price_asc",
+    label: "Price: Low to High",
+  },
+  {
+    value: "price_desc",
+    label: "Price: High to Low",
+  },
+];

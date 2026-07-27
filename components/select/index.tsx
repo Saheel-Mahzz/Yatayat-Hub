@@ -28,7 +28,9 @@ export function SelectElement({
 }) {
   return (
     <Field className="w-full ">
-      <FieldLabel>{label}</FieldLabel>
+      <FieldLabel className="text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+        {label}
+      </FieldLabel>
       <Select
         name={name}
         defaultValue={defaultValue}

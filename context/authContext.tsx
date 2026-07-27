@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("access_token", accessToken);
     localStorage.setItem("refresh_token", refreshToken);
     document.cookie = `access_token=${accessToken}; path=/; max-age=86400`;
+    document.cookie = `refresh_token=${refreshToken}; path=/; max-age=86400`;
     setIsLoggedIn(true);
   };
 
