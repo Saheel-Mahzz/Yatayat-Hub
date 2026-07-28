@@ -4,6 +4,7 @@ import { List } from "@/components/list";
 import { getBusList } from "./api/getBuslist";
 import TripPagination from "../trips/components/pagination";
 import Bus from "./components/bus";
+import { getPageOffset } from "@/components/list/utils/getPageOffSet";
 
 export default async function BusList({
   search,
@@ -69,7 +70,11 @@ export default async function BusList({
         </CreateButton> */}
         <Bus />
       </div>
-      <List columns={columns} rows={allBuses} />
+      <List
+        columns={columns}
+        rows={allBuses}
+        startIndex={getPageOffset(search)}
+      />
       <TripPagination totalCount={totalCount} />
     </>
   );

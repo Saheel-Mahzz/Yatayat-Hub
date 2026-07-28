@@ -11,6 +11,7 @@ import { Column } from "@/modules/myBookings";
 interface IList<T> {
   columns: Column<T>[];
   rows: T[];
+  startIndex?: number;
   cell?: (row: T, index?: number) => React.ReactNode;
 }
 
@@ -46,7 +47,11 @@ function getNestedValue<T>(
   return result as string | boolean | null | undefined;
 }
 
-export function List<T extends object>({ columns, rows }: IList<T>) {
+export function List<T extends object>({
+  columns,
+  rows,
+  startIndex,
+}: IList<T>) {
   if (rows.length === 0)
     return (
       <div className="flex items-center justify-center text-3xl mt-7">
@@ -109,7 +114,7 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
               "
                   >
                     {col?.cell
-                      ? col.cell?.(row, rowIndex)
+                      ? col.cell?.(row, rowIndex + (startIndex ?? 0))
                       : getNestedValue(row, col?.accessorKey as string)}
                   </TableCell>
                 ))}

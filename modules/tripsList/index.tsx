@@ -2,11 +2,10 @@ import { getBusDropdown, getTripsList } from "./api/getTripsList";
 import { Column } from "../myBookings";
 import { Trip } from "./definitions/tripList.definitions";
 import { List } from "@/components/list";
-import CreateTripModel from "./components/createTripModel";
-import CreateButton from "@/components/createButton";
 import { getLocations } from "../trips/api/getLocations";
 import TripPagination from "../trips/components/pagination";
 import Trips from "./components/trips";
+import { getPageOffset } from "@/components/list/utils/getPageOffSet";
 
 export default async function TripsList({
   search,
@@ -84,7 +83,11 @@ export default async function TripsList({
           <CreateTripModel locations={locations} buses={buses} />
         </CreateButton> */}
       </div>
-      <List columns={columns} rows={allTrips} />
+      <List
+        columns={columns}
+        rows={allTrips}
+        startIndex={getPageOffset(search)}
+      />
       <TripPagination totalCount={total} />
     </>
   );

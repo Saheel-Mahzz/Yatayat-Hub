@@ -5,6 +5,7 @@ import { List } from "@/components/list";
 import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
 import TripPagination from "../trips/components/pagination";
+import { getPageOffset } from "@/components/list/utils/getPageOffSet";
 export interface Column<T> {
   header: string;
   accessorKey: keyof T | string;
@@ -65,7 +66,11 @@ export default async function MyBookings({
   ];
   return (
     <div className="w-full max-w-5xl mx-auto ">
-      <List columns={columns} rows={allBooking} />
+      <List
+        columns={columns}
+        rows={allBooking}
+        startIndex={getPageOffset(search)}
+      />
       <TripPagination totalCount={totalCount} />
     </div>
   );
