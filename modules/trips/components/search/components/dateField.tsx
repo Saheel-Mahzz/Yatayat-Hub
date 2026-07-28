@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function DateField({
   name,
@@ -16,21 +16,13 @@ export default function DateField({
   name: string;
   defaultValue?: string;
 }) {
-  // const [date, setDate] = useState();
-  // const [date, setDate] = useState<Date | undefined>(undefined);
   const [date, setDate] = useState<Date | undefined>(
-    defaultValue ? new Date(defaultValue) : new Date(),
+    defaultValue ? new Date(defaultValue) : undefined,
   );
-  // const maxDate = new Date().getDate() + 30;
   const maxFutureDate = new Date();
-  // Aaja ko date ma 30 din thapeko:
   maxFutureDate.setDate(maxFutureDate.getDate() + 30);
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
-      {/* <input type="hidden" name="departure_time" value={date} />
-       */}
-      {/* <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
-       */}
       <input
         type="hidden"
         name={name}
@@ -45,16 +37,7 @@ export default function DateField({
               variant="ghost"
               className="justify-start p-0 h-6 text-gray-500"
             >
-              {/* Select date
-               */}
-              {date ? (
-                // format(date, "PPP")
-                format(date, "yyyy-MM-dd")
-              ) : (
-                <span className="text-muted-foreground font-normal">
-                  Select date
-                </span>
-              )}
+              {date ? format(date, "yyyy-MM-dd") : "select date"}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">

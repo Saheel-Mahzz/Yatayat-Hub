@@ -4,7 +4,7 @@ import z from "zod";
 export interface Trip {
   available_seats?: number;
   booked_seats?: string[];
-  bus?: Buses;
+  bus?: Buses | string;
   date: string;
   time: string;
   // departure_time: string;

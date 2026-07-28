@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-
 import { useActionState, useEffect, useState } from "react";
 import tripCreateAction from "../actions/createTripAction";
 import InputElement from "@/components/inputFields/inputElement";
@@ -72,7 +71,7 @@ export default function CreateTripModel({
             locations={locations}
             name="from_location"
             onSelect={setFromLocation}
-            placeholder="Select "
+            placeholder="Select"
             value={fromLocation}
             defaultValue={state?.data?.from_location}
           />

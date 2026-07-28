@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { Trip, TripSchema } from "../definitions/tripList.definitions";
 import { ActionState } from "@/types/action-state";
 import { format } from "date-fns";
+import { AxiosError } from "axios";
 
 export default async function tripCreateAction(
   prevstate: ActionState<Trip>,
@@ -32,9 +33,7 @@ export default async function tripCreateAction(
   if (!result.success) {
     const fieldErrors = result?.error?.issues?.reduce<Record<string, string>>(
       (acc, curr) => {
-        // Path array ko first indexing item extract garera string typed conversion deko
         const key = curr.path[0] as string;
-
         if (key) {
           acc[key] = curr.message;
         }
@@ -60,7 +59,9 @@ export default async function tripCreateAction(
     };
   } catch (err) {
     console.log("err", err);
-    console.log("BACKEND ERROR DATA:", err?.response?.data);
+    if (err instanceof AxiosError) {
+      console.log("BACKEND ERROR DATA:", err?.response?.data);
+    }
     return {
       success: false,
       message: "Internal Server Error!",

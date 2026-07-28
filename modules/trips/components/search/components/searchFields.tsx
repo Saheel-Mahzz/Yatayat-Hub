@@ -1,10 +1,7 @@
 "use client";
-
 import { useState } from "react";
-import { ChevronsUpDown, MapPin } from "lucide-react";
-
+import { Check, ChevronsUpDown, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import {
   Popover,
   PopoverContent,
@@ -18,6 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 export interface ILocation {
   label: string;
@@ -29,11 +27,8 @@ interface ISearchFields {
   placeholder: string;
   name: string;
   locations: ILocation[];
-  // value?: ILocation | null;
   value?: string | null;
-  // onSelect?: (value: ILocation) => void;
   onSelect?: (value: string) => void;
-  // disable?: ILocation | null;
   disable?: string | null;
   defaultValue?: string;
 }
@@ -50,11 +45,6 @@ export default function SearchFields({
 }: ISearchFields) {
   const [open, setOpen] = useState(false);
   const currentValue = value || defaultValue;
-  // const [selected, setSelected] = useState<ILocation | null>(null);
-  // const selectedLocation = locations.find((loc) => loc.value === value);
-  // const selectedLocation = locations.find(
-  //   (loc) => String(loc.value) === String(currentValue),
-  // );
 
   const selectedLocation = locations.find(
     (loc) =>
@@ -68,15 +58,10 @@ export default function SearchFields({
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">{label}</span>
 
-        {/* Hidden input — yehi le FormData ma value carry garcha */}
-        {/* <input type="hidden" name={name} value={currentValue ?? ""} />
-         */}
         <input
           type="hidden"
           name={name}
-          value={
-            selectedLocation ? selectedLocation.value : (currentValue ?? "")
-          }
+          value={selectedLocation?.value ?? ""}
         />
 
         <Popover open={open} onOpenChange={setOpen}>
@@ -87,7 +72,6 @@ export default function SearchFields({
               aria-expanded={open}
               className="justify-between p-0 h-6 font-normal text-left"
             >
-              {/* {value ? value.label : placeholder} */}
               {selectedLocation ? selectedLocation.label : placeholder}
               <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
             </Button>
@@ -102,28 +86,19 @@ export default function SearchFields({
                     <CommandItem
                       key={loc.value}
                       value={loc.label}
-                      // onSelect={() => {
-                      //   onselect(loc);
-                      //   setOpen(false);
-                      // }}
                       onSelect={() => {
-                        // onSelect?.(loc);
                         onSelect?.(loc?.value);
                         setOpen(false);
                       }}
-                      // className={`${loc.value === disable?.value ? "cursor-none" : "cursor-pointer"}`}
                       className={`${loc.value === disable ? "cursor-none" : "cursor-pointer"}`}
-                      // disabled={loc.value === disable?.value}
                       disabled={loc.value === disable}
                     >
-                      {/* <Check
+                      <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          selected?.value === loc.value
-                            ? "opacity-100"
-                            : "opacity-0",
+                          value === loc.value ? "opacity-100" : "opacity-0",
                         )}
-                      /> */}
+                      />
                       {loc.label}
                     </CommandItem>
                   ))}
