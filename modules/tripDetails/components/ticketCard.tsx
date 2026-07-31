@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ITripDetails } from "../definitions/tripDetails";
-import { format, parseISO } from "date-fns";
+import { format, isBefore, parseISO, startOfDay } from "date-fns";
 
 interface ITicketDetails {
   first_name?: string;
@@ -34,6 +34,7 @@ export default function TicketModal({
   trip,
   booked_at,
 }: ITicketDetails) {
+  console.log("booked at", booked_at);
   // const [open, setOpen] = useState<boolean>(true);
 
   // const dateObject = parseISO(booked_at as string);
@@ -42,14 +43,24 @@ export default function TicketModal({
 
   // // 2. Ani afule khojeko pattern ma format garne
   // const formattedDate = format(dateObject, "yyyy-MM-dd");
+  // const formattedDate = booked_at
+  //   ? format(new Date(booked_at), "yyyy-MM-dd")
+  //   : "Not Available";
+
   const formattedDate = booked_at
-    ? format(new Date(booked_at), "yyyy-MM-dd")
-    : "Not Available";
+    ? format(booked_at, "yyyy-MM-dd")
+    : "Not Avaliable";
+
+  console.log("formatted date", formattedDate);
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
 
-  const isPastTrip =
-    new Date(formattedDate).setHours(0, 0, 0, 0) <
-    new Date().setHours(0, 0, 0, 0);
+  // const isPastTrip =
+  //   new Date(formattedDate).setHours(0, 0, 0, 0) <
+  //   new Date().setHours(0, 0, 0, 0);
+
+  const isPastTrip = booked_at
+    ? isBefore(startOfDay(new Date(booked_at)), startOfDay(new Date()))
+    : false;
   return (
     // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>

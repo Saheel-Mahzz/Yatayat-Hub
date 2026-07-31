@@ -57,8 +57,8 @@ export const LoginSchema = z.object({
 
 export const RegisterSchema = z
   .object({
-    first_name: z.string().min(1, "This field cannot be left empty!"),
-    last_name: z.string().min(1, "This field cannot be left empty!"),
+    first_name: z.string().trim().min(1, "This field cannot be left empty!"),
+    last_name: z.string().trim().min(1, "This field cannot be left empty!"),
     email: z
       .string()
       .min(1, "This field cannot be left empty!")

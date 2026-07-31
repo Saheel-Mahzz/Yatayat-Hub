@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { RegisterSchema } from "../definitions/auth.definitons";
+import { AxiosError } from "axios";
 interface RegisterState {
   // data: IAuth | null;
   success: boolean;
@@ -58,6 +59,10 @@ export async function registerAction(
       error: null,
     };
   } catch (err) {
+    console.log("api eerror ", err);
+    if (err instanceof AxiosError) {
+      console.log(err.response?.data);
+    }
     return {
       success: false,
       message: "Something went wrong!",
