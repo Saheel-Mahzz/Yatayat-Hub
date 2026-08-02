@@ -3,9 +3,8 @@
 import { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircle, RefreshCw } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Error({
   error,
@@ -18,7 +17,7 @@ export default function Error({
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    console.error("Bus Route Error:", error);
+    console.error("err", error);
   }, [error]);
 
   const handleRetry = () => {

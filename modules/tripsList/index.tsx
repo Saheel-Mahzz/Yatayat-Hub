@@ -78,10 +78,6 @@ export default async function TripsList({
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Trips</h1>
         <Trips locations={locations} buses={buses} />
-
-        {/* <CreateButton addButtonText="Add Trip" modelTitle="Create New trip">
-          <CreateTripModel locations={locations} buses={buses} />
-        </CreateButton> */}
       </div>
       <List
         columns={columns}

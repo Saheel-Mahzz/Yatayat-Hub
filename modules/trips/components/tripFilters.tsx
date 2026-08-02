@@ -32,17 +32,14 @@ export default function TripFilters({
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    // 1. Initial empty search params initialize garne
     const params = new URLSearchParams(searchParams);
     params.delete("page");
 
-    // 2. Form fields bata values line
     const from = formData.get("from_destination") as string;
     const to = formData.get("to_destination") as string;
-    const passenger = formData.get("passenger") as string; // Check dynamic passenger name attribute
-    const date = formData.get("date") as string; // Check dynamic date name attribute
+    const passenger = formData.get("passenger") as string;
+    const date = formData.get("date") as string;
 
-    // 3. Backend ko logic jastai input check garera query set garne
     if (from) params.set("from_location", from);
     if (to) params.set("to_location", to);
     if (passenger) params.set("passenger", passenger);
@@ -52,8 +49,6 @@ export default function TripFilters({
     } else {
       params.delete("date");
     }
-    // 4. Clean URL push handine
-    // output: /bookings?from_location=KTM&passenger=2
     router.push(`/${path}?${params.toString()}`);
   };
   const [selectedFrom, setSelectedFrom] = useState<string | null>(
@@ -67,8 +62,6 @@ export default function TripFilters({
     setSelectedFrom(selectedTo);
     setSelectedTo(selectedFrom);
   };
-
-  console.log("search params", searchParams.get("from_location"));
 
   const isDestinationMissing = !selectedFrom || !selectedTo;
 

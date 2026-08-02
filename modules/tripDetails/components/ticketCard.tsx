@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { CheckCircle2, Download, Bus } from "lucide-react";
 import {
   Dialog,
@@ -11,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ITripDetails } from "../definitions/tripDetails";
-import { format, isBefore, parseISO, startOfDay } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 
 interface ITicketDetails {
   first_name?: string;

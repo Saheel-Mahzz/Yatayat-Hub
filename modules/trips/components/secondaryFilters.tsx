@@ -26,7 +26,6 @@ export default function SecondaryFilters() {
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-6">
-      {/* Header */}
       <div className="flex items-center gap-2 border-b pb-3 border-gray-100">
         <Filter className="w-4 h-4 text-gray-500" />
         <h3 className="font-semibold text-gray-800 text-sm tracking-wide">
