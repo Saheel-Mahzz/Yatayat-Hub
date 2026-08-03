@@ -33,6 +33,8 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
         setIsTicketModalOpen(true);
       }, 0);
       router.refresh();
+    } else {
+      toast.error(state?.message);
     }
   }, [state]);
 

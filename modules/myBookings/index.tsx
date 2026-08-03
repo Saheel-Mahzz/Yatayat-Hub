@@ -6,6 +6,7 @@ import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
 import TripPagination from "../trips/components/pagination";
 import { getPageOffset } from "@/components/list/utils/getPageOffSet";
+import { Badge } from "@/components/ui/badge";
 export interface Column<T> {
   header: string;
   accessorKey: keyof T | string;
@@ -24,11 +25,13 @@ export default async function MyBookings({
   const totalCount = response?.data?.count || 0;
   const allBooking = response?.data?.results || [];
 
+  console.log("all Bookings", allBooking);
+
   const columns: Column<IBooking>[] = [
     {
       header: "S.N.",
-      accessorKey: "sn", // Yesle farak pardaina, just key ko lagi
-      cell: (row, index) => <span>{(index ?? 0) + 1}</span>, // Index dynamic pass garchu hami
+      accessorKey: "sn",
+      cell: (row, index) => <span>{(index ?? 0) + 1}</span>,
     },
     {
       header: "Bus Name",
@@ -42,6 +45,15 @@ export default async function MyBookings({
     {
       header: "Seat Number",
       accessorKey: "seat_number",
+      cell: (row) => {
+        const booked_seats = row?.trip?.booked_seats;
+        if (!booked_seats) return "-";
+        return booked_seats.map((seat, index) => (
+          <Badge variant="outline" key={index} className="ml-2">
+            {seat}
+          </Badge>
+        ));
+      },
     },
 
     // {
