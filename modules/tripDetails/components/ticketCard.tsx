@@ -17,10 +17,11 @@ interface ITicketDetails {
   last_name?: string;
   email?: string;
   trip: ITripDetails;
-  seat_number: string;
+  seat_number: string | string[];
   isTicketModelOpen: boolean;
   setIsTicketModelOpen: (type: boolean) => void;
-  booked_at?: string;
+  departure_date?: string;
+  depature_time?: string;
 }
 
 export default function TicketModal({
@@ -31,9 +32,10 @@ export default function TicketModal({
   last_name,
   seat_number,
   trip,
-  booked_at,
+  departure_date,
+  depature_time,
 }: ITicketDetails) {
-  console.log("booked at", booked_at);
+  console.log("booked at", departure_date);
   // const [open, setOpen] = useState<boolean>(true);
 
   // const dateObject = parseISO(booked_at as string);
@@ -46,19 +48,20 @@ export default function TicketModal({
   //   ? format(new Date(booked_at), "yyyy-MM-dd")
   //   : "Not Available";
 
-  const formattedDate = booked_at
-    ? format(booked_at, "yyyy-MM-dd")
+  const formattedDate = departure_date
+    ? format(departure_date, "yyyy-MM-dd")
     : "Not Avaliable";
 
   console.log("formatted date", formattedDate);
+  console.log("seat numbers", seat_number);
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
 
   // const isPastTrip =
   //   new Date(formattedDate).setHours(0, 0, 0, 0) <
   //   new Date().setHours(0, 0, 0, 0);
 
-  const isPastTrip = booked_at
-    ? isBefore(startOfDay(new Date(booked_at)), startOfDay(new Date()))
+  const isPastTrip = departure_date
+    ? isBefore(startOfDay(new Date(departure_date)), startOfDay(new Date()))
     : false;
   return (
     // Default open={true} for testing static UI popup view
@@ -149,12 +152,16 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Seat Number
               </span>
-              <Badge
-                variant="secondary"
-                className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border border-emerald-200 font-bold text-sm px-3 py-0.5 rounded-md"
-              >
-                {seat_number}
-              </Badge>
+              {Array.isArray(seat_number) &&
+                seat_number.map((seat) => (
+                  <Badge
+                    key={seat}
+                    variant="secondary"
+                    className="bg-emerald-50 m-1 text-emerald-700 hover:bg-emerald-50 border border-emerald-200 font-bold text-sm px-3 py-0.5 rounded-md"
+                  >
+                    {seat}
+                  </Badge>
+                ))}
             </div>
 
             <div className="col-span-2">
@@ -172,7 +179,9 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Departure Time
               </span>
-              <p className="font-semibold text-slate-800">08:30 AM</p>
+              <p className="font-semibold text-slate-800">
+                {depature_time ?? "-"}
+              </p>
             </div>
           </div>
         </div>

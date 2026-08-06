@@ -85,7 +85,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   };
 
   const calculatedRows = Math.ceil(Number(tripDetails?.bus?.total_seats) / 4); // Assuming 4 seats per row
-
+  console.log("state", state);
   return (
     <>
       <form onSubmit={handleBookingSubmit}>
@@ -136,9 +136,12 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             isTicketModelOpen={isTicketModalOpen}
             setIsTicketModelOpen={setIsTicketModalOpen}
             email={state?.data?.email}
-            seat_number={state?.data?.seat_number}
-            booked_at={state?.data?.booked_at}
+            seat_number={state?.data?.trip?.booked_seats}
+            departure_date={state?.data?.trip?.date}
             trip={state?.data?.trip}
+            first_name={state?.data?.user?.first_name}
+            last_name={state?.data?.user?.last_name}
+            depature_time={state?.data?.trip?.time}
           />
         </Card>
       </form>

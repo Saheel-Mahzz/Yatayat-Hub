@@ -1,6 +1,10 @@
 import TripDetails from "@/modules/tripDetails";
 
-export default async function page({ params }: { params: { id: string } }) {
+// interface PageProps {
+//   params: Promise<{ id: string }>;
+// }
+
+export default async function page({ params }: PageProps<"/booking/[id]">) {
   const { id } = await params;
   return <TripDetails tripId={id} />;
 }
