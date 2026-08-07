@@ -23,17 +23,18 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
   const [isAuthModelOpen, setIsAuthModelOpen] = useState<boolean>(false);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(false);
-
+  console.log("trip details", tripDetails);
   useEffect(() => {
     if (state?.success) {
       toast.success("Seat Booked Successfully!");
       setTimeout(() => {
-        // setSelectedSeat(null);
         setSelectedSeat([]);
         setIsTicketModalOpen(true);
       }, 0);
       router.refresh();
-    } else {
+      return;
+    }
+    if (state?.message) {
       toast.error(state?.message);
     }
   }, [state]);
@@ -85,7 +86,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   };
 
   const calculatedRows = Math.ceil(Number(tripDetails?.bus?.total_seats) / 4); // Assuming 4 seats per row
-  console.log("state", state);
   return (
     <>
       <form onSubmit={handleBookingSubmit}>
@@ -96,7 +96,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Select your seat</h2>
               <span className="text-sm text-muted-foreground">
-                {tripDetails?.bus?.total_seats} seats
+                {tripDetails?.available_seats} seats
               </span>
             </div>
             <SeatLegend />
@@ -126,7 +126,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             <Button
               type="submit"
               className="w-full mt-6 rounded-full cursor-pointer"
-              disabled={!selectedSeat || isPending}
+              disabled={selectedSeat.length == 0 || isPending}
             >
               Book Seat
             </Button>
@@ -136,7 +136,7 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
             isTicketModelOpen={isTicketModalOpen}
             setIsTicketModelOpen={setIsTicketModalOpen}
             email={state?.data?.email}
-            seat_number={state?.data?.trip?.booked_seats}
+            seat_number={state?.data?.seats}
             departure_date={state?.data?.trip?.date}
             trip={state?.data?.trip}
             first_name={state?.data?.user?.first_name}

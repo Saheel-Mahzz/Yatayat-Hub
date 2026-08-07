@@ -46,9 +46,9 @@ export default async function MyBookings({
       header: "Seat Number",
       accessorKey: "seat_number",
       cell: (row) => {
-        const booked_seats = row?.trip?.booked_seats;
-        if (!booked_seats) return "-";
-        return booked_seats.map((seat, index) => (
+        const seats = row?.seats;
+        if (!seats) return "-";
+        return seats.map((seat, index) => (
           <Badge variant="outline" key={index} className="ml-2">
             {seat}
           </Badge>

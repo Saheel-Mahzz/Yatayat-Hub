@@ -13,6 +13,7 @@ export interface IBooking {
   setIsTicketModelOpen: (type: boolean) => void;
   booked_at: string;
   user: IUser;
+  seats: string[];
 }
 
 export interface IBookingResponse {

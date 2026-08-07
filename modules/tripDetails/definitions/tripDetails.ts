@@ -12,6 +12,7 @@ export interface ITripDetails {
   price?: string | number;
   bus: Bus;
   booked_seats: string[];
+  available_seats: string;
 }
 
 export const LEGEND_ITEMS = [

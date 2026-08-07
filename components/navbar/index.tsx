@@ -49,7 +49,6 @@ export default function Navbar() {
   const handleAuthSuccess = () => {
     setOpen(false);
   };
-
   const handleLogOut = () => {
     logout();
     toast.success("Successfully logged out!");
