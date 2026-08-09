@@ -39,13 +39,7 @@ export default function TicketModal({
     ? format(departure_date, "yyyy-MM-dd")
     : "Not Avaliable";
 
-  console.log("formatted date", formattedDate);
-  console.log("seat numbers", seat_number);
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
-
-  // const isPastTrip =
-  //   new Date(formattedDate).setHours(0, 0, 0, 0) <
-  //   new Date().setHours(0, 0, 0, 0);
 
   const isPastTrip = departure_date
     ? isBefore(startOfDay(new Date(departure_date)), startOfDay(new Date()))

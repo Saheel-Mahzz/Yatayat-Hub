@@ -5,14 +5,14 @@ import React, { useState } from "react";
 
 import { SquarePen } from "lucide-react";
 import { Trip } from "../definitions/tripList.definitions";
-import CreateTripModel from "./createTripModel";
+import TripForm from "./tripForm";
 
 export interface IDropdown {
   label: string;
   value: string;
 }
 
-export default function Trips({
+export default function TripsModel({
   row,
   buses,
   locations,
@@ -31,7 +31,7 @@ export default function Trips({
       buttonText={row ? <SquarePen /> : "Add New Trips"}
       variant="outline"
       triggerComponent={
-        <CreateTripModel
+        <TripForm
           onSuccess={() => setOpen(false)}
           locations={locations}
           buses={buses}

@@ -4,8 +4,8 @@ import { Trip } from "./definitions/tripList.definitions";
 import { List } from "@/components/list";
 import { getLocations } from "../trips/api/getLocations";
 import TripPagination from "../trips/components/pagination";
-import Trips from "./components/trips";
 import { getPageOffset } from "@/components/list/utils/getPageOffSet";
+import TripsModel from "./components/tripsModel";
 
 export default async function TripsList({
   search,
@@ -70,14 +70,16 @@ export default async function TripsList({
     {
       header: "Actions",
       accessorKey: "",
-      cell: (row) => <Trips row={row} buses={buses} locations={locations} />,
+      cell: (row) => (
+        <TripsModel row={row} buses={buses} locations={locations} />
+      ),
     },
   ];
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Trips</h1>
-        <Trips locations={locations} buses={buses} />
+        <TripsModel locations={locations} buses={buses} />
       </div>
       <List
         columns={columns}

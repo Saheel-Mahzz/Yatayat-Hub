@@ -22,7 +22,7 @@ interface ICreateTrip {
   onSuccess: () => void;
 }
 
-export default function CreateTripModel({
+export default function TripForm({
   trips,
   locations,
   buses,

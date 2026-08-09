@@ -2,11 +2,11 @@
 
 import Model from "@/components/Model";
 import React, { useState } from "react";
-import CreateBusModel from "./createBusModel";
 import { Buses } from "../definitions/buses.definitions";
 import { SquarePen } from "lucide-react";
+import BusForm from "./busForm";
 
-export default function Bus({ row }: { row?: Buses }) {
+export default function BusModel({ row }: { row?: Buses }) {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Model
@@ -16,9 +16,7 @@ export default function Bus({ row }: { row?: Buses }) {
       withIcon={row ? false : true}
       buttonText={row ? <SquarePen /> : "Add New Bus"}
       variant="outline"
-      triggerComponent={
-        <CreateBusModel onSuccess={() => setOpen(false)} bus={row} />
-      }
+      triggerComponent={<BusForm onSuccess={() => setOpen(false)} bus={row} />}
     />
   );
 }

@@ -10,7 +10,7 @@ import { Buses } from "../definitions/buses.definitions";
 import { SelectElement } from "@/components/select";
 import { BUS_TYPE } from "../constants/busType.const";
 
-export default function CreateBusModel({
+export default function BusForm({
   bus,
   onSuccess,
 }: {
