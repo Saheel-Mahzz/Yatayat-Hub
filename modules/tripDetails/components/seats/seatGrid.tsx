@@ -46,9 +46,7 @@ export default function SeatGrid({
 
             const isBooked = bookedSeats.includes(seatName);
             const isSelected = selectedSeat?.includes(seatName);
-            // console.log("testoing", test);
-            // const isSelected = test.includes(seatName);
-            // console.log("is lseectec", isSelected);
+
             let seatStyle =
               "bg-white text-gray-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300 cursor-pointer";
             if (isBooked) {

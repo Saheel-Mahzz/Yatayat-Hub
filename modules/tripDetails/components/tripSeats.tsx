@@ -23,7 +23,6 @@ export default function Seats({ tripDetails }: { tripDetails: ITripDetails }) {
   const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
   const [isAuthModelOpen, setIsAuthModelOpen] = useState<boolean>(false);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState<boolean>(false);
-  console.log("trip details", tripDetails);
   useEffect(() => {
     if (state?.success) {
       toast.success("Seat Booked Successfully!");

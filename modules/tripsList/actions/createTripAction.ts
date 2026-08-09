@@ -27,7 +27,6 @@ export default async function tripCreateAction(
     date: formattedDate,
   };
 
-  console.log("raw data", rawData);
   const result = TripSchema.safeParse(rawData);
 
   if (!result.success) {
@@ -58,9 +57,7 @@ export default async function tripCreateAction(
       error: null,
     };
   } catch (err) {
-    console.log("err", err);
     if (err instanceof AxiosError) {
-      console.log("BACKEND ERROR DATA:", err?.response?.data);
     }
     return {
       success: false,

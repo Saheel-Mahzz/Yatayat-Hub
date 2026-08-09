@@ -42,7 +42,6 @@ export default async function changePasswordAction(
 
   try {
     const reponse = await api.post("/user/change-password/", payload);
-    console.log("response", reponse);
     return {
       data: reponse.data,
       success: true,

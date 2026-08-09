@@ -41,7 +41,6 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
     };
   } catch (err) {
     if (err instanceof AxiosError) {
-      console.log("Axios Error Details:", err?.response?.data);
       const backendError =
         err?.response?.data?.message ||
         "Invalid Credentials or request failed!";
@@ -53,7 +52,6 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
     }
 
     if (err instanceof Error) {
-      console.log("Unexpected JS error:", err.message);
     }
     return {
       success: false,

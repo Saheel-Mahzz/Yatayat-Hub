@@ -25,8 +25,6 @@ export default async function MyBookings({
   const totalCount = response?.data?.count || 0;
   const allBooking = response?.data?.results || [];
 
-  console.log("all Bookings", allBooking);
-
   const columns: Column<IBooking>[] = [
     {
       header: "S.N.",

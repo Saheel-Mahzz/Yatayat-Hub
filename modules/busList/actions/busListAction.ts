@@ -49,7 +49,6 @@ export default async function busCreateAction(
       error: null,
     };
   } catch (err) {
-    console.error("Bus create/update error:", err); // debugging को लागि (server log ma देखिन्छ)
     if (axios.isAxiosError(err)) {
       return {
         success: false,
@@ -57,7 +56,7 @@ export default async function busCreateAction(
           err.response?.data?.message ??
           "Something went wrong. Please try again.",
         data: rawData,
-        error: err.response?.data ?? null, // backend ko validation error (field-wise) frontend मा पठाउने
+        error: err.response?.data ?? null,
       };
     }
 

@@ -42,8 +42,6 @@ export default function TripForm({
   const [toLocation, setToLocation] = useState<string | null>(null);
   const [selectedBus, setSelectedBus] = useState<string | null>(null);
 
-  console.log("seelcted location", fromLocation);
-
   const buttonText = isPending
     ? trips
       ? "Editing"

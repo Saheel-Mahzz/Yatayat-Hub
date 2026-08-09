@@ -52,9 +52,7 @@ export async function registerAction(
       error: null,
     };
   } catch (err) {
-    console.log("api eerror ", err);
     if (err instanceof AxiosError) {
-      console.log(err.response?.data);
     }
     return {
       success: false,

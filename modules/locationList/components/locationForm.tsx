@@ -48,7 +48,6 @@ export default function LocationForm({
       ? "Creting.."
       : "Create Location";
 
-  console.log("location", location);
   return (
     <form action={formAction}>
       <div className="space-y-5 pt-4">
