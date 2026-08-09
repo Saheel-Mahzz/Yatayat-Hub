@@ -5,15 +5,23 @@ import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import locationCreateAction from "../actions/locationAction";
-const initialState = {
-  message: "",
-  data: null,
-  error: null,
-  success: false,
-};
+import { ILocation } from "../definitions/locations.definitions";
+import { Loader2 } from "lucide-react";
 
-export default function CreateLocationModel() {
+export default function LocationForm({
+  onSuccess,
+  location,
+}: {
+  location?: ILocation;
+  onSuccess: () => void;
+}) {
   const router = useRouter();
+  const initialState = {
+    message: "",
+    data: { ...location },
+    error: null,
+    success: false,
+  };
 
   const [state, formAction, isPending] = useActionState(
     locationCreateAction,
@@ -22,10 +30,25 @@ export default function CreateLocationModel() {
 
   useEffect(() => {
     if (state.success) {
-      toast.message("Location Created Successfully!");
+      toast.success(state.message);
       router.refresh();
+      onSuccess?.();
+      return;
+    }
+    if (state?.error) {
+      toast.error(state.message);
     }
   }, [state]);
+
+  const buttonText = location
+    ? isPending
+      ? "Editing.."
+      : "Edit Location"
+    : isPending
+      ? "Creting.."
+      : "Create Location";
+
+  console.log("location", location);
   return (
     <form action={formAction}>
       <div className="space-y-5 pt-4">
@@ -35,7 +58,7 @@ export default function CreateLocationModel() {
           name="name"
           type="text"
           err={state?.error?.name}
-          // value={state?.data?.name || ""}
+          defaultValue={state?.data?.name}
         />
 
         <div className="flex justify-end gap-3 pt-4">
@@ -43,8 +66,9 @@ export default function CreateLocationModel() {
             Cancel
           </Button>
 
-          <Button type="submit">
-            {isPending ? "Creating.." : "Create Location"}
+          <Button type="submit" disabled={isPending}>
+            {isPending && <Loader2 className="animate-spin" size={18} />}
+            {buttonText}
           </Button>
         </div>
       </div>

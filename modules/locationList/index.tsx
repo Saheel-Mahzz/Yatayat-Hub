@@ -1,15 +1,13 @@
 import { Column } from "../myBookings";
 import { List } from "@/components/list";
-import CreateButton from "@/components/createButton";
 import { ILocation } from "./definitions/locations.definitions";
 import { getLocationlist } from "./api/getLocationlist";
-import CreateLocationModel from "./components/createLocationModel";
+import LocationModel from "./components/locationModel";
 
 export default async function LocationList() {
   const response = await getLocationlist();
 
   const allLocations = response?.data || [];
-  // const totalCount = response?.data?.count;
 
   const columns: Column<ILocation>[] = [
     {
@@ -23,17 +21,20 @@ export default async function LocationList() {
       header: "Name",
       accessorKey: "name",
     },
+    {
+      header: "Actions",
+      accessorKey: "actions",
+      cell: (row) => {
+        return <LocationModel row={row} />;
+      },
+    },
   ];
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Locations</h1>
-        <CreateButton
-          addButtonText="Add Location"
-          modelTitle="Create New Location"
-        >
-          <CreateLocationModel />
-        </CreateButton>
+
+        <LocationModel />
       </div>
       <List columns={columns} rows={allLocations} />
     </>

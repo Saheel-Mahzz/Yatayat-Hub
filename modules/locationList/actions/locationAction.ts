@@ -3,7 +3,7 @@ import {
   ILocation,
   LocationSchema,
 } from "../definitions/locations.definitions";
-
+import { AxiosError } from "axios";
 interface IPrevState {
   success: boolean;
   error: null | Record<string, string>;
@@ -15,6 +15,13 @@ export default async function locationCreateAction(
   prevstate: IPrevState,
   formData: FormData,
 ) {
+  const id = prevstate?.data?.id;
+
+  const method = id ? "patch" : "post";
+  const url = id ? `/locations/${id}/` : "/locations/";
+  const responseMessage = id
+    ? "Location Edited Successfully."
+    : "Location Created Successfully!";
   const rawData = {
     name: (formData.get("name") as string) || "",
   };
@@ -24,7 +31,6 @@ export default async function locationCreateAction(
   if (!result.success) {
     const fieldErrors = result?.error?.issues?.reduce<Record<string, string>>(
       (acc, curr) => {
-        // Path array ko first indexing item extract garera string typed conversion deko
         const key = curr.path[0] as string;
 
         if (key) {
@@ -43,14 +49,23 @@ export default async function locationCreateAction(
   }
 
   try {
-    const reponse = await api.post("/locations/", rawData);
+    const reponse = await api[method](url, rawData);
     return {
       data: reponse.data,
       success: true,
-      message: "Location Created Successfully!",
+      message: responseMessage,
       error: null,
     };
   } catch (err) {
+    if (err instanceof AxiosError) {
+      const errMessage = err?.response?.data?.name[0];
+      return {
+        success: false,
+        message: errMessage,
+        data: rawData,
+        error: err?.response?.data?.name[0],
+      };
+    }
     return {
       success: false,
       message: "Internal Server Error!",
