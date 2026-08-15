@@ -15,11 +15,11 @@ export const PASSENGERS = [
 
 export const PRICES = [
   {
-    value: "price_asc",
+    value: "price",
     label: "Price: Low to High",
   },
   {
-    value: "price_desc",
+    value: "-price",
     label: "Price: High to Low",
   },
 ];

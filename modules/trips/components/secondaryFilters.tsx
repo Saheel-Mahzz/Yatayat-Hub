@@ -36,7 +36,7 @@ export default function SecondaryFilters() {
       <div className="flex flex-col gap-2">
         <SelectElement
           label="Trip Price"
-          name="price_sort"
+          name="ordering"
           options={PRICES}
           placeholder="Sort by price"
           onChange={handleFilterChange}
