@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -15,26 +16,23 @@ interface PaginationProps {
   totalCount: number;
 }
 
-export default function TripPagination({ totalCount }: PaginationProps) {
+function PaginationInner({ totalCount }: PaginationProps) {
   const router = useRouter();
   const pathname = usePathname();
-
   const searchParams = useSearchParams();
+
   const ITEMS_PER_PAGE = 5;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   const handlePageChange = (newPageNumber: number) => {
     const params = new URLSearchParams(searchParams.toString());
-
     params.set("page", newPageNumber.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
 
   const currentPageNumber = Number(searchParams.get("page")) || 1;
 
-  if (totalPages <= 1) return;
-
-  // const starsArray = Array.from({ length: 5 }, () => "*");
+  if (totalPages <= 1) return null;
 
   return (
     <div className="flex justify-center mt-6">
@@ -79,5 +77,14 @@ export default function TripPagination({ totalCount }: PaginationProps) {
         </PaginationContent>
       </Pagination>
     </div>
+  );
+}
+
+// Global Export with Suspense Wrapper
+export default function TripPagination({ totalCount }: PaginationProps) {
+  return (
+    <Suspense fallback={null}>
+      <PaginationInner totalCount={totalCount} />
+    </Suspense>
   );
 }
