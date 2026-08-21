@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import React from "react";
 import { getBookings } from "./api/getBookings";
 import { List } from "@/components/list";
