@@ -2,27 +2,16 @@
 
 import { Bus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { BUS_TYPE } from "@/modules/busList/constants/busType.const";
 import { SelectElement } from "@/components/select";
 import { PRICES } from "../constants/passenger.const";
+import useFilter from "@/hooks/useFilter";
 
 export default function SecondaryFilters() {
   const search = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
   const params = new URLSearchParams(search);
-
-  const handleFilterChange = (key: string, value: string) => {
-    params.delete("page");
-    const currentValue = params.get(key);
-    if (currentValue === value) {
-      params.delete(key);
-    } else {
-      params.set(key, value);
-    }
-    router.push(`${pathname}/?${params.toString()}`, { scroll: false });
-  };
+  const { handleFilterChange, resetFilters } = useFilter();
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-6">
@@ -68,6 +57,9 @@ export default function SecondaryFilters() {
               </Button>
             );
           })}
+          <Button type="button" onClick={() => resetFilters()}>
+            Clear all
+          </Button>
         </div>
       </div>
     </div>

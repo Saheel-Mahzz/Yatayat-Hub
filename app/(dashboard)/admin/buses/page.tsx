@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import BusList from "@/modules/busList";
 
 export default async function BusPage({
