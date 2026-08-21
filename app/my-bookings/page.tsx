@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import MyBookings from "../../modules/myBookings";
 
 export default async function page({
@@ -6,5 +7,9 @@ export default async function page({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const search = await searchParams;
-  return <MyBookings search={search} />;
+  return (
+    <Suspense fallback={<div>Loading bookings...</div>}>
+      <MyBookings search={search} />
+    </Suspense>
+  );
 }
