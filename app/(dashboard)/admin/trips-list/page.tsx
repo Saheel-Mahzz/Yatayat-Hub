@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import TripsList from "@/modules/tripsList";
 
 export default async function page({
