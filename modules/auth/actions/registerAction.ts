@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { RegisterSchema } from "../definitions/auth.definitons";
+import { AxiosError } from "axios";
 interface RegisterState {
   // data: IAuth | null;
   success: boolean;
@@ -22,15 +23,8 @@ export async function registerAction(
   const safeData = RegisterSchema.safeParse(rawData);
 
   if (!safeData.success) {
-    // const fieldErrors = safeData?.error?.issues?.reduce((acc, curr) => {
-    //   acc[curr?.path] = curr?.message;
-    //   return acc;
-    // }, {});
-
-    // Acc (Accumulator) lai string dynamic key-value object declare handiyeko
     const fieldErrors = safeData?.error?.issues?.reduce<Record<string, string>>(
       (acc, curr) => {
-        // Path array ko first indexing item extract garera string typed conversion deko
         const key = curr.path[0] as string;
 
         if (key) {
@@ -58,6 +52,8 @@ export async function registerAction(
       error: null,
     };
   } catch (err) {
+    if (err instanceof AxiosError) {
+    }
     return {
       success: false,
       message: "Something went wrong!",

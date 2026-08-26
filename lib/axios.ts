@@ -6,59 +6,67 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    // 1. Local storage bata token string line (e.g., "access_token")
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("access_token")
         : null;
 
-    // 2. Yedi token exist garchha bhane Headers configure garne
     if (token) {
-      // Django DRF ko standard JWT dynamic standard header name format standard 'Bearer <token>' hunchha
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // 3. Modifed config return garna pardaincha
     return config;
   },
   (error) => {
-    // Kehi gari request pathauda error aayo bhane forward handine
     return Promise.reject(error);
   },
 );
 
-// export const getAuthApi = () => {
-//   const cookieStore = cookies();
-//   const token = cookieStore.get("access_token")?.value;
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-//   // 1. Base headers object tayar parne
-//   const headers: Record<string, string> = {};
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-//   // 2. Yedi cookie ma token bhetiyo bhane dynamic Authorization header thapne
-//   if (token) {
-//     headers.Authorization = `Bearer ${token}`;
-//   }
+      try {
+        const refreshToken = localStorage.getItem("refresh_token");
 
-//   // 3. Dynamic configurations sahita fresh Axios instance return garne
-//   return axios.create({
-//     baseURL: process.env.NEXT_PUBLIC_API_URL,
-//     headers: headers,
-//   });
-// };
+        console.log("refresh token", refreshToken);
 
-// export const getAuthApi = async () => {
-//   // 2. cookies() ko madait ma await thapeko
-//   const cookieStore = await cookies();
-//   const token = cookieStore.get("access_token")?.value;
+        if (!refreshToken) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          document.cookie = "access_token=; path=/; max-age=0";
 
-//   const headers: Record<string, string> = {};
+          window.location.href = "/";
+          return Promise.reject(error);
+        }
 
-//   if (token) {
-//     headers.Authorization = `Bearer ${token}`;
-//   }
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/token/refresh/`,
+          {
+            refresh: refreshToken,
+          },
+        );
 
-//   return axios.create({
-//     baseURL: process.env.NEXT_PUBLIC_API_URL,
-//     headers: headers,
-//   });
-// };
+        const newAccessToken = res.data.access;
+
+        localStorage.setItem("access_token", newAccessToken);
+        document.cookie = `access_token=${newAccessToken}; path=/; max-age=86400`;
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        return api(originalRequest);
+      } catch (refreshError) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        window.location.href = "/";
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);

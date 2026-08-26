@@ -3,38 +3,46 @@ import TripFilters from "./components/tripFilters";
 import TripPagination from "./components/pagination";
 import TripList from "./components/tripList";
 import { getLocations } from "./api/getLocations";
+import SecondaryFilters from "./components/secondaryFilters";
 
 export default async function Trips({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const response = await getTrips(searchParams);
-
   const [tripsRes, locationsRes] = await Promise.all([
     getTrips(searchParams),
     getLocations(),
   ]);
 
-  const currentPage = Number(searchParams?.page) || 1;
-  const allTrips = response?.data?.results;
+  const allTrips = tripsRes?.data?.results || [];
+  const totalCount = tripsRes?.data?.count || 0;
 
-  const locations = locationsRes?.map((loc) => {
-    return {
-      label: loc?.name,
-      value: loc?.id,
-    };
-  });
+  const locations =
+    (Array.isArray(locationsRes) &&
+      locationsRes?.map((loc) => {
+        return {
+          label: loc?.name,
+          value: loc?.id,
+        };
+      })) ||
+    [];
 
   return (
-    <div>
+    <div className="space-y-4">
       <TripFilters locations={locations} />
-
-      <TripList allTrips={allTrips} />
-      <TripPagination
-        totalCount={response?.data?.count}
-        currentPage={currentPage}
-      />
+      <div className="grid grid-cols-12 gap-6 w-full max-w-5xl mx-auto">
+        <div className="col-span-4">
+          <SecondaryFilters />
+        </div>
+        <div
+          className="col-span-8 space-y-3
+        "
+        >
+          <TripList allTrips={allTrips} />
+        </div>
+      </div>
+      <TripPagination totalCount={totalCount} />
     </div>
   );
 }

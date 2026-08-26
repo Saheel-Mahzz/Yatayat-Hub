@@ -7,6 +7,7 @@ import { Button } from "../../components/ui/button";
 import { loginAction } from "./actions/loginAction";
 import { toast } from "sonner";
 import useAuth from "@/context/authContext";
+import { Loader2 } from "lucide-react";
 
 export default function LoginForm({
   onAuthSuccess,
@@ -23,7 +24,7 @@ export default function LoginForm({
   useEffect(() => {
     if (state.success) {
       toast.success("Login Successfull!");
-      login(state.data.access);
+      login(state.data.access, state.data.refresh);
       onAuthSuccess();
     }
   }, [state, onAuthSuccess]);
@@ -42,8 +43,18 @@ export default function LoginForm({
         placeholder="*******"
         err={state?.error?.password}
       />
-      <Button className="w-full mt-2 cursor-pointer" type="submit">
-        {isPending ? "Submitting..." : "Login & Continue"}
+      <Button
+        className="w-full mt-2 cursor-pointer"
+        type="submit"
+        disabled={isPending}
+      >
+        {isPending ? (
+          <>
+            <Loader2 className="animate-spin" size={16} /> Submitting...
+          </>
+        ) : (
+          "Login & Continue"
+        )}
       </Button>
     </form>
   );

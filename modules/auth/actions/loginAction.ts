@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { LoginSchema } from "../definitions/auth.definitons";
+import { AxiosError } from "axios";
 
 interface LoginState {
   // data: IAuth | null;
@@ -13,14 +14,8 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
   };
   const safeData = LoginSchema.safeParse(rawData);
   if (!safeData.success) {
-    // const fieldErrors = safeData?.error?.issues?.reduce((acc, curr) => {
-    //   acc[curr?.path] = curr?.message;
-    //   return acc;
-    // }, {});
-    // Acc (Accumulator) lai string dynamic key-value object declare handiyeko
     const fieldErrors = safeData?.error?.issues?.reduce<Record<string, string>>(
       (acc, curr) => {
-        // Path array ko first indexing item extract garera string typed conversion deko
         const key = curr.path[0] as string;
 
         if (key) {
@@ -45,6 +40,19 @@ export async function loginAction(prevState: LoginState, formData: FormData) {
       message: "Login Succesfull!",
     };
   } catch (err) {
+    if (err instanceof AxiosError) {
+      const backendError =
+        err?.response?.data?.message ||
+        "Invalid Credentials or request failed!";
+
+      return {
+        success: false,
+        message: backendError,
+      };
+    }
+
+    if (err instanceof Error) {
+    }
     return {
       success: false,
       message: "Internal Server error!",

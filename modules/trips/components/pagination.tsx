@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -9,32 +10,29 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
-  currentPage: number;
   totalCount: number;
 }
 
-export default function TripPagination({
-  currentPage,
-  totalCount,
-}: PaginationProps) {
+function PaginationInner({ totalCount }: PaginationProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const ITEMS_PER_PAGE = 5;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   const handlePageChange = (newPageNumber: number) => {
     const params = new URLSearchParams(searchParams.toString());
-
     params.set("page", newPageNumber.toString());
-    router.push(`/trips/?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
-  if (totalPages <= 1) return;
+  const currentPageNumber = Number(searchParams.get("page")) || 1;
 
-  // const starsArray = Array.from({ length: 5 }, () => "*");
+  if (totalPages <= 1) return null;
 
   return (
     <div className="flex justify-center mt-6">
@@ -43,60 +41,24 @@ export default function TripPagination({
           <PaginationItem>
             <PaginationPrevious
               onClick={() => {
-                if (currentPage > 1) handlePageChange(currentPage - 1);
+                if (currentPageNumber > 1)
+                  handlePageChange(currentPageNumber - 1);
               }}
             />
           </PaginationItem>
 
           {Array.from({ length: totalPages }, (_, index) => (
-            <>
-              <PaginationItem>
-                <PaginationLink
-                  //   href="#"
-                  isActive={currentPage === index + 1}
-                  onClick={() => {
-                    handlePageChange(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            </>
+            <PaginationItem key={index}>
+              <PaginationLink
+                isActive={currentPageNumber === index + 1}
+                onClick={() => {
+                  handlePageChange(index + 1);
+                }}
+              >
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
           ))}
-          {/* 
-          <PaginationItem>
-            <PaginationLink
-              //   href="#"
-              isActive={currentPage === 1}
-              onClick={() => {
-                handlePageChange(1);
-              }}
-            >
-              1
-            </PaginationLink>
-          </PaginationItem>
-
-          <PaginationItem>
-            <PaginationLink
-              isActive={currentPage === 2}
-              onClick={() => {
-                handlePageChange(2);
-              }}
-            >
-              2
-            </PaginationLink>
-          </PaginationItem>
-
-          <PaginationItem>
-            <PaginationLink
-              isActive={currentPage === 3}
-              onClick={() => {
-                handlePageChange(3);
-              }}
-            >
-              3
-            </PaginationLink>
-          </PaginationItem> */}
 
           <PaginationItem>
             <PaginationEllipsis />
@@ -105,15 +67,24 @@ export default function TripPagination({
           <PaginationItem>
             <PaginationNext
               onClick={() => {
-                if (currentPage < totalPages) {
-                  handlePageChange(currentPage + 1);
+                if (currentPageNumber < totalPages) {
+                  handlePageChange(currentPageNumber + 1);
                 }
               }}
-              className={`${currentPage < totalPages ? "cursor-pointer" : "cursor-not-allowed"}`}
+              className={`${currentPageNumber < totalPages ? "cursor-pointer" : "cursor-not-allowed"}`}
             />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
+  );
+}
+
+// Global Export with Suspense Wrapper
+export default function TripPagination({ totalCount }: PaginationProps) {
+  return (
+    <Suspense fallback={null}>
+      <PaginationInner totalCount={totalCount} />
+    </Suspense>
   );
 }

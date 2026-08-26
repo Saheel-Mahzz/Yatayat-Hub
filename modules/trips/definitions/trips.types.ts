@@ -4,6 +4,8 @@ export interface IBusTrip {
   bus_type: string;
   to_location: string;
   available_seats: number;
+  date: string;
+  time: string;
   bus: {
     name: string;
     total_seats: string;

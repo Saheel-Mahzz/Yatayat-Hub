@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { ZodError } from "zod";
+import { AxiosError } from "axios";
 
 interface BookingActionResponse {
   data?: string;
@@ -13,7 +13,7 @@ export async function creatBookingAction(
 ) {
   const rawData = {
     trip: formData?.get("trip"),
-    seat_number: formData?.get("seat_number"),
+    seat_number: JSON.parse(formData?.get("seat_number") as string),
   };
 
   try {
@@ -24,12 +24,13 @@ export async function creatBookingAction(
       message: "Booked Successfully!",
     };
   } catch (err) {
-    if (err instanceof ZodError) {
-      // Yo block bhitra afei ZodError ko type trigger hunchha
+    let errorMessage;
+    if (err instanceof AxiosError) {
+      errorMessage = err?.response?.data?.non_field_errors[0];
     }
     return {
       success: false,
-      message: "Something went wrong!",
+      message: errorMessage ?? "Something went wrong!",
     };
   }
 }

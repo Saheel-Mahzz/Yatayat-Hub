@@ -1,39 +1,7 @@
-// import { Input } from "@/components/ui/input";
-// import { MapPin } from "lucide-react";
-
-// interface ISearchFields {
-//   label: string;
-//   placeholder: string;
-//   name: string;
-// }
-
-// export default function SearchFields({
-//   label,
-//   placeholder,
-//   name,
-// }: ISearchFields) {
-//   return (
-//     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
-//       <MapPin className="w-4 h-4 text-gray-500" />
-//       <div className="flex flex-col w-full">
-//         <span className="text-xs text-gray-500">{label}</span>
-//         <Input
-//           placeholder={placeholder}
-//           className="border-0 p-0 h-6 focus-visible:ring-0"
-//           name={name}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
-
 import { useState } from "react";
 import { Check, ChevronsUpDown, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-
 import {
   Popover,
   PopoverContent,
@@ -47,6 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 export interface ILocation {
   label: string;
@@ -58,9 +27,10 @@ interface ISearchFields {
   placeholder: string;
   name: string;
   locations: ILocation[];
-  value: ILocation | null;
-  onSelect: (value: ILocation) => void;
-  disable: ILocation | null;
+  value?: string | null;
+  onSelect?: (value: string) => void;
+  disable?: string | null;
+  defaultValue?: string;
 }
 
 export default function SearchFields({
@@ -71,17 +41,28 @@ export default function SearchFields({
   value,
   onSelect,
   disable,
+  defaultValue,
 }: ISearchFields) {
   const [open, setOpen] = useState(false);
-  // const [selected, setSelected] = useState<ILocation | null>(null);
+  const currentValue = value || defaultValue;
+
+  const selectedLocation = locations.find(
+    (loc) =>
+      String(loc.value) === String(currentValue) ||
+      String(loc.label).toLowerCase() === String(currentValue).toLowerCase(),
+  );
+
   return (
     <div className="flex items-center gap-2 border rounded-xl px-3 py-2 w-full">
       <MapPin className="w-4 h-4 text-gray-500" />
       <div className="flex flex-col w-full">
         <span className="text-xs text-gray-500">{label}</span>
 
-        {/* Hidden input — yehi le FormData ma value carry garcha */}
-        <input type="hidden" name={name} value={value?.value ?? ""} />
+        <input
+          type="hidden"
+          name={name}
+          value={selectedLocation?.value ?? ""}
+        />
 
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -91,7 +72,7 @@ export default function SearchFields({
               aria-expanded={open}
               className="justify-between p-0 h-6 font-normal text-left"
             >
-              {value ? value.label : placeholder}
+              {selectedLocation ? selectedLocation.label : placeholder}
               <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -105,25 +86,19 @@ export default function SearchFields({
                     <CommandItem
                       key={loc.value}
                       value={loc.label}
-                      // onSelect={() => {
-                      //   onselect(loc);
-                      //   setOpen(false);
-                      // }}
                       onSelect={() => {
-                        onSelect(loc);
+                        onSelect?.(loc?.value);
                         setOpen(false);
                       }}
-                      className={`${loc.value === disable?.value ? "cursor-none" : "cursor-pointer"}`}
-                      disabled={loc.value === disable?.value}
+                      className={`${loc.value === disable ? "cursor-none" : "cursor-pointer"}`}
+                      disabled={loc.value === disable}
                     >
-                      {/* <Check
+                      <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          selected?.value === loc.value
-                            ? "opacity-100"
-                            : "opacity-0",
+                          value === loc.value ? "opacity-100" : "opacity-0",
                         )}
-                      /> */}
+                      />
                       {loc.label}
                     </CommandItem>
                   ))}

@@ -1,25 +1,36 @@
+export const dynamic = "force-dynamic";
 import React from "react";
 import { getBookings } from "./api/getBookings";
 import { List } from "@/components/list";
-import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+
 import ViewTicket from "./components/viewTicket";
 import { IBooking } from "./definitions/bookings.defination";
+import TripPagination from "../trips/components/pagination";
+import { getPageOffset } from "@/components/list/utils/getPageOffSet";
+import { Badge } from "@/components/ui/badge";
 export interface Column<T> {
   header: string;
   accessorKey: keyof T | string;
   cell?: (row: T, index?: number) => React.ReactNode;
 }
 
-export default async function MyBookings() {
-  const response = await getBookings();
+export default async function MyBookings({
+  search,
+}: {
+  search: {
+    [key: string]: string | undefined;
+  };
+}) {
+  const response = await getBookings(search);
+
+  const totalCount = response?.data?.count || 0;
   const allBooking = response?.data?.results || [];
 
   const columns: Column<IBooking>[] = [
     {
       header: "S.N.",
-      accessorKey: "sn", // Yesle farak pardaina, just key ko lagi
-      cell: (row, index) => <span>{(index ?? 0) + 1}</span>, // Index dynamic pass garchu hami
+      accessorKey: "sn",
+      cell: (row, index) => <span>{(index ?? 0) + 1}</span>,
     },
     {
       header: "Bus Name",
@@ -33,6 +44,15 @@ export default async function MyBookings() {
     {
       header: "Seat Number",
       accessorKey: "seat_number",
+      cell: (row) => {
+        const seats = row?.seats;
+        if (!seats) return "-";
+        return seats.map((seat, index) => (
+          <Badge variant="outline" key={index} className="ml-2">
+            {seat}
+          </Badge>
+        ));
+      },
     },
 
     // {
@@ -57,7 +77,12 @@ export default async function MyBookings() {
   ];
   return (
     <div className="w-full max-w-5xl mx-auto ">
-      <List columns={columns} rows={allBooking} />
+      <List
+        columns={columns}
+        rows={allBooking}
+        startIndex={getPageOffset(search)}
+      />
+      <TripPagination totalCount={totalCount} />
     </div>
   );
 }

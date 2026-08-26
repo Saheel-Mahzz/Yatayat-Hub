@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { CheckCircle2, Download, Bus } from "lucide-react";
 import {
   Dialog,
@@ -11,17 +10,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ITripDetails } from "../definitions/tripDetails";
-import { format, parseISO } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 
 interface ITicketDetails {
   first_name?: string;
   last_name?: string;
   email?: string;
   trip: ITripDetails;
-  seat_number: string;
+  seat_number: string | string[];
   isTicketModelOpen: boolean;
   setIsTicketModelOpen: (type: boolean) => void;
-  booked_at?: string;
+  departure_date?: string;
+  depature_time?: string;
 }
 
 export default function TicketModal({
@@ -32,52 +32,36 @@ export default function TicketModal({
   last_name,
   seat_number,
   trip,
-  booked_at,
+  departure_date,
+  depature_time,
 }: ITicketDetails) {
-  // const [open, setOpen] = useState<boolean>(true);
+  const formattedDate = departure_date
+    ? format(departure_date, "yyyy-MM-dd")
+    : "Not Avaliable";
 
-  // const dateObject = parseISO(booked_at as string);
-  // 1. Paila string lai JavaScript Date object ma convert garne
-  // const dateObject = parseISO(booked_at as string);
-
-  // // 2. Ani afule khojeko pattern ma format garne
-  // const formattedDate = format(dateObject, "yyyy-MM-dd");
-  const formattedDate = booked_at
-    ? format(new Date(booked_at), "yyyy-MM-dd")
-    : "Not Available";
   // const formattedDate = format(new Date(booked_at as string), "yyyy-MM-dd");
-  console.log(formattedDate);
 
-  const isPastTrip =
-    new Date(formattedDate).setHours(0, 0, 0, 0) <
-    new Date().setHours(0, 0, 0, 0);
+  const isPastTrip = departure_date
+    ? isBefore(startOfDay(new Date(departure_date)), startOfDay(new Date()))
+    : false;
   return (
-    // Default open={true} for testing static UI popup view
     <Dialog open={isTicketModelOpen} onOpenChange={setIsTicketModelOpen}>
       <DialogContent className="sm:max-w-md p-0 overflow-hidden rounded-2xl gap-0 border-none bg-slate-50">
-        {/* Top Decorative Banner */}
         <DialogHeader className="bg-emerald-600 text-white p-6 flex flex-col items-center text-center relative">
           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
             <CheckCircle2 className="w-7 h-7 text-white" />
           </div>
-          {/* <DialogTitle className="text-xl font-bold tracking-wide text-white">
-            Booking Confirmed!
-          </DialogTitle> */}
+
           <DialogTitle className="text-xl font-bold tracking-wide text-white">
             {isPastTrip ? "Trip Completed" : "Booking Confirmed!"}
           </DialogTitle>
-          <p className="text-emerald-100 text-xs mt-1 font-medium">
-            {/* Ticket ID: #21 • Booked at {format()} */}
-          </p>
+          <p className="text-emerald-100 text-xs mt-1 font-medium"></p>
 
-          {/* Authentic Ticket Left/Right Circle Cutouts */}
           <div className="absolute -bottom-3 -left-3 w-6 h-6 bg-background rounded-full border-r border-slate-200"></div>
           <div className="absolute -bottom-3 -right-3 w-6 h-6 bg-background rounded-full border-l border-slate-200"></div>
         </DialogHeader>
 
-        {/* Ticket Details Core Area */}
         <div className="p-6 space-y-4">
-          {/* Main Route Segment */}
           <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
             <div className="text-left">
               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
@@ -88,7 +72,6 @@ export default function TicketModal({
               </p>
             </div>
 
-            {/* Bus Animation Connection Vector */}
             <div className="flex flex-col items-center flex-1 mx-4">
               <Bus className="w-5 h-5 text-emerald-600 animate-pulse" />
               <div className="w-full border-t-2 border-dashed border-emerald-300 mt-1 relative"></div>
@@ -103,8 +86,6 @@ export default function TicketModal({
               </p>
             </div>
           </div>
-
-          {/* Vehicle Information Panel */}
           <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex justify-between items-center">
             <div>
               <h4 className="font-bold text-slate-800 text-sm">
@@ -121,8 +102,6 @@ export default function TicketModal({
               {trip?.bus?.number_plate}
             </Badge>
           </div>
-
-          {/* Meta Information Metadata Grid */}
           <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm grid grid-cols-2 gap-y-4 gap-x-4 text-sm">
             <div>
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
@@ -140,12 +119,16 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Seat Number
               </span>
-              <Badge
-                variant="secondary"
-                className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border border-emerald-200 font-bold text-sm px-3 py-0.5 rounded-md"
-              >
-                {seat_number}
-              </Badge>
+              {Array.isArray(seat_number) &&
+                seat_number.map((seat) => (
+                  <Badge
+                    key={seat}
+                    variant="secondary"
+                    className="bg-emerald-50 m-1 text-emerald-700 hover:bg-emerald-50 border border-emerald-200 font-bold text-sm px-3 py-0.5 rounded-md"
+                  >
+                    {seat}
+                  </Badge>
+                ))}
             </div>
 
             <div className="col-span-2">
@@ -163,7 +146,9 @@ export default function TicketModal({
               <span className="text-[11px] font-medium text-muted-foreground block mb-0.5">
                 Departure Time
               </span>
-              <p className="font-semibold text-slate-800">08:30 AM</p>
+              <p className="font-semibold text-slate-800">
+                {depature_time ?? "-"}
+              </p>
             </div>
           </div>
         </div>

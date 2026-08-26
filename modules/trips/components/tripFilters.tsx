@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from "lucide-react";
-import SearchFields, { ILocation } from "./search/components/searchFields";
+import SearchFields from "./search/components/searchFields";
 import DateField from "./search/components/dateField";
 import PassengerField from "./search/components/passengerField";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { useState } from "react";
 import {
@@ -25,35 +25,38 @@ export default function TripFilters({
 }) {
   const router = useRouter();
 
+  const path = usePathname();
+  const searchParams = useSearchParams();
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
+    const params = new URLSearchParams(searchParams);
+    params.delete("page");
 
-    // 1. Initial empty search params initialize garne
-    const params = new URLSearchParams();
-
-    // 2. Form fields bata values line
     const from = formData.get("from_destination") as string;
     const to = formData.get("to_destination") as string;
-    const passenger = formData.get("passenger") as string; // Check dynamic passenger name attribute
-    const date = formData.get("departure_time") as string; // Check dynamic date name attribute
+    const passenger = formData.get("passenger") as string;
+    const date = formData.get("date") as string;
 
-    // 3. Backend ko logic jastai input check garera query set garne
     if (from) params.set("from_location", from);
     if (to) params.set("to_location", to);
     if (passenger) params.set("passenger", passenger);
-    if (date) params.set("departure_time", date);
-
     if (date) {
       const formattedDate = format(date, "yyyy-MM-dd");
-      params.set("departure_time", formattedDate);
+      params.set("date", formattedDate);
+    } else {
+      params.delete("date");
     }
-    // 4. Clean URL push handine
-    // output: /bookings?from_location=KTM&passenger=2
-    router.push(`/trips?${params.toString()}`);
+    router.push(`/${path}?${params.toString()}`);
   };
-  const [selectedFrom, setSelectedFrom] = useState<ILocation | null>(null);
-  const [selectedTo, setSelectedTo] = useState<ILocation | null>(null);
+  const [selectedFrom, setSelectedFrom] = useState<string | null>(
+    searchParams.get("from_location") ?? null,
+  );
+  const [selectedTo, setSelectedTo] = useState<string | null>(
+    searchParams.get("to_location") ?? null,
+  );
 
   const switchDestination = () => {
     setSelectedFrom(selectedTo);
@@ -101,7 +104,7 @@ export default function TripFilters({
           </div>
 
           <div className="flex-1 min-w-0">
-            <DateField />
+            <DateField name="date" />
           </div>
 
           <div className="flex-1 min-w-0">

@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,6 +11,7 @@ import { Column } from "@/modules/myBookings";
 interface IList<T> {
   columns: Column<T>[];
   rows: T[];
+  startIndex?: number;
   cell?: (row: T, index?: number) => React.ReactNode;
 }
 
@@ -47,7 +47,11 @@ function getNestedValue<T>(
   return result as string | boolean | null | undefined;
 }
 
-export function List<T extends object>({ columns, rows }: IList<T>) {
+export function List<T extends object>({
+  columns,
+  rows,
+  startIndex,
+}: IList<T>) {
   if (rows.length === 0)
     return (
       <div className="flex items-center justify-center text-3xl mt-7">
@@ -81,23 +85,12 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
       </Table> */}
       <div className="rounded-2xl border bg-white shadow-sm overflow-hidden my-7">
         <Table>
-          <TableCaption className="py-4 text-muted-foreground">
-            A list of Bookings.
-          </TableCaption>
-
           <TableHeader>
             <TableRow className="bg-muted/50 hover:bg-muted/50">
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
-                  className="
-              h-12
-              font-semibold
-              text-slate-700
-              uppercase
-              text-xs
-              tracking-wide
-            "
+                  className=" h-12 font-semibold text-slate-700 uppercase text-xs tracking-wide"
                 >
                   {col?.header}
                 </TableHead>
@@ -109,11 +102,7 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
             {rows.map((row, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className="
-            transition-colors
-            hover:bg-green-50/50
-            border-b
-          "
+                className="transition-colors hover:bg-green-50/50 border-b"
               >
                 {columns.map((col, colIndex) => (
                   <TableCell
@@ -125,7 +114,7 @@ export function List<T extends object>({ columns, rows }: IList<T>) {
               "
                   >
                     {col?.cell
-                      ? col.cell?.(row, rowIndex)
+                      ? col.cell?.(row, rowIndex + (startIndex ?? 0))
                       : getNestedValue(row, col?.accessorKey as string)}
                   </TableCell>
                 ))}

@@ -1,64 +1,22 @@
-// import z from "zod";
-
-// export const LoginSchema = z.object({
-//   email: z.string().min(1, "This field cannot be left empty!"),
-//   password: z.string().min(1, "This field cannot be left empty!"),
-// });
-// export const RegisterSchema = z.object({
-//   first_name: z.string().min(1, "This field cannot be left empty!"),
-//   last_name: z.string().min(1, "This field cannot be left empty!"),
-//   email: z.string().min(1, "This field cannot be left empty!"),
-//   // password: z.string().min(1, "This field cannot be left empty!"),
-//   password: z
-//     .string()
-//     .min(8, { message: "Password must be at least 8 characters long!" }),
-//   confirm_password: z
-//     .string()
-//     .min(1, { message: "Please confirm your password!" }),
-// })
-// .refine((data) => data.password === data.confirm_password, {
-//   message: "Passwords do not match, feri check gara bro!",
-//   path: ["confirm_password"], // error message confirm_password field kai muni dekhauxa yesle
-// })
-// phone_number: z
-//     .string()
-//     .trim()
-//     .superRefine((val, ctx) => {
-//       // 1. Empty check
-//       if (val.length === 0) {
-//         ctx.addIssue({
-//           code: "custom", // <-- Simple string 'custom' halne aba!
-//           message: "This field cannot be left empty!",
-//         });
-//         return;
-//       }
-
-//       // 2. Regex format check
-//       if (!/^9[678]\d{8}$/.test(val)) {
-//         ctx.addIssue({
-//           code: "custom", // <-- standard string format
-//           message: "Invalid Nepali phone number!",
-//         });
-//       }
-//     })
-
-import { z } from "zod"; // Block style import fixed
+import { z } from "zod";
 
 export const LoginSchema = z.object({
   email: z
     .string()
+    .trim()
     .min(1, "This field cannot be left empty!")
-    .max(50, "Field cannot excess more than 50 characters"),
+    .max(50, "Characers cannot excess more than 50 characters"),
   password: z
     .string()
+    .trim()
     .min(1, "This field cannot be left empty!")
-    .max(50, "Field cannot excess more than 50 characters"),
+    .max(50, "Characers cannot excess more than 50 characters"),
 });
 
 export const RegisterSchema = z
   .object({
-    first_name: z.string().min(1, "This field cannot be left empty!"),
-    last_name: z.string().min(1, "This field cannot be left empty!"),
+    first_name: z.string().trim().min(1, "This field cannot be left empty!"),
+    last_name: z.string().trim().min(1, "This field cannot be left empty!"),
     email: z
       .string()
       .min(1, "This field cannot be left empty!")
@@ -76,7 +34,6 @@ export const RegisterSchema = z
           return;
         }
 
-        // 2. Regex format check
         if (!/^9[678]\d{8}$/.test(val)) {
           ctx.addIssue({
             code: "custom",
@@ -86,9 +43,18 @@ export const RegisterSchema = z
       }),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters long!" }),
+      .trim()
+      .min(8, { message: "Password must be at least 8 characters long!" })
+      .regex(/[A-Z]/, "Password must contain atleat one uppercase letter")
+      .regex(/[a-z]/, "Password must contain atleast one lowercase letter")
+      .regex(/[0-9]/, "Password must contain atleast one number")
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Password must contain atleat one special character",
+      ),
     confirm_password: z
       .string()
+      .trim()
       .min(1, { message: "Please confirm your password!" }),
   })
   .refine((data) => data.password === data.confirm_password, {

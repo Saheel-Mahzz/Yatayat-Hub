@@ -1,9 +1,12 @@
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/authContext";
 import Navbar from "@/components/navbar";
+import ToastHandler from "@/components/toastHandler";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -39,8 +42,15 @@ export default function RootLayout({
       <AuthProvider>
         <body className="min-h-full flex flex-col">
           <Navbar />
+
           {children}
-          <Toaster position="top-center" />
+          <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            duration={4000}
+          />
+          <ToastHandler />
         </body>
       </AuthProvider>
     </html>
