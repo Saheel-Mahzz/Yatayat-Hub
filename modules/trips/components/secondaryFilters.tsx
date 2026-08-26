@@ -57,7 +57,11 @@ export default function SecondaryFilters() {
               </Button>
             );
           })}
-          <Button type="button" onClick={() => resetFilters()}>
+          <Button
+            type="button"
+            onClick={() => resetFilters()}
+            className="cursor-pointer"
+          >
             Clear all
           </Button>
         </div>

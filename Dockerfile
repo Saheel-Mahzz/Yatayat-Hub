@@ -10,11 +10,10 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-# Static page collection/prerender issue bypass garne
-ENV NEXT_TELEMETRY_DISABLED=1
-
+# Direct Next.js binary bata build gareko (workspace issue bypassed)
 RUN ./node_modules/.bin/next build
 
 EXPOSE 3000
 
-CMD ["node", ".next/standalone/server.js"]
+# CMD ["pnpm", "start"]
+CMD ["./node_modules/.bin/next", "start"]
